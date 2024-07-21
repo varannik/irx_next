@@ -2,9 +2,10 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import {connectDB} from '@/utils/db'
 import axios from 'axios';
-import User  from '@/models/user';
+import User  from '@/models/User';
 
-const handler = NextAuth({
+
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -37,15 +38,18 @@ const handler = NextAuth({
       }
     },
     async session({ session }) {
-
       const sessionUser = await User.findOne({email: session.user?.email})
-
-
       return session;
  
  
     },
   },
-});
+
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    encryption: true,
+  }
+}
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

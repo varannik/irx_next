@@ -1,15 +1,21 @@
-'use client'
-import { useSession, signIn, signOut } from "next-auth/react";
+
+
+import { Container } from '@/components/Container'
+
+import UserStats from '@/components/UserStats'
 
 
 export default function Home() {
-  const {data: session } = useSession()
-  console.log(session)
+
   return (
-      <section>
-        <h1> Home Page </h1>
-        <button onClick={()=> signIn('google')}>Sign In</button>
-        <button onClick={()=> signOut()}>Sign Out</button>
-      </section >
+          <>
+            <Container className="mt-9">
+              <div className="max-w-2xl">
+              <UserStats />
+              </div>
+            </Container>
+          </>
   );
 }
+
+

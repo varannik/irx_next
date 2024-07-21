@@ -9,3 +9,16 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+    networks:
+      Ex_V1:
+        ipv4_address: 172.19.0.6
+
+
+networks:
+  Ex_V1:
+    name: V1
+    external: true
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.19.0.0/16"
