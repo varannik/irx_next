@@ -17,6 +17,7 @@ import LoginPage from './SigninProfile'
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 import { Button } from './Button'
 import UserSign from './UserSign'
+import AssetsList from '@/components/UI/assetslist'
 
 
 
@@ -212,7 +213,7 @@ export default function Layout({ children }: { children: React.ReactNode })  {
                   </ul>
                 </li>
                 <li className="-mx-6 mt-auto">
-
+                <AssetsList  />
                 <UserSign  onClick={() => setProfileDrawerOpen(true)} />
 
                 </li>
@@ -232,10 +233,9 @@ export default function Layout({ children }: { children: React.ReactNode })  {
         Sign in
         </Button> */}
         <UserSign  onClick={() => setProfileDrawerOpen(true)} />
-
-         
+        <AssetsList />
         </div>
-
+        
         <LoginPage />
 
 

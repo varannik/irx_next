@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, models, model } from 'mongoose';
 
-interface IMaxMin {
+interface IMaxMin extends Document {
   maxmin: {
     J: Record<string, {
       week: { max: number, min: number },
@@ -43,6 +43,6 @@ const MaxMinSchema: Schema = new Schema({
 });
 
 // Create the MaxMin model
-const MaxMin = models.MaxMin || model<IMaxMin & Document>('MaxMin', MaxMinSchema);
+const MaxMin = models.MaxMin || model<IMaxMin>('MaxMin', MaxMinSchema);
 
 export default MaxMin;

@@ -9,14 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^2.1.0",
+    "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.4",
     "apexcharts": "^3.49.2",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
+    "flagpack-core": "^2.0.0",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
-    "framer-motion": "^11.2.11",
+    "framer-motion": "^11.3.24",
     "headlessui": "^0.0.0",
     "mongodb": "^6.8.0",
     "mongoose": "^8.4.0",
@@ -26,10 +27,13 @@
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18",
+    "react-flagpack": "^2.0.4",
+    "react-gauge-component": "^1.2.21",
     "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -37,7 +41,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.4",
+    "tailwindcss": "^3.4.7",
     "typescript": "^5"
-  }
+  },
+  "postinstall": "react-flagpack"
 }

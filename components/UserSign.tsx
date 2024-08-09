@@ -26,8 +26,6 @@ export default function UserSign({ ...props }) {
                 </button>
             </>
 
-
-
         )
 
     } else {
@@ -39,7 +37,4 @@ export default function UserSign({ ...props }) {
             </button>
         )
     }
-
-
-
 }
