@@ -5,11 +5,13 @@ interface IMaxMin extends Document {
     J: Record<string, {
       week: { max: number, min: number },
       month: { max: number, min: number },
+      today: { max: number, min: number },
       days: Record<number, { max: number, min: number }>
     }>,
     G: Record<string, {
       week: { max: number, min: number },
       month: { max: number, min: number },
+      today: { max: number, min: number },
       days: Record<number, { max: number, min: number }>
     }>
   };
@@ -22,6 +24,7 @@ const MaxMinSchema: Schema = new Schema({
       of: new Schema({
         week: { max: Number, min: Number },
         month: { max: Number, min: Number },
+        today: { max: Number, min: Number },
         days: {
           type: Map,
           of: { max: Number, min: Number }
@@ -33,6 +36,7 @@ const MaxMinSchema: Schema = new Schema({
       of: new Schema({
         week: { max: Number, min: Number },
         month: { max: Number, min: Number },
+        today: { max: Number, min: Number },
         days: {
           type: Map,
           of: { max: Number, min: Number }

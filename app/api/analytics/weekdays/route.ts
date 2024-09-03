@@ -2,9 +2,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
-import { maxminSchema } from './vl'
+import { WeekDaysSchema } from './vl'
 import { connectDB } from '@/utils/db'
-import MaxMin  from '@/models/MaxMin'; // Adjust the path as necessary
+import WeekDays  from '@/models/WeekDays'; // Adjust the path as necessary
 
 
 export async function GET(request:NextRequest) {
@@ -12,7 +12,7 @@ export async function GET(request:NextRequest) {
   try {
     // Connect to MongoDB
     await connectDB();
-    const items = await MaxMin.find({})
+    const items = await WeekDays.find({})
     return NextResponse.json(items);
 
   } catch(error)  {
@@ -26,14 +26,14 @@ export async function POST(request: NextRequest) {
     const json = await request.json();
     
     // Validate the data
-    const validatedData = maxminSchema.parse(json);
+    const validatedData = WeekDaysSchema.parse(json);
 
     // Connect to MongoDB
     await connectDB();
     // Delete if any data exist
-    await MaxMin.deleteMany({})
+    await WeekDays.deleteMany({})
     // Insert the validated data into MongoDB
-    await MaxMin.create(validatedData);
+    await WeekDays.create(validatedData);
 
     return NextResponse.json({ message: 'Data saved successfully' }, { status: 200 });
   } catch (error) {
@@ -54,12 +54,12 @@ export async function PUT(req: NextRequest) {
       const json = req.json();
       
       // Validate the data
-      const validatedData = maxminSchema.parse(json);
+      const validatedData = WeekDaysSchema.parse(json);
 
       // Connect to MongoDB
       connectDB();
       // Update the validated data into MongoDB
-      MaxMin.updateOne({}, validatedData);
+      WeekDays.updateOne({}, validatedData);
   
       return NextResponse.json({ message: 'Data updated successfully' }, { status: 200 });
     } catch (error) {

@@ -2,14 +2,14 @@ import {create} from 'zustand';
 
 // Define the DrawerOpen interface
 interface ProfileDrawerOpen {
-  open: boolean;
-  setProfileDrawerOpen: (open: boolean) => void;
+  openProfile: boolean;
+  setProfileDrawerOpen: (openProfile: boolean) => void;
 }
 
 // Create the Zustand store using the DrawerOpen interface
 const useProfileDrawerStore = create<ProfileDrawerOpen>((set) => ({
-  open: false, // Initial state of the drawer
-  setProfileDrawerOpen: (open: boolean) => set({ open }), // Method to update the drawer state
+  openProfile: false, // Initial state of the drawer
+  setProfileDrawerOpen: (openProfile: boolean) => set({ openProfile }), // Method to update the drawer state
 }));
 
 export default useProfileDrawerStore;

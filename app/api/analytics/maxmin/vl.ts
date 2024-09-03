@@ -12,6 +12,10 @@ export const maxminSchema = z.object({
         max: z.number(),
         min: z.number()
       }),
+      today: z.object({
+        max: z.number(),
+        min: z.number()
+      }),
       days: z.record(z.string(), z.object({
         max: z.number(),
         min: z.number()
@@ -23,6 +27,10 @@ export const maxminSchema = z.object({
         min: z.number()
       }),
       month: z.object({
+        max: z.number(),
+        min: z.number()
+      }),
+      today: z.object({
         max: z.number(),
         min: z.number()
       }),

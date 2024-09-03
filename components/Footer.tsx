@@ -1,45 +1,50 @@
-import Link from 'next/link'
+import useAssetDrawerStore from "@/stores/useAssetDrawerStore";
+import useCalendarDrawerStore from "@/stores/useCalendarDrawerStore";
+import useMenuDrawerStore from "@/stores/useMenuDrawerStore"
+import { Bars3Icon , CurrencyDollarIcon, CalendarIcon} from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
-import { ContainerInner, ContainerOuter } from '@/components/Container'
+const tabs = [
+  { name: 'My Account', href: '#', current: true },
+  { name: 'Company', href: '#', current: false },
+]
 
-function NavLink({
-  href,
-  children,
-}: {
-  href: string
-  children: React.ReactNode
-}) {
-  return (
-    <Link
-      href={href}
-      className="transition hover:text-teal-500 dark:hover:text-teal-400"
-    >
-      {children}
-    </Link>
-  )
-}
+const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer1 basis-1/3 px-3 py-2 text-sm font-semibold text-gray-900 div hover:bg-slate-800 focus:z-10"
 
 export function Footer() {
+  const {openMenu, setMenuDrawerOpen } = useMenuDrawerStore();
+  const {openAsset, setAssetDrawerOpen} = useAssetDrawerStore()
+  const {openCalendar, setCalendarDrawerOpen} = useCalendarDrawerStore()
   return (
-    <footer className="mt-32 flex-none">
-      <ContainerOuter>
-        <div className="border-t border-zinc-100 pb-16 pt-10 dark:border-zinc-700/40">
-          <ContainerInner>
-            <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-              <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                <NavLink href="/about">About</NavLink>
-                <NavLink href="/projects">Projects</NavLink>
-                <NavLink href="/speaking">Speaking</NavLink>
-                <NavLink href="/uses">Uses</NavLink>
-              </div>
-              <p className="text-sm text-zinc-400 dark:text-zinc-500">
-                &copy; {new Date().getFullYear()} Spencer Sharp. All rights
-                reserved.
-              </p>
-            </div>
-          </ContainerInner>
+
+    <div className="fixed inset-x-0 bottom-2 w-full h-10 z-50 flex flex-row items-center justify-center bg-transparent py-4 shadow-sm sm:px-6  ">
+      <div className=" w-full lg:w-9/12 rounded-t-lg  bg-bg-layer1 ">
+        <div className="flex m-2 divide-x divide-solid divide-div-diff  ">
+        <button onClick={() => setMenuDrawerOpen(true)}
+          type="button"
+          className={clsx(className)}
+        >
+          <Bars3Icon  className="stroke-text-active h-6 w-6" aria-hidden="true" />
+        </button>
+
+        <button onClick={() => setCalendarDrawerOpen(true)}
+          type="button"
+          className={clsx(className)}
+        >
+          <CalendarIcon className="stroke-text-active h-6 w-6" aria-hidden="true" />
+        </button>
+        <button onClick={() => setAssetDrawerOpen(true)}
+          type="button"
+          className={clsx(className)}
+        >
+          <CurrencyDollarIcon className="stroke-text-active h-6 w-6" aria-hidden="true" />
+        </button>
         </div>
-      </ContainerOuter>
-    </footer>
+
+      </div>
+    </div>
+
+
   )
 }
+

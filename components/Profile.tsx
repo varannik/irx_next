@@ -21,11 +21,11 @@ import { signOut } from 'next-auth/react'
 
 export default function Profile({session}:{session:UserSession}) {
 
-  const { open, setProfileDrawerOpen } = useProfileDrawerStore();
+  const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
   console.log(session.user.image)
 
   return (
-    <Transition show={open} as={Fragment}>
+    <Transition show={openProfile} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setProfileDrawerOpen}>
         <div className="fixed inset-0 bg-gray-900/80" />
         <div className="fixed inset-0 overflow-hidden">

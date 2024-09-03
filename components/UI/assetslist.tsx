@@ -1,18 +1,19 @@
 'use client'
 
-
 import useSelectedAsset from '@/stores/useSelectedAssetStore'
 import { useState, useEffect } from 'react'
-import { useStore } from 'zustand'
-import { Field, Label } from './catalyst/fieldset'
-import { Listbox, ListboxLabel, ListboxOption } from './catalyst/listbox'
-import Flag from 'react-flagpack'
-import {IAsset} from '@/models/Countries'
+import { IAsset } from '@/models/Countries'
+import Flag from 'react-world-flags'
+
+import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
+import SpinerIcon from './icons/Spinner'
 
 
 export default function AssetsList() {
 
   const { currentAsset, setCurrentAsset } = useSelectedAsset();
+  const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
+
   const [currencies, setCurrencies] = useState(null)
   const [isLoading, setLoading] = useState(true)
 
@@ -20,15 +21,17 @@ export default function AssetsList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/analytics/countries');
+        const response = await fetch('/api/analytics/countries', { next: { revalidate: 3600 }, cache: 'force-cache' });
         if (!response.ok) {
-          
+
           throw new Error(`Error: ${response.statusText}`);
         }
         const result = await response.json();
-        const data =  result[0].assets;
+        const data = result[0].assets;
+        const dataSorted = data.sort((a, b) => a.info.NUMERIC - b.info.NUMERIC);
+        const filterData = dataSorted.filter(obj => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
 
-        setCurrencies(data);
+        setCurrencies(filterData);
         setLoading(false)
       } catch (error) {
         console.log(error.message);
@@ -38,78 +41,39 @@ export default function AssetsList() {
     fetchData();
   }, [currentAsset]);
 
-  if (isLoading) return <p>Loading...</p>
-  if (!currencies) return <p>No profile data</p>
+  if (isLoading) return <SpinerIcon />
+  if (!currencies) return <p>Connection Fail</p>
 
-  // return (
+  return (
 
-  //   <Field >
-  //     <Listbox name="asset" value={currentAsset} defaultValue={currentAsset}>
-  //       {currencies.map((asset:IAsset) => (
-  //         <ListboxOption value={asset.info.ALPHA_2} key={asset.name} > 
-  //           <Flag className="w-5 sm:w-4" code={asset.info.ALPHA_2}/>
-  //           <ListboxLabel>{asset.name}</ListboxLabel>
-  //         </ListboxOption>
-  //       ))}
-  //     </Listbox>
-  //   </Field>
-  // )
+    <ul role="list" className="space-y-1">
+      <li>
+        <div className='flex px-2 py-2 items-center rounded-md text-xs text-gray-900 bg-slate-400'>
+          <Flag className=" basis-1/4  h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
+          <div className=" ml-3 justify-start">
+            {currentAsset.name}
+          </div>
+        </div>
+      </li>
+      {currencies.map((asset:IAsset) => (
+        <li key={asset.name} className="overflow-hidden shadow">
+          <button
+            type="button"
+            className=" flex flex-row  items-center rounded-md w-full bg-gray-900 px-2 py-1 text-xs font-light shadow-sm text-gray-400 div hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            onClick={() => {
+              setCurrentAsset(asset)
+              setAssetDrawerOpen(false)
+            }}
+          >
+            <Flag className="basis-1/4  h-6 w-6 object-cover object-center rounded-lg" code={asset.info.ALPHA_2} />
 
+            <div className="flex basis-3/4 ml-3 justify-start">
+              {asset.name}
+            </div>
 
-  // return (
-  //   <div>
-  //     <select
-  //       id="Currency"
-  //       name="Currency"
-  //       className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-  //       defaultValue={currentAsset}
-  //     >
-  //       {currencies.map((asset) => (
-  //         <option key={asset.name}>
-  //           <Flag  code={asset.info.ALPHA_2}/>
-  //           {asset.name}
-  
-  //         </option>
-  
-  //       ))}
-  //     </select>
-  //   </div>
-  // )
-
-
-
-    return (
-      <Field>
-        <Label>Project status</Label>
-        <Listbox name="status" defaultValue="active">
-          <ListboxOption value="active">
-            <ListboxLabel>Active</ListboxLabel>
-          </ListboxOption>
-          <ListboxOption value="paused">
-            <ListboxLabel>Paused</ListboxLabel>
-          </ListboxOption>
-          <ListboxOption value="delayed">
-            <ListboxLabel>Delayed</ListboxLabel>
-          </ListboxOption>
-          <ListboxOption value="canceled">
-            <ListboxLabel>Canceled</ListboxLabel>
-          </ListboxOption>
-        </Listbox>
-      </Field>
-    )
-  
-
-
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
 }
-
-
-
-
-
-
-
-
-
-
-
-

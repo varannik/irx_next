@@ -1,5 +1,5 @@
 'use client'
-
+import { NextUIProvider } from '@nextui-org/react'
 import { SessionProvider } from "next-auth/react"
 import { createContext, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
@@ -41,19 +41,21 @@ function ThemeWatcher() {
 
 export const AppContext = createContext<{ previousPathname?: string }>({})
 
-export function Providers({ children , session}: { children: React.ReactNode }) {
+export function Providers({ children, session }: { children: React.ReactNode }) {
   let pathname = usePathname()
   let previousPathname = usePrevious(pathname)
 
   return (
-    <SessionProvider session = {session}>
-    <AppContext.Provider value={{ previousPathname }}>
-      <ThemeProvider attribute="class" disableTransitionOnChange>
-        <ThemeWatcher />
-        {children}
-      </ThemeProvider>
-    </AppContext.Provider>
-     </SessionProvider>
+    <SessionProvider session={session}>
+      <AppContext.Provider value={{ previousPathname }}>
+        <NextUIProvider>
+          <ThemeProvider attribute="class" disableTransitionOnChange>
+            <ThemeWatcher />
+            {children}
+          </ThemeProvider>
+        </NextUIProvider>
+      </AppContext.Provider>
+    </SessionProvider>
   )
 }
 

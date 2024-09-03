@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react"
 import Image from "next/image"
+import { ArrowRightEndOnRectangleIcon } from '@heroicons/react/24/outline'
 
 export default function UserSign({ ...props }) {
 
@@ -12,18 +13,18 @@ export default function UserSign({ ...props }) {
 
         return (
             <>
-                <button {...props} className="w-full  flex  items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800 ">
-                    <Image
-                        width={100}
-                        height={100}
-                        className="h-10 w-10 rounded-full bg-gray-800"
-                        src={session.user?.image}
-                        alt=""
-                    />
-                    <span className="sr-only">Your profile</span>
-                    <span aria-hidden="true">{session.user?.name}</span>
+                <div className="grid justify-center h-12 w-12 hover:bg-slate-800 hover:rounded-full">
+                    <button {...props} className=" text-xs leading-6 text-white">
+                        <Image
+                            width={100}
+                            height={100}
+                            className="h-10 w-10 rounded-full bg-gray-800"
+                            src={session.user?.image}
+                            alt=""
+                        />
+                    </button>
+                </div>
 
-                </button>
             </>
 
         )
@@ -31,10 +32,13 @@ export default function UserSign({ ...props }) {
     } else {
 
         return (
+            <div className="grid justify-center h-12 hover:bg-slate-800 hover:rounded-lg">
+                <button {...props} className="">
+                    <ArrowRightEndOnRectangleIcon className="h-9 w-8" />
+                </button>
+            </div>
 
-            <button {...props} className="w-full  flex  items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800 ">
-                Sign in
-            </button>
         )
     }
 }
+

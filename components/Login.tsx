@@ -15,11 +15,11 @@ function classNames(...classes) {
 
 export default function Login() {
 
-  const { open, setProfileDrawerOpen } = useProfileDrawerStore();
+  const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
 
 
   return (
-    <Transition show={open} as={Fragment}>
+    <Transition show={openProfile} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setProfileDrawerOpen}>
         <div className="fixed inset-0" />
 

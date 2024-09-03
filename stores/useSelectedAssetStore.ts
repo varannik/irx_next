@@ -1,16 +1,16 @@
 import {create} from 'zustand';
-import { connectDB } from '@/utils/db'
-import CurrentRate  from '@/models/CurrentRate'; // Adjust the path as necessary
+import { IAsset } from '@/models/Countries';
 
+const defaultAsset = {'name': 'US Dollar', 'info': {'COUNTRY_NAME': 'United States of America', 'ALPHA_2': 'US', 'ALPHA_3': 'USA', 'NUMERIC': 840.0}}
 
 interface ISelectedAsset {
-  currentAsset: string;
-  setCurrentAsset: (currentAsset: string) => void;
+  currentAsset: IAsset;
+  setCurrentAsset: (currentAsset: IAsset) => void;
 }
 
 const useSelectedAsset = create<ISelectedAsset>((set) => ({
-    currentAsset: 'US', // Initial state of Asset
-    setCurrentAsset: (currentAsset: string) => set({ currentAsset }), // Method to update Current Asset
+    currentAsset: defaultAsset , // Initial state of Asset
+    setCurrentAsset: (currentAsset: IAsset) => set({ currentAsset }), // Method to update Current Asset
 }));
 
 export default useSelectedAsset;
