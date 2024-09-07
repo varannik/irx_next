@@ -6,6 +6,7 @@ import { use, useEffect, useState } from "react";
 import useSelectedAsset from "@/stores/useSelectedAssetStore";
 import useSelectedCalendar from "@/stores/useSelectedCalendarStore";
 import useSelectRangeGaugeChart from "@/stores/useSelectRangeGaugeChart";
+import { Card } from "@/components/UI/cardTremor"
 const GaugeComponent = dynamic(() => import('react-gauge-component'), { ssr: false });
 
 interface objAsset {
@@ -111,8 +112,8 @@ export default function MaxMinGauge() {
 
 
   return (
-    <div className="max-w-sm w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
-
+    // <div className="max-w-gl w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
+      <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5">
       <div className="flex justify-between">
         <div>
           <p className="text-base font-normal text-text-active">Max and Min</p>
@@ -120,7 +121,7 @@ export default function MaxMinGauge() {
 
       </div>
       <div className=" py-5">
-
+      <div className="flex justify-center items-center">
       <GaugeComponent
         value={currentRate}
         type="radial"
@@ -147,18 +148,19 @@ export default function MaxMinGauge() {
           elastic: true,
           animationDelay: 0,
           type: "needle",
-          color: "#edf6f9"
+          color: "#edf6f9",
 
         }}
       />
       </div>
 
-
+      </div>
 
       {/* Select current week or month */}
       <SelectRangeDays />
-    </div>
+    {/* </div> */}
 
+    </Card>
   )
 }
 

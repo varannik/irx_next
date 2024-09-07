@@ -1,5 +1,4 @@
 import { Schema, Document, models, model } from "mongoose";
-import { object } from "zod";
 
 
 interface IWeekDay {

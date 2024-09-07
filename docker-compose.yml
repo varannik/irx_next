@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+    restart: always
     networks:
       Ex_V1:
         ipv4_address: 172.19.0.6

@@ -7,6 +7,7 @@ import { Button, Pagination } from "@nextui-org/react";
 import { BarChartWeekDays } from "@/components/UI/barChartWeekDays"
 import { IWeekDays, IWeek } from "@/models/WeekDays";
 import { getWeekdayName } from "@/lib/weekDays"
+import { Card } from "@/components/UI/cardTremor"
 
 
 function fibonacci(n: number): number {
@@ -70,8 +71,8 @@ export default function CheapestDayofTheWeek() {
 
 
   return (
-    <div className="max-w-sm w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
-
+    // <div className="max-w-sm w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
+      <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5">
       <div className="flex">
         <div className="flex justify-center">
           <p className="text-base font-normal text-text-active">Cheapest day of the week</p>
@@ -137,7 +138,8 @@ export default function CheapestDayofTheWeek() {
       </div>
       <div className="w-64">
       </div>
-    </div>
+      </Card>
+    // </div>
 
   )
 }
