@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react"
 import { createContext, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { ThemeProvider, useTheme } from 'next-themes'
+import { Session } from 'next-auth'
 
 function usePrevious<T>(value: T) {
   let ref = useRef<T>()
@@ -41,7 +42,7 @@ function ThemeWatcher() {
 
 export const AppContext = createContext<{ previousPathname?: string }>({})
 
-export function Providers({ children, session }: { children: React.ReactNode }) {
+export function Providers({ children, session }: { children: React.ReactNode ,session:Session}) {
   let pathname = usePathname()
   let previousPathname = usePrevious(pathname)
 
