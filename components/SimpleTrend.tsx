@@ -6,7 +6,7 @@ import { Card } from "@/components/UI/cardTremor"
 import { SparkAreaChart } from "@/components/UI/sparkChart"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
 import { cx } from "@/lib/utils"
-import { set } from "mongoose"
+
 
 let formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
@@ -59,7 +59,7 @@ export function SimpleTrend() {
 
   console.log(simpleTrendData)
   return (
-    <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5 divide-x-1 divide-div-diff">
+    <Card  className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5 divide-x-1 divide-div-diff">
       <div className="flex grow items-center space-x-2.5">
         <div className="flex-none font-medium text-gray-700 dark:text-gray-300">7 Days </div>
         <div className="flex justify-center grow">
@@ -84,7 +84,7 @@ export function SimpleTrend() {
         ? "bg-red-high"
         : currentDiffVal == 0 ? "bg-gray-mid" : "bg-green-high"
           )}>
-          %{currentDiffVal}
+          % {currentDiffVal}
         </span>
       </div>
     </Card>

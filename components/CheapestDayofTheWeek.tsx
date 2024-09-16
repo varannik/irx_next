@@ -8,6 +8,7 @@ import { BarChartWeekDays } from "@/components/UI/barChartWeekDays"
 import { IWeekDays, IWeek } from "@/models/WeekDays";
 import { getWeekdayName } from "@/lib/weekDays"
 import { Card } from "@/components/UI/cardTremor"
+import SpinerIcon from "./UI/icons/Spinner";
 
 
 function fibonacci(n: number): number {
@@ -69,6 +70,15 @@ export default function CheapestDayofTheWeek() {
   }, [weekDaysData, currentCalendar, currentAsset, currentStepsBack, cheapestDay])
 
 
+  if (weekDaysData == null || cheapestDay == null) return (
+    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
+      <p className="text-base font-normal text-text-active">Cheapest day of the week</p>
+      <div className="flex items-center justify-center">
+      <SpinerIcon />
+      </div>
+      
+    </Card>
+  )
 
   return (
     // <div className="max-w-sm w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">

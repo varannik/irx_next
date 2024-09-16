@@ -7,6 +7,7 @@ import useSelectedAsset from "@/stores/useSelectedAssetStore";
 import useSelectedCalendar from "@/stores/useSelectedCalendarStore";
 import useSelectRangeGaugeChart from "@/stores/useSelectRangeGaugeChart";
 import { Card } from "@/components/UI/cardTremor"
+import SpinerIcon from "./UI/icons/Spinner";
 const GaugeComponent = dynamic(() => import('react-gauge-component'), { ssr: false });
 
 interface objAsset {
@@ -57,8 +58,6 @@ export default function MaxMinGauge() {
         const data = result[0].maxmin;
         
         setMaxminData(data)
-
-        console.log(data)
       } catch (error) {
         console.log(error.message);
       }
@@ -104,13 +103,20 @@ export default function MaxMinGauge() {
         setCurrentMaxMin(maxminData[currentCalendar][String(currentAsset.name)][String(selectedRange.range)])
       }
       
-      
     }
- 
-
     }  , [currentAsset, maxminData, currentCalendar, selectedRange, currentData, currentMaxMin]);
 
 
+    if (maxminData == null || currentData == null) return (
+      <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
+        <p className="text-base font-normal text-text-active">Max and Min</p>
+        <div className="flex items-center justify-center">
+        <SpinerIcon />
+        </div>
+        
+      </Card>
+    )
+  
   return (
     // <div className="max-w-gl w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
       <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5">

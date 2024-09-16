@@ -24,7 +24,7 @@
     "react-dom": "^18",
     "react-gauge-component": "^1.2.21",
     "react-world-flags": "^1.6.0",
-    "recharts": "^2.12.7",
+    "recharts": "^2.13.0-alpha.5",
     "tailwind-merge": "^2.5.2",
     "tailwind-variants": "^0.2.1",
     "zod": "^3.23.8",
