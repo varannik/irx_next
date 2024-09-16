@@ -3,6 +3,7 @@ import { Providers } from '@/app/providers'
 import Layout from '@/components/Layout'
 
 import '@/styles/tailwind.css'
+import { Session } from "next-auth";
 
 export const metadata: Metadata = {
   title: {
@@ -21,13 +22,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  session,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  session:Session
 }) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="h-full ">
-        <Providers>
+        <Providers session={session}>
           <div className="w-full">
             <Layout>{children}</Layout>
           </div>
