@@ -81,7 +81,7 @@ export function PeriodTrends() {
         setFullData(data)
         // 
       } catch (error) {
-        console.log(error.message);
+        console.log('periodictrend data are not reachable');
       }
     };
 

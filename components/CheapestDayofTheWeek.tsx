@@ -48,7 +48,7 @@ export default function CheapestDayofTheWeek() {
         setWeekDaysData(data)
         // 
       } catch (error) {
-        console.log(error.message);
+        console.log('weekdays data are not reachable');
       }
     };
 

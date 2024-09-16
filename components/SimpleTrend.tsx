@@ -34,7 +34,7 @@ export function SimpleTrend() {
         setSimpleTrendData(data)
 
       } catch (error) {
-        console.log(error.message);
+        console.log('Simple trend data is not reachable');
       }
     };
 

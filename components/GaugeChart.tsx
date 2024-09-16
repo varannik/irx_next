@@ -59,7 +59,7 @@ export default function MaxMinGauge() {
         
         setMaxminData(data)
       } catch (error) {
-        console.log(error.message);
+        console.log('MaxMin data are not reachable');
       }
     };
 
