@@ -28,7 +28,7 @@ import {
 import { useOnWindowResize } from "@/lib/useOnWindowResize"
 import { cx } from "@/lib/utils"
 
-//#region Legend
+
 
 interface LegendItemProps {
   name: string
