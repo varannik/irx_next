@@ -16,7 +16,7 @@ export async function GET(request:NextRequest) {
     return NextResponse.json(items);
 
   } catch(error)  {
-    return NextResponse.json({ message: 'Data dosent exist', error: error.message }, { status: 404 });
+    return NextResponse.json({ message: 'Data dosent exist' }, { status: 404 });
   }
   
 }
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Data saved successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error saving data:', error);
-    return NextResponse.json({ message: 'Error saving data', error: error.message }, { status: 400 });
+    return NextResponse.json({ message: 'Error saving data' }, { status: 400 });
   }
 }
 
@@ -64,7 +64,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ message: 'Data updated successfully' }, { status: 200 });
     } catch (error) {
       console.error('Error updating data:', error);
-      return NextResponse.json({ message: 'Error updating data', error: error.message }, { status: 400 });
+      return NextResponse.json({ message: 'Error updating data' }, { status: 400 });
     }
 
   } else {
