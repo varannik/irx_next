@@ -1,6 +1,3 @@
-// Tremor AreaChart [v0.3.1]
-
-
 "use client"
 
 import React from "react"
