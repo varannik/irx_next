@@ -42,12 +42,12 @@ function ThemeWatcher() {
 
 export const AppContext = createContext<{ previousPathname?: string }>({})
 
-export function Providers({ children, session }: { children: React.ReactNode ,session:Session}) {
+export function Providers({ children }: { children: React.ReactNode}) {
   let pathname = usePathname()
   let previousPathname = usePrevious(pathname)
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider >
       <AppContext.Provider value={{ previousPathname }}>
         <NextUIProvider>
           <ThemeProvider attribute="class" disableTransitionOnChange>

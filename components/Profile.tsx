@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-
+import Image from 'next/image'
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 import UserSession from '@/interfaces/UserSession'
 
@@ -64,10 +64,11 @@ export default function Profile({session}:{session:UserSession}) {
                       <div className="pb-1 sm:pb-6">
                         <div>
                           <div className="relative h-40 sm:h-56">
-                            <img
+                            <Image
                               className="absolute h-full w-full object-cover"
-                              src={session.user.image}
+                              src={String(session.user.image)}
                               alt=""
+                              fill
                             />
                           </div>
                           <div className="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">

@@ -2,9 +2,9 @@ import Link from 'next/link'
 import { Logo } from './QuanticalLogo'
 import { useEffect, useState } from 'react'
 import useSelectedAsset from '@/stores/useSelectedAssetStore'
-import useSelectedCalendar from '@/stores/useSelectedCalendar'
 import RefreshWaiting from './UI/circularProgress'
 import {Button} from "@nextui-org/react";
+import { date } from 'zod'
 
 
 
@@ -32,7 +32,7 @@ function getCorrectTimeZone(dateStr:string){
 
 export default function Header() {
   const [logoHovered, setLogoHovered] = useState(false)
-  const [lastTime, setLastTime] = useState<string | null>(null)
+  const [lastTime, setLastTime] = useState<number | Date | null>(null)
   const [lastUpdate, setLastUpdate] = useState<string | null>(null)
   const {currentAsset, setCurrentAsset } = useSelectedAsset()
   const [waitForNewUpdate, setWaitForNewUpdate] = useState(15)
@@ -62,6 +62,7 @@ export default function Header() {
 
   // Use useEffect to update the time every second
   useEffect(() => {
+    if (lastTime !==null){
       const intervalId = setInterval(() => {
 
         // Get the current date and time
@@ -71,18 +72,18 @@ export default function Header() {
         const lastDate = new Date(lastTime);
 
         // Calculate the difference in milliseconds
-        const diffInMilliseconds = now - lastDate;
+        const diffInMilliseconds = now.getTime() - lastDate.getTime()
 
         // Convert milliseconds to minutes
         const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60)); 
         const tillToUpdate = 15 - diffInMinutes
 
         setWaitForNewUpdate(tillToUpdate)
-
       }, 1000);
-  
+
       // Cleanup function to clear the interval when the component unmounts
       return () => clearInterval(intervalId);
+    }
     }, [lastTime, lastUpdate]);
 
   useEffect(()=>{
@@ -99,7 +100,7 @@ export default function Header() {
         setLastTime(result[0].last_update)
 
       } catch (error) {
-        console.log(error.message);
+        console.log('Current data is not reachable');
       }
     };
 

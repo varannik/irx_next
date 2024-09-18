@@ -23,12 +23,21 @@ function fibonacci(n: number): number {
   return b;
 }
 
+function findLowestDab(week: IWeek): number | null {
+  return week
+      .flat()  // Flatten the 2D array into a single array of IWeekDay
+      .reduce((lowestDab: number | null, day) => {
+          return lowestDab === null || day.dab < lowestDab ? day.dab : lowestDab;
+      }, null);
+}
+
+
 export default function CheapestDayofTheWeek() {
 
   const { currentAsset } = useSelectedAsset()
   const { currentCalendar } = useSelectedCalendar()
   const [weekDaysData, setWeekDaysData] = useState<null | IWeekDays>(null)
-  const [filteredData, setFilteredData] = useState([])
+  const [filteredData, setFilteredData] = useState<IWeek>([])
   const [cheapestDay , setCheapestDay] = useState<string>('')
 
 
@@ -59,9 +68,8 @@ export default function CheapestDayofTheWeek() {
     // filteredData(weekDaysData, currentAsset, currentCalendar)
     if (weekDaysData !== null) {
       const data = weekDaysData['weekdays'][currentCalendar][String(currentAsset.name)][fibonacci(currentStepsBack)]
-      let lowestDay = data.reduce((min, current) => current.dab < min.dab ? current : min);
-      
-      setCheapestDay(getWeekdayName(currentCalendar, lowestDay.dyn, "full"))
+      let lowestDay = findLowestDab(data)
+      setCheapestDay(getWeekdayName(currentCalendar, lowestDay, "full"))
       setFilteredData(data)
 
     } else {

@@ -2,7 +2,7 @@
 
 import useSelectedAsset from '@/stores/useSelectedAssetStore'
 import { useState, useEffect } from 'react'
-import { IAsset } from '@/models/Countries'
+import { IAsset, IAssetCollection, IAssetInfo } from '@/models/Countries'
 import Flag from 'react-world-flags'
 
 import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
@@ -14,7 +14,7 @@ export default function AssetsList() {
   const { currentAsset, setCurrentAsset } = useSelectedAsset();
   const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
 
-  const [currencies, setCurrencies] = useState(null)
+  const [currencies, setCurrencies] = useState<IAssetCollection | null>(null)
   const [isLoading, setLoading] = useState(true)
 
 
@@ -28,13 +28,13 @@ export default function AssetsList() {
         }
         const result = await response.json();
         const data = result[0].assets;
-        const dataSorted = data.sort((a, b) => a.info.NUMERIC - b.info.NUMERIC);
-        const filterData = dataSorted.filter(obj => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
+        const dataSorted = data.sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
+        const filterData = dataSorted.filter((obj:IAsset) => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
 
         setCurrencies(filterData);
         setLoading(false)
       } catch (error) {
-        console.log(error.message);
+        console.log('List of currencies are not reachable');
       }
     };
 

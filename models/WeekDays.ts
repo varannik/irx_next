@@ -1,14 +1,14 @@
 import { Schema, Document, models, model } from "mongoose";
 
 
-interface IWeekDay {
+export interface IWeekDay {
     dyn:number,
     dab:number,
     das:number
 }
 
 
-export interface IWeek {
+export interface IWeek extends Array<IWeekDay[]> {
     [key: number]: IWeekDay[]
 }
 

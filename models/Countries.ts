@@ -2,7 +2,7 @@ import  { Schema, Document, Model, model, models } from 'mongoose';
 
 
 // Define the TypeScript interface for an individual asset
-interface IAssetInfo {
+export interface IAssetInfo {
   COUNTRY_NAME: string;
   ALPHA_2: string;
   ALPHA_3: string;
@@ -14,7 +14,7 @@ export interface IAsset {
   info: IAssetInfo ;
 }
 
-interface IAssetCollection extends Document {
+export interface IAssetCollection extends Array<Document> {
   assets: IAsset[];
 }
 

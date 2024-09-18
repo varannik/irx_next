@@ -44,7 +44,7 @@ export default function MaxMinGauge() {
   const [currentRate, setCurrentRate] = useState(null)
   const [maxminData, setMaxminData] = useState(null)
   const [arcLimits, setArcLimits] = useState(null)
-  const [currentMaxMin, setCurrentMaxMin] = useState({'min':null ,'max':null })
+  const [currentMaxMin, setCurrentMaxMin] = useState({'min':0 ,'max':100 })
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,7 +81,7 @@ export default function MaxMinGauge() {
         
 
       } catch (error) {
-        console.log(error.message);
+        console.log('Current data is not reachable');
       }
     };
 
@@ -107,7 +107,7 @@ export default function MaxMinGauge() {
     }  , [currentAsset, maxminData, currentCalendar, selectedRange, currentData, currentMaxMin]);
 
 
-    if (maxminData == null || currentData == null) return (
+    if (maxminData == null || currentData == null || currentRate==null  ) return (
       <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
         <p className="text-base font-normal text-text-active">Max and Min</p>
         <div className="flex items-center justify-center">

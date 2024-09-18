@@ -24,7 +24,7 @@ import {
 } from "@/lib/chartUtils"
 import { useOnWindowResize } from "@/lib/useOnWindowResize"
 import { cx } from "@/lib/utils"
-import { IWeek } from "@/models/WeekDays";
+import { IWeek, IWeekDay } from "@/models/WeekDays";
 import useSelectedCalendar from "@/stores/useSelectedCalendarStore"
 import { getWeekdayName } from "@/lib/weekDays"
 
@@ -834,23 +834,22 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
 BarChart.displayName = "BarChart"
 
 
-
-
-export const BarChartWeekDays = (data:[]) => {
+export const BarChartWeekDays = ({data}:{data:IWeek}) => {
   const [value, setValue] = React.useState<BarChartEventProps>(null)
   const { currentCalendar } = useSelectedCalendar()
 
-
-  let newData = data['data'].map(item => {
+  
+  let newData = data.map((item) => {
     return {
         ...item, 
         dyn: getWeekdayName(currentCalendar,item.dyn, '2l' )
     };
+
 });
 
   return (
-    <>
-      <BarChart
+
+      <BarChart 
       
         className="h-72"
         data={newData}
@@ -870,10 +869,7 @@ export const BarChartWeekDays = (data:[]) => {
             .toString()}`
         }
       />
-      {/* <pre className="mt-8 rounded-md bg-gray-950 p-3 text-sm text-white dark:bg-gray-800">
-        {JSON.stringify(value, null, 2)}
-      </pre> */}
-    </>
+
   )
 }
 

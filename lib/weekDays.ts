@@ -1,4 +1,4 @@
-export function getWeekdayName(caltype: 'J' | 'G', day: number, nameType: '2l' | 'full'): string {
+export function getWeekdayName(caltype: 'J' | 'G', day: number| null, nameType: '2l' | 'full'): string {
     let key: string;
 
     // Define full names for weekdays
@@ -13,7 +13,11 @@ export function getWeekdayName(caltype: 'J' | 'G', day: number, nameType: '2l' |
         'J': ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']
     };
 
-    // Determine which type of name to return
+    if (day===null){
+        return '-'
+    }else {
+
+            // Determine which type of name to return
     switch (nameType) {
         case 'full':
             key = fullNames[caltype][day] || 'Unknown'; // Default to 'Unknown' if day is invalid
@@ -26,4 +30,8 @@ export function getWeekdayName(caltype: 'J' | 'G', day: number, nameType: '2l' |
     }
 
     return key;
+
+    }
+
+
 }

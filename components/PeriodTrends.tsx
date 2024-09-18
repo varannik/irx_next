@@ -29,7 +29,7 @@ function lastRate (datas : any, latestValue:number){
 }
 
 
-export const CustomRadio = (props) => {
+export const CustomRadio = (props:any) => {
   
 
   const { children, ...otherProps } = props;

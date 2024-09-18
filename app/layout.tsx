@@ -21,16 +21,14 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  children,
-  session,
+  children
 }: {
-  children: React.ReactNode,
-  session:Session
+  children: React.ReactNode
 }) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="h-full ">
-        <Providers session={session}>
+        <Providers >
           <div className="w-full">
             <Layout>{children}</Layout>
           </div>
