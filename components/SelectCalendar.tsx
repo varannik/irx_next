@@ -2,11 +2,8 @@ import { Fragment, useState } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import useSelectedCalendar from '@/stores/useSelectedCalendarStore'
 import useCalendarDrawerStore from '@/stores/useCalendarDrawerStore'
-import clsx from 'clsx'
+
 import { Tab, Tabs } from '@nextui-org/react'
-
-const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer1 basis-1/3 px-3 py-2 text-sm  text-text-active div hover:bg-hov-c focus:z-10"
-
 
 export default function SelectCalendar() {
   const { openCalendar, setCalendarDrawerOpen } = useCalendarDrawerStore()

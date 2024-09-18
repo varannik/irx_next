@@ -6,23 +6,21 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
-import UserSession from '@/interfaces/UserSession'
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 import {
   ArrowLeftStartOnRectangleIcon
 
 } from '@heroicons/react/24/outline'
 import { signOut } from 'next-auth/react'
+import { cx } from '@/lib/utils'
+import { Session } from 'next-auth'
 
 
-export default function Profile({session}:{session:UserSession}) {
+export default function Profile({session}:{session:Session}) {
 
   const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
-  console.log(session.user.image)
+
 
   return (
     <Transition show={openProfile} as={Fragment}>
@@ -66,7 +64,7 @@ export default function Profile({session}:{session:UserSession}) {
                           <div className="relative h-40 sm:h-56">
                             <Image
                               className="absolute h-full w-full object-cover"
-                              src={String(session.user.image)}
+                              src={String(session.user?.image)}
                               alt=""
                               fill
                             />
@@ -75,12 +73,12 @@ export default function Profile({session}:{session:UserSession}) {
                             <div className="sm:flex-1">
                               <div>
                                 <div className="flex items-center">
-                                  <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">{session.user.name}</h3>
+                                  <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">{session.user?.name}</h3>
                                   <span className="ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-400">
                                     <span className="sr-only">Online</span>
                                   </span>
                                 </div>
-                                <p className="text-sm text-gray-500">{session.user.email}</p>
+                                <p className="text-sm text-gray-500">{session.user?.email}</p>
                               </div>
                               <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
 
@@ -113,7 +111,7 @@ export default function Profile({session}:{session:UserSession}) {
                                             {({ active }) => (
                                               <a
                                                 href="#"
-                                                className={classNames(
+                                                className={cx(
                                                   active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                                   'block px-4 py-2 text-sm'
                                                 )}
@@ -126,7 +124,7 @@ export default function Profile({session}:{session:UserSession}) {
                                             {({ active }) => (
                                               <a
                                                 href="#"
-                                                className={classNames(
+                                                className={cx(
                                                   active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                                   'block px-4 py-2 text-sm'
                                                 )}

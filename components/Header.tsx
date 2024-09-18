@@ -4,15 +4,7 @@ import { useEffect, useState } from 'react'
 import useSelectedAsset from '@/stores/useSelectedAssetStore'
 import RefreshWaiting from './UI/circularProgress'
 import {Button} from "@nextui-org/react";
-import { date } from 'zod'
 
-
-
-
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 function getCorrectTimeZone(dateStr:string){
 
@@ -24,11 +16,6 @@ function getCorrectTimeZone(dateStr:string){
 
   return timeStr
 }
-
-
-
-
-
 
 export default function Header() {
   const [logoHovered, setLogoHovered] = useState(false)

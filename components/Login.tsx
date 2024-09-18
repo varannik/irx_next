@@ -2,15 +2,12 @@
 
 import { Fragment } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
-
+import Image from 'next/image'
 
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 
 export default function Login() {
@@ -39,7 +36,7 @@ export default function Login() {
                   <div className="flex h-full flex-col overflow-y-scroll bg-gray-900 shadow-xl">
                   <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                      <img
+                      <Image
                         className="mx-auto h-10 w-auto"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                         alt="Your Company"
