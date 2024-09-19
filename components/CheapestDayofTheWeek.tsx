@@ -80,7 +80,6 @@ export default function CheapestDayofTheWeek() {
       let lowestDay = findLowestDab(data)
       setCheapestDay(getWeekdayName(IndexCurrentCalendar(currentCalendar), lowestDay, "full"))
       setFilteredData(data)
-
     } else {
       console.log('ridim')
     }

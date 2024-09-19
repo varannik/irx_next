@@ -10,7 +10,7 @@ export interface IAssetInfo {
 }
 
 export interface IAsset {
-  name: String,
+  name: string,
   info: IAssetInfo ;
 }
 

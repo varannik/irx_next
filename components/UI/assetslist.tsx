@@ -55,7 +55,7 @@ export default function AssetsList() {
           </div>
         </div>
       </li>
-      {currencies.map((asset:IAsset) => (
+      {currencies.assets.map((asset:IAsset) => (
         <li key={asset.name} className="overflow-hidden shadow">
           <button
             type="button"
