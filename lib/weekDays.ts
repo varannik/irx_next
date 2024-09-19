@@ -1,4 +1,9 @@
-export function getWeekdayName(caltype: 'J' | 'G', day: number| null, nameType: '2l' | 'full'): string {
+import { IKey } from "@/stores/useSelectedCalendarStore";
+import { IndexCurrentCalendar } from "@/utils/keyIndex";
+
+export function getWeekdayName(caltype: IKey, day: number| null, nameType: '2l' | 'full'): string {
+
+
     let key: string;
 
     // Define full names for weekdays
@@ -20,10 +25,10 @@ export function getWeekdayName(caltype: 'J' | 'G', day: number| null, nameType: 
             // Determine which type of name to return
     switch (nameType) {
         case 'full':
-            key = fullNames[caltype][day] || 'Unknown'; // Default to 'Unknown' if day is invalid
+            key = fullNames[IndexCurrentCalendar(caltype)][day] || 'Unknown'; // Default to 'Unknown' if day is invalid
             break;
         case '2l':
-            key = twoLetterAbbrs[caltype][day] || '??'; // Default to '??' if day is invalid
+            key = twoLetterAbbrs[IndexCurrentCalendar(caltype)][day] || '??'; // Default to '??' if day is invalid
             break;
         default:
             key = '??'; // If nameType is not '2l' or 'full'

@@ -839,7 +839,7 @@ export const BarChartWeekDays = ({data}:{data:IWeek}) => {
   const { currentCalendar } = useSelectedCalendar()
 
   
-  let newData = data.map((item) => {
+  let newData = data.map((item:any) => {
     return {
         ...item, 
         dyn: getWeekdayName(currentCalendar,item.dyn, '2l' )

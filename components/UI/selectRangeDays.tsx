@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { RadioGroup, Radio, cn, Slider } from "@nextui-org/react";
 import useSelectRangeGaugeChart from "@/stores/useSelectRangeGaugeChart";
 
-export const CustomRadio = (props) => {
+export const CustomRadio = (props:any) => {
   
 
   const { children, ...otherProps } = props;
@@ -27,7 +27,7 @@ export const CustomRadio = (props) => {
   );
 };
 
-export const CustomRadioSidbar = (props) => {
+export const CustomRadioSidbar = (props:any) => {
   const { children, ...otherProps } = props;
 
   return (
@@ -91,7 +91,7 @@ export default function SelectRangeDays() {
           maxValue={90}
           defaultValue={1}
           getValue={(day) => `Last ${day}  days`}
-          onChangeEnd={(value: number) => {
+          onChangeEnd={(value) => {
             setRange({  ...selectedRange, selectedDaysAsRange: value })
           }}
 

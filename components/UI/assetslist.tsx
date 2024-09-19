@@ -41,39 +41,42 @@ export default function AssetsList() {
     fetchData();
   }, [currentAsset]);
 
-  if (isLoading) return <SpinerIcon />
-  if (!currencies) return <p>Connection Fail</p>
+  if (isLoading || currencies == null) {return <SpinerIcon />} 
+  else {
+    return (
 
-  return (
-
-    <ul role="list" className="space-y-1">
-      <li>
-        <div className='flex px-2 py-2 items-center rounded-md text-xs text-gray-900 bg-slate-400'>
-          <Flag className=" basis-1/4  h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
-          <div className=" ml-3 justify-start">
-            {currentAsset.name}
-          </div>
-        </div>
-      </li>
-      {currencies.assets.map((asset:IAsset) => (
-        <li key={asset.name} className="overflow-hidden shadow">
-          <button
-            type="button"
-            className=" flex flex-row  items-center rounded-md w-full bg-gray-900 px-2 py-1 text-xs font-light shadow-sm text-gray-400 div hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            onClick={() => {
-              setCurrentAsset(asset)
-              setAssetDrawerOpen(false)
-            }}
-          >
-            <Flag className="basis-1/4  h-6 w-6 object-cover object-center rounded-lg" code={asset.info.ALPHA_2} />
-
-            <div className="flex basis-3/4 ml-3 justify-start">
-              {asset.name}
+      <ul role="list" className="space-y-1">
+        <li>
+          <div className='flex px-2 py-2 items-center rounded-md text-xs text-gray-900 bg-slate-400'>
+            <Flag className=" basis-1/4  h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
+            <div className=" ml-3 justify-start">
+              {currentAsset.name}
             </div>
-
-          </button>
+          </div>
         </li>
-      ))}
-    </ul>
-  )
+        {currencies.assets.map((asset:IAsset) => (
+          <li key={asset.name} className="overflow-hidden shadow">
+            <button
+              type="button"
+              className=" flex flex-row  items-center rounded-md w-full bg-gray-900 px-2 py-1 text-xs font-light shadow-sm text-gray-400 div hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              onClick={() => {
+                setCurrentAsset(asset)
+                setAssetDrawerOpen(false)
+              }}
+            >
+              <Flag className="basis-1/4  h-6 w-6 object-cover object-center rounded-lg" code={asset.info.ALPHA_2} />
+  
+              <div className="flex basis-3/4 ml-3 justify-start">
+                {asset.name}
+              </div>
+  
+            </button>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+
+
 }

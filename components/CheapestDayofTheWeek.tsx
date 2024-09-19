@@ -9,6 +9,7 @@ import { IWeekDays, IWeek } from "@/models/WeekDays";
 import { getWeekdayName } from "@/lib/weekDays"
 import { Card } from "@/components/UI/cardTremor"
 import SpinerIcon from "./UI/icons/Spinner";
+import { IndexCurrentCalendar } from "@/utils/keyIndex";
 
 
 function fibonacci(n: number): number {
@@ -68,14 +69,7 @@ export default function CheapestDayofTheWeek() {
     // filteredData(weekDaysData, currentAsset, currentCalendar)
   
     if (weekDaysData !== null) {
-      const IndexCurrentCalendar = (key: IKey): 'G' | 'J' => {
-        if (key === 'J') {
-          return 'J';  // Valid return value
-        } else if (key === 'G') {
-          return 'G';  // Valid return value
-        } else {
-          throw new Error("Invalid key. Only 'J' or 'G' are allowed.")
-      }}
+
       const data = weekDaysData['weekdays'][IndexCurrentCalendar(currentCalendar)][String(currentAsset.name)][fibonacci(currentStepsBack)]
       let lowestDay = findLowestDab(data)
       setCheapestDay(getWeekdayName(IndexCurrentCalendar(currentCalendar), lowestDay, "full"))
