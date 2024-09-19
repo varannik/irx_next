@@ -13,11 +13,12 @@ let formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2
 });
 
+
 export function SimpleTrend() {
   const {currentAsset} = useSelectedAsset()
   const [simpleTrendData, setSimpleTrendData] = useState(null)
-  const [current7dData, setCurrent7dData] = useState(null)
-  const [currentDiffVal, setCurrentDiffVal] = useState<number | null>(null)
+  const [current7dData, setCurrent7dData] = useState<Record<string, any>[]>([])
+  const [currentDiffVal, setCurrentDiffVal] = useState<string | null>(null)
   const [color, setColor] = useState<"positive" | "negative" | 'gray'>('gray')
 
 
@@ -44,12 +45,13 @@ export function SimpleTrend() {
 
   useEffect(()=>{
 
-    if (simpleTrendData !== null) {
+    if (simpleTrendData !== null && currentDiffVal !== null) {
+      let n = Number(simpleTrendData[String(currentAsset.name)]['diff_per'])
       setCurrent7dData(simpleTrendData[String(currentAsset.name)]['pre_days'])
-      setCurrentDiffVal(formatter.format(String(simpleTrendData[String(currentAsset.name)]['diff_per'])))
-      setColor( currentDiffVal > 0
+      setCurrentDiffVal(formatter.format(n))
+      setColor( n > 0
         ? "positive"
-        : currentDiffVal == 0 ? "gray" : "negative"
+        : n == 0 ? "gray" : "negative"
       )
 
     }
@@ -80,9 +82,9 @@ export function SimpleTrend() {
         </span>
         <span  className={cx(
           "rounded px-2 py-1 text-sm font-medium text-white",
-          currentDiffVal > 0
+          color == 'positive'
         ? "bg-red-high"
-        : currentDiffVal == 0 ? "bg-gray-mid" : "bg-green-high"
+        : color == 'negative' ? "bg-gray-mid" : "bg-green-high"
           )}>
           % {currentDiffVal}
         </span>
