@@ -2,16 +2,18 @@ import { Schema, model, models, Document } from 'mongoose';
 
 // Define the interface for the User schema
 interface IUser extends Document {
-  email: string;
-  name: string;
-  image?: string;
+  email: String;
+  name: String;
+  image?: String;
 }
+
+
 
 // Create the User schema
 const UserSchema = new Schema<IUser>({
   email: {
     type: String,
-    unique: [true, "Email Already Exist"],
+    unique: true,
     required: [true, "Email is required"]
   },
   name: {
