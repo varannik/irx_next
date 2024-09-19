@@ -1,15 +1,14 @@
-import { Fragment, Key, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
-import useSelectedCalendar, { TCalendar } from '@/stores/useSelectedCalendarStore'
+import useSelectedCalendar from '@/stores/useSelectedCalendarStore'
 import useCalendarDrawerStore from '@/stores/useCalendarDrawerStore'
 
 import { Tab, Tabs } from '@nextui-org/react'
 
+
 export default function SelectCalendar() {
   const { openCalendar, setCalendarDrawerOpen } = useCalendarDrawerStore()
   const { currentCalendar, setCurrentCalendar } = useSelectedCalendar()
-
-
 
   return (
     <Transition show={openCalendar}>
@@ -49,9 +48,9 @@ export default function SelectCalendar() {
                     selectedKey={currentCalendar}
                     onSelectionChange={setCurrentCalendar} >
                     
-                    <Tab key="J" title="Persian" />
+                    <Tab key='J' title="Persian" />
 
-                    <Tab key="G" title="Gregorian"/>
+                    <Tab key='G' title="Gregorian"/>
                     
                     </Tabs>
                 </div>
