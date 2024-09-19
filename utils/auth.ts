@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
         
   
         try {
-          console.log(account)
+          console.log(profile)
           await connectDB()
   
           const userExist = await User.findOne({email:profile?.email})
@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
             await User.create({
               email: profile?.email,
               name: profile?.name,
-              image: profile?.picture
+              image: profile?.image
             })
           }
   
@@ -42,9 +42,4 @@ export const authOptions: NextAuthOptions = {
    
       },
     },
-  
-    jwt: {
-      secret: process.env.JWT_SECRET,
-      encryption: true,
-    }
   }
