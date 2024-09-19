@@ -3,6 +3,7 @@
 import { Fragment } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import Image from 'next/image'
+import { Logo } from './QuanticalLogo'
 
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 import Link from 'next/link'
@@ -36,11 +37,7 @@ export default function Login() {
                   <div className="flex h-full flex-col overflow-y-scroll bg-gray-900 shadow-xl">
                   <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                      <Image
-                        className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
-                      />
+                      <Logo />
                       <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Sign in to your account
                       </h2>

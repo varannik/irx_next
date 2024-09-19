@@ -6,8 +6,8 @@ import { NextAuthOptions } from 'next-auth';
 export const authOptions: NextAuthOptions = {
     providers: [
       GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientId: String(process.env.GOOGLE_CLIENT_ID),
+        clientSecret: String(process.env.GOOGLE_CLIENT_SECRET),
       }),
     ],
     callbacks: {
@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
           const userExist = await User.findOne({email:profile?.email})
   
           if (!userExist) {
-            const user = await User.create({
+            await User.create({
               email: profile?.email,
               name: profile?.name,
               image: profile?.picture
