@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import useSelectedAsset from "@/stores/useSelectedAssetStore";
-import useSelectedCalendar from "@/stores/useSelectedCalendarStore";
+import useSelectedCalendar, { IKey } from "@/stores/useSelectedCalendarStore";
 import { Button, Pagination } from "@nextui-org/react";
 import { BarChartWeekDays } from "@/components/UI/barChartWeekDays"
 import { IWeekDays, IWeek } from "@/models/WeekDays";
@@ -66,10 +66,19 @@ export default function CheapestDayofTheWeek() {
 
   useEffect(() => {
     // filteredData(weekDaysData, currentAsset, currentCalendar)
+  
     if (weekDaysData !== null) {
-      const data = weekDaysData['weekdays'][currentCalendar][String(currentAsset.name)][fibonacci(currentStepsBack)]
+      const IndexCurrentCalendar = (key: IKey): 'G' | 'J' => {
+        if (key === 'J') {
+          return 'J';  // Valid return value
+        } else if (key === 'G') {
+          return 'G';  // Valid return value
+        } else {
+          throw new Error("Invalid key. Only 'J' or 'G' are allowed.")
+      }}
+      const data = weekDaysData['weekdays'][IndexCurrentCalendar(currentCalendar)][String(currentAsset.name)][fibonacci(currentStepsBack)]
       let lowestDay = findLowestDab(data)
-      setCheapestDay(getWeekdayName(currentCalendar, lowestDay, "full"))
+      setCheapestDay(getWeekdayName(IndexCurrentCalendar(currentCalendar), lowestDay, "full"))
       setFilteredData(data)
 
     } else {

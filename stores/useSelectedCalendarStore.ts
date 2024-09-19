@@ -1,7 +1,7 @@
 import { Key } from 'react';
 import {create} from 'zustand';
 
-type IKey = Exclude<Key, bigint>
+export type IKey = Exclude<Key, bigint >
 
 interface ISelectedCalendar {
   currentCalendar: IKey  ;
