@@ -8,3 +8,20 @@ export const IndexCurrentCalendar = (key: IKey): 'G' | 'J' => {
     } else {
       throw new Error("Invalid key. Only 'J' or 'G' are allowed.")
   }}
+
+
+  export const IndexRange = (key: null | number | number[]): number => {
+    if ( typeof key === 'number') {
+      return key
+    } 
+    if (key == null ) {
+      console.log('Index must be a singular number');
+      return 0
+    }
+    else {
+      return key[0]
+    }
+
+    
+  }
+

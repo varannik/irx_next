@@ -8,6 +8,7 @@ import useSelectedCalendar from "@/stores/useSelectedCalendarStore";
 import useSelectRangeGaugeChart from "@/stores/useSelectRangeGaugeChart";
 import { Card } from "@/components/UI/cardTremor"
 import SpinerIcon from "./UI/icons/Spinner";
+import { IndexRange } from "@/utils/keyIndex";
 const GaugeComponent = dynamic(() => import('react-gauge-component'), { ssr: false });
 
 interface objAsset {
@@ -98,7 +99,7 @@ export default function MaxMinGauge() {
     if (maxminData !== null) {
       if (selectedRange.range == 'days') {
 
-        setCurrentMaxMin(maxminData[currentCalendar][String(currentAsset.name)][String(selectedRange.range)][selectedRange.selectedDaysAsRange!])
+        setCurrentMaxMin(maxminData[currentCalendar][String(currentAsset.name)][String(selectedRange.range)][IndexRange(selectedRange.selectedDaysAsRange)])
       } else {
         setCurrentMaxMin(maxminData[currentCalendar][String(currentAsset.name)][String(selectedRange.range)])
       }

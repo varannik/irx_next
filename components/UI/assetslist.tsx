@@ -14,7 +14,7 @@ export default function AssetsList() {
   const { currentAsset, setCurrentAsset } = useSelectedAsset();
   const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
 
-  const [currencies, setCurrencies] = useState<IAssetCollection | null>(null)
+  const [currencies, setCurrencies] = useState<IAsset[]>([]) 
   const [isLoading, setLoading] = useState(true)
 
 
@@ -35,11 +35,12 @@ export default function AssetsList() {
         setLoading(false)
       } catch (error) {
         console.log('List of currencies are not reachable');
+
       }
     };
 
     fetchData();
-  }, [currentAsset]);
+  }, [currencies, currentAsset]);
 
   if (isLoading || currencies == null) {return <SpinerIcon />} 
   else {
@@ -54,7 +55,7 @@ export default function AssetsList() {
             </div>
           </div>
         </li>
-        {currencies.assets.map((asset:IAsset) => (
+        {currencies.map((asset:IAsset) => (
           <li key={asset.name} className="overflow-hidden shadow">
             <button
               type="button"
