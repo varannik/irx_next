@@ -19,7 +19,7 @@ export default function UserSign({ ...props }) {
                             width={100}
                             height={100}
                             className="h-10 w-10 rounded-full bg-gray-800"
-                            src={session.user?.image}
+                            src={String(session.user?.image)}
                             alt=""
                         />
                     </button>
