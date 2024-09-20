@@ -12,13 +12,13 @@ export const CustomRadio = (props:any) => {
       {...otherProps}
       classNames={{
         base: cn(
-          "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c  items-center justify-between",
-          "flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-4  border-2 border-transparent",
+          "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
+          "flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-1  border-2 border-transparent",
           "data-[selected=true]:border-border-selected"
         ),
         control: 'bg-gray-light ',
-        wrapper: 'group-data-[selected=true]:border-border-selected ',
-        label:'text-sm',
+        wrapper: 'group-data-[selected=true]:border-border-selected z-0',
+        label:' w-full text-xs',
         description:'text-xs'
       }}
     >
@@ -35,13 +35,14 @@ export const CustomRadioSidbar = (props:any) => {
       {...otherProps}
       classNames={{
         base: cn(
-          "flex col-span-3 inline-flex m-0 bg-bg-layer3 hover:bg-hov-c items-center justify-between ",
-          "flex-row-reverse max-w-full cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
+          "flex col-span-3 inline-flex m-0 bg-bg-layer3 hover:bg-hov-c items-center justify-end ",
+          "flex-row-reverse max-w-full cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
           "data-[selected=true]:border-border-selected"
         ),
         labelWrapper: "grow ",
         control: 'bg-gray-light',
-        wrapper: 'group-data-[selected=true]:border-border-selected '
+        label:'text-xs',
+        wrapper: 'group-data-[selected=true]:border-border-selected z-0'
 
       }}
     >
@@ -66,8 +67,8 @@ export default function SelectRangeDays() {
       
       description=" ">
 
-      <CustomRadio  description="" value="today">
-        Today
+      <CustomRadio  description="Curent" value="today">
+        Day
       </CustomRadio>
 
       <CustomRadio description="Current" value="week">

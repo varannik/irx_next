@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   title: {
     template: 'Quantical',
     default:
-      'Spencer Sharp - Software designer, founder, and amateur astronaut',
+      'Real-Time Exchange Tracker, Live Iranian Free Market Rates',
   },
   description:
-    'I’m Spencer, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms.',
+    'Real-Time Exchange Rate Tracker provides a comprehensive solution for monitoring the Iranian free market currency fluctuations. This innovative platform offers up-to-the-minute exchange rates, backed by advanced AI analytics and insights from our knowledgeable human community.',
   alternates: {
     types: {
       'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,

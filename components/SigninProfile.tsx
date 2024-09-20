@@ -9,7 +9,6 @@ import { useSession } from "next-auth/react"
 
 export default  function LoginPage () {
   const { data: Session, status } = useSession()
-  console.log(Session)
 
   if (status === "authenticated" ){
 

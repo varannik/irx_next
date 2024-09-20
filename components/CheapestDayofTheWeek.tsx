@@ -5,7 +5,7 @@ import useSelectedAsset from "@/stores/useSelectedAssetStore";
 import useSelectedCalendar, { IKey } from "@/stores/useSelectedCalendarStore";
 import { Button, Pagination } from "@nextui-org/react";
 import { BarChartWeekDays } from "@/components/UI/barChartWeekDays"
-import { IWeekDays, IWeek } from "@/models/WeekDays";
+import { IWeekDays, IWeek, IWeekDay } from "@/models/WeekDays";
 import { getWeekdayName } from "@/lib/weekDays"
 import { Card } from "@/components/UI/cardTremor"
 import SpinerIcon from "./UI/icons/Spinner";
@@ -23,13 +23,21 @@ function fibonacci(n: number): number {
 
   return b;
 }
-
 function findLowestDab(week: IWeek): number | null {
-  return week
-      .flat()  // Flatten the 2D array into a single array of IWeekDay
-      .reduce((lowestDab: number | null, day) => {
-          return lowestDab === null || day.dab < lowestDab ? day.dab : lowestDab;
-      }, null);
+  // Flatten the 2D array of IWeekDay objects into a 1D array
+  const flatWeek = week.flat();
+
+  // Use reduce to find the day with the lowest dab
+  const result = flatWeek.reduce((cheapestDay: IWeekDay | null, currentDay: IWeekDay) => {
+    // If the cheapestDay is null or currentDay's dab is cheaper, update cheapestDay
+    if (cheapestDay === null || currentDay.dab < cheapestDay.dab) {
+      return currentDay;
+    }
+    return cheapestDay;
+  }, null);
+
+  // Return the dyn of the day with the lowest dab, or null if no such day exists
+  return result ? result.dyn : null;
 }
 
 
@@ -72,21 +80,20 @@ export default function CheapestDayofTheWeek() {
 
       const data = weekDaysData['weekdays'][IndexCurrentCalendar(currentCalendar)][String(currentAsset.name)][fibonacci(currentStepsBack)]
       let lowestDay = findLowestDab(data)
+      
       setCheapestDay(getWeekdayName(IndexCurrentCalendar(currentCalendar), lowestDay, "full"))
       setFilteredData(data)
-    } else {
-      console.log('ridim')
     }
+
   }, [weekDaysData, currentCalendar, currentAsset, currentStepsBack, cheapestDay])
 
 
-  if (weekDaysData == null || cheapestDay == null) return (
+  if (weekDaysData == null ) return (
     <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
-      <p className="text-base font-normal text-text-active">Cheapest day of the week</p>
+      <p className="text-base font-normal text-text-active">Highest & Lowest weekday</p>
       <div className="flex items-center justify-center">
       <SpinerIcon />
       </div>
-      
     </Card>
   )
 
@@ -95,12 +102,12 @@ export default function CheapestDayofTheWeek() {
       <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5">
       <div className="flex">
         <div className="flex justify-center">
-          <p className="text-base font-normal text-text-active">Cheapest day of the week</p>
+          <p className="text-base font-normal text-text-active">Highest & Lowest weekday</p>
         </div>
-        <div className="ml-6 p-2 grow flex flex-col items-center bg-bg-layer3 rounded-lg text-xs">
-              <div>
+        <div className="ml-1 p-1 grow flex flex-col items-center bg-bg-layer3 rounded-lg text-xs">
+
                 {cheapestDay}
-              </div>
+
             </div>
 
       </div>

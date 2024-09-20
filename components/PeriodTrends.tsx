@@ -39,13 +39,13 @@ export const CustomRadio = (props:any) => {
       {...otherProps}
       classNames={{
         base: cn(
-          "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c  items-center justify-between",
-          "flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-4  border-2 border-transparent",
+          "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
+          "flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-1  border-2 border-transparent",
           "data-[selected=true]:border-border-selected"
         ),
         control: 'bg-gray-light ',
-        wrapper: 'group-data-[selected=true]:border-border-selected ',
-        label:'text-sm',
+        wrapper: 'group-data-[selected=true]:border-border-selected z-0 ',
+        label:'text-xs',
         description:'text-xs'
       }}
     >
