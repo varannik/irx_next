@@ -67,8 +67,8 @@ export default function SelectRangeDays() {
       
       description=" ">
 
-      <CustomRadio  description="Curent" value="today">
-        Day
+      <CustomRadio  description="" value="today">
+      Today
       </CustomRadio>
 
       <CustomRadio description="Current" value="week">
