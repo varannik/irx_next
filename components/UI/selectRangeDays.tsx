@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { RadioGroup, Radio, cn, Slider } from "@nextui-org/react";
 import useSelectRangeGaugeChart from "@/stores/useSelectRangeGaugeChart";
 
@@ -55,7 +55,6 @@ export default function SelectRangeDays() {
   
   const {selectedRange, setRange} =useSelectRangeGaugeChart()
 
-
   return (
     <RadioGroup
       classNames={{
@@ -67,8 +66,8 @@ export default function SelectRangeDays() {
       
       description=" ">
 
-      <CustomRadio  description="" value="today">
-      Today
+      <CustomRadio  description="Current" value="today">
+      Day
       </CustomRadio>
 
       <CustomRadio description="Current" value="week">

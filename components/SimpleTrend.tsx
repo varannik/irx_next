@@ -73,8 +73,7 @@ export function SimpleTrend() {
       )
 
     }
-    
-    }  , [current7dData, currentAsset, currentDiffVal, simpleTrendData]);
+    }  , [currentAsset, currentDiffVal, simpleTrendData]);
 
   return (
     <Card  className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5 "> 
