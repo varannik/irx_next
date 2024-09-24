@@ -1,7 +1,7 @@
 import { Schema, Document, models, model } from "mongoose";
 
 
-interface I7Days {
+export interface I7Days {
     dyn:number,
     rate:number,
 }

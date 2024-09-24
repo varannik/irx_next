@@ -6,7 +6,24 @@ import { Card } from "@/components/UI/cardTremor"
 import { SparkAreaChart } from "@/components/UI/sparkChart"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
 import { cx } from "@/lib/utils"
+import { I7Days } from "@/models/SimpleTrend"
 
+function standizeRate (current7dData : Array<I7Days> ):Array<I7Days>{
+  // To accurately display the fluctuating trend
+  // Step 1: Extract the rates from pre_days
+  const rates = current7dData.map(day => day.rate);
+
+  // Step 2: Find min and max values of rates
+  const minRate = Math.min(...rates);
+  const maxRate = Math.max(...rates);
+
+  // Step 3: Standardize the rates using min-max normalization
+  current7dData = current7dData.map(day => ({
+      ...day,
+      rate: (day.rate - minRate) / (maxRate - minRate)
+  }));
+  return current7dData
+}
 
 let formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
@@ -48,7 +65,7 @@ export function SimpleTrend() {
     if (simpleTrendData !== null) {
       
       let n = Number(simpleTrendData[String(currentAsset.name)]['diff_per'])
-      setCurrent7dData(simpleTrendData[String(currentAsset.name)]['pre_days'])
+      setCurrent7dData(standizeRate(simpleTrendData[String(currentAsset.name)]['pre_days']))
       setCurrentDiffVal(formatter.format(n))
       setColor( n > 0
         ? "positive"
