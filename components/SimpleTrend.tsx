@@ -99,7 +99,7 @@ export function SimpleTrend() {
           "rounded px-2 py-1 text-sm font-medium text-white",
           color == 'positive'
         ? "bg-red-high"
-        : color == 'negative' ? "bg-gray-mid" : "bg-green-high"
+        : color == 'negative' ? "bg-green-high"  : "bg-gray-mid"
           )}>
           % {currentDiffVal}
         </span>

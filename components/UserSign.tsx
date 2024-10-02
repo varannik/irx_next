@@ -7,7 +7,7 @@ import { ArrowRightEndOnRectangleIcon } from '@heroicons/react/24/outline'
 export default function UserSign({ ...props }) {
 
     const { data: session, status } = useSession()
-
+    console.log(session)
     if (status === "authenticated") {
 
         return (

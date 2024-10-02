@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
       },
       async session({ session }) {
         const sessionUser = await User.findOne({email: session.user?.email})
-        return session;
+        return sessionUser;
    
    
       },
