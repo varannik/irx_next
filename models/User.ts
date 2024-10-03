@@ -7,8 +7,6 @@ interface IUser extends Document {
   image?: String;
 }
 
-
-
 // Create the User schema
 const UserSchema = new Schema<IUser>({
   email: {

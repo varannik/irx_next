@@ -11,20 +11,19 @@ export const authOptions: NextAuthOptions = {
       }),
     ],
     callbacks: {
-      async signIn({ profile, account}) {
+      async signIn({ profile, account, user}) {
         
   
         try {
-          console.log(profile)
           await connectDB()
   
           const userExist = await User.findOne({email:profile?.email})
-  
+          console.log(user)
           if (!userExist) {
             await User.create({
               email: profile?.email,
               name: profile?.name,
-              image: profile?.image
+              image: profile?.picture
             })
           }
   
@@ -37,9 +36,8 @@ export const authOptions: NextAuthOptions = {
       },
       async session({ session }) {
         const sessionUser = await User.findOne({email: session.user?.email})
-        return sessionUser;
-   
-   
+        session.user = sessionUser
+        return session;
       },
     },
   }
