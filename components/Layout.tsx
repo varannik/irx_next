@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SelectAsset />
         <Footer />
 
-        <main className="py-10">
+        <main className="py-10 bg-black">
           <div className="px-4 sm:px-6 lg:px-6">{children}</div>
         </main>
       </div>
