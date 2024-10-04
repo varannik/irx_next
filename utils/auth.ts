@@ -11,14 +11,11 @@ export const authOptions: NextAuthOptions = {
       }),
     ],
     callbacks: {
-      async signIn({ profile, account, user}) {
-        
+      async signIn({ profile}) {
   
         try {
           await connectDB()
-  
           const userExist = await User.findOne({email:profile?.email})
-          console.log(user)
           if (!userExist) {
             await User.create({
               email: profile?.email,
