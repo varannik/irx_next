@@ -1,9 +1,9 @@
 services:
-  nextapp:
+  nextqt:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: next
+    container_name: nextqt
     ports:
       - '3000:3000'
     volumes:

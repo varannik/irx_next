@@ -99,6 +99,8 @@ export function PeriodTrends() {
     }
   },[currentCalendar, currentAsset, fullData, trendData, selectedRange])
 
+  console.log(trendData)
+
   if (fullData == null || trendData == null) return (
     <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
       <p className="text-base font-normal text-text-active">Trend</p>
@@ -126,6 +128,7 @@ export function PeriodTrends() {
         showLegend={false}
         showYAxis={false}
         startEndOnly={true}
+        autoMinValue={true}
         // colors={["gray"]}
         className="mb-3 mt-8 h-48"
         tooltipCallback={(props) => {
