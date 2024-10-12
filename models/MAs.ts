@@ -4,26 +4,26 @@ import { Schema, Document, models, model } from 'mongoose';
 interface ICurrencyRecord  {
     date: string;
     rate: number;
-    moving_avg_short_3: number;
-    moving_avg_short_5: number;
-    moving_avg_short_10: number;
-    moving_avg_mid_50: number;
-    moving_avg_mid_100: number;
-    moving_avg_long_200: number;
-    moving_avg_long_300: number;
+    moa3: number;
+    moa5: number;
+    moa10: number;
+    moa50: number;
+    moa100: number;
+    moa200: number;
+    moa300: number;
 }
 
 // Define the schema for each currency record
 const CurrencyRecordSchema: Schema = new Schema({
     date: { type: String, required: true },
     rate: { type: Number, required: true },
-    moving_avg_short_3: { type: Number, required: true },
-    moving_avg_short_5: { type: Number, required: true },
-    moving_avg_short_10: { type: Number, required: true },
-    moving_avg_mid_50: { type: Number, required: true },
-    moving_avg_mid_100: { type: Number, required: true },
-    moving_avg_long_200: { type: Number, required: true },
-    moving_avg_long_300: { type: Number, required: true }
+    moa3: { type: Number, required: true },
+    moa5: { type: Number, required: true },
+    moa10: { type: Number, required: true },
+    moa50: { type: Number, required: true },
+    moa100: { type: Number, required: true },
+    moa200: { type: Number, required: true },
+    moa300: { type: Number, required: true }
 });
 
 // Define the interface for the main schema

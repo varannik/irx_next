@@ -4,13 +4,13 @@ import { z } from 'zod';
 const CurrencyRecordSchema = z.object({
   date: z.string(), // Ensure the date is a non-empty string
   rate: z.number().positive(), // The rate should be a positive number
-  moving_avg_short_3: z.number().positive(),
-  moving_avg_short_5: z.number().positive(),
-  moving_avg_short_10: z.number().positive(),
-  moving_avg_mid_50: z.number().positive(),
-  moving_avg_mid_100: z.number().positive(),
-  moving_avg_long_200: z.number().positive(),
-  moving_avg_long_300: z.number().positive(),
+  moa3: z.number().positive(),
+  moa5: z.number().positive(),
+  moa10: z.number().positive(),
+  moa50: z.number().positive(),
+  moa100: z.number().positive(),
+  moa200: z.number().positive(),
+  moa300: z.number().positive(),
 });
 
 
