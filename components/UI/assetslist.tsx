@@ -38,11 +38,11 @@ export default function AssetsList() {
     };
 
     fetchData();
-  }, [currencies, currentAsset]);
+  }, []);
 
   useEffect(()=>{
     if (assetListdata){
-      const dataSorted = assetListdata.slice().sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
+      const dataSorted = assetListdata.sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
       const filterData = dataSorted.filter((obj:IAsset) => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
   
       setCurrencies(filterData);
