@@ -3,14 +3,14 @@ import { z } from 'zod';
 // Zod schema for each currency record
 const CurrencyRecordSchema = z.object({
   date: z.string(), // Ensure the date is a non-empty string
-  rate: z.number().positive(), // The rate should be a positive number
-  moa3: z.number().positive(),
-  moa5: z.number().positive(),
-  moa10: z.number().positive(),
-  moa50: z.number().positive(),
-  moa100: z.number().positive(),
-  moa200: z.number().positive(),
-  moa300: z.number().positive(),
+  Rate: z.number().positive(), // The rate should be a positive number
+  MA3: z.number().positive(),
+  MA5: z.number().positive(),
+  MA10: z.number().positive(),
+  MA50: z.number().positive(),
+  MA100: z.number().positive(),
+  MA200: z.number().positive(),
+  MA300: z.number().positive(),
 });
 
 

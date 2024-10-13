@@ -9,25 +9,25 @@ import { IAsset } from "@/models/Countries"
 import { ICurrencyRecord, IMAModel } from "@/models/MAs"
 
 
-function replaceMoaWithMAInArray(records: ICurrencyRecord[]): ICurrencyRecord[] {
-  return records.map(record => {
-      const updatedRecord: any = {}; // Temporary 'any' type for flexibility
+// function replaceMoaWithMAInArray(records: ICurrencyRecord[]): ICurrencyRecord[] {
+//   return records.map(record => {
+//       const updatedRecord: any = {}; // Temporary 'any' type for flexibility
 
-      // Iterate over the keys of each record object
-      Object.keys(record).forEach(key => {
-          // If the key includes 'moa', replace 'moa' with 'MA'
-          if (key.includes('moa')) {
-              const newKey = key.replace('moa', 'MA');
-              updatedRecord[newKey] = (record as any)[key]; // Use 'any' type assertion here
-          } else {
-              // Otherwise, keep the original key and value
-              updatedRecord[key] = (record as any)[key];
-          }
-      });
+//       // Iterate over the keys of each record object
+//       Object.keys(record).forEach(key => {
+//           // If the key includes 'moa', replace 'moa' with 'MA'
+//           if (key.includes('moa')) {
+//               const newKey = key.replace('moa', 'MA');
+//               updatedRecord[newKey] = (record as any)[key]; // Use 'any' type assertion here
+//           } else {
+//               // Otherwise, keep the original key and value
+//               updatedRecord[key] = (record as any)[key];
+//           }
+//       });
 
-      return updatedRecord as ICurrencyRecord; // Cast back to ICurrencyRecord
-  });
-}
+//       return updatedRecord as ICurrencyRecord; // Cast back to ICurrencyRecord
+//   });
+// }
 
 
 export function PredictNextDay() {
@@ -92,8 +92,8 @@ export function PredictNextDay() {
     if (data && assetData){
 
       const currencyData: ICurrencyRecord[] = data.ma[currentAsset.name];
-      currencyData.sort((a: { date: string | number | Date }, b: { date: string | number | Date }) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      setAssetData(replaceMoaWithMAInArray(currencyData))
+      const sortedData = currencyData.sort((a: { date: string | number | Date }, b: { date: string | number | Date }) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      setAssetData(sortedData)
     }
     
     
