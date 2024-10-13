@@ -3,161 +3,184 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@/components/UI/cardTremor"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
-import { cx } from "@/lib/utils"
-import { I7Days } from "@/models/SimpleTrend"
-import { LineChart, TooltipProps } from "./UI/lineChart"
+import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChart"
+import { CheckboxGroup, Checkbox, cn } from "@nextui-org/react";
+import { IAsset } from "@/models/Countries"
+import { ICurrencyRecord, IMAModel } from "@/models/MAs"
 
-const data = [
+function replaceMoaWithMAInArray(records: ICurrencyRecord[]): ICurrencyRecord[] {
+  return records.map(record => {
+      const updatedRecord: any = {}; // Temporary 'any' type for flexibility
 
-  {
-      "date": "2024-09-28",
-      "rate": 61000,
-      "MA3": null
-  },
-  {
-      "date": "2024-09-29",
-      "rate": 60400,
-      "MA3": null
-  },
-  {
-      "date": "2024-09-30",
-      "rate": 60650,
-      "MA3": null
-  },
-  {
-      "date": "2024-10-01",
-      "rate": 61850,
-      "MA3": null
-  },
-  {
-      "date": "2024-10-02",
-      "rate": 61800,
-      "MA3": null
-  },
-  {
-      "date": "2024-10-03",
-      "rate": 62450,
-      "MA3": null
-  },
-  {
-      "date": "2024-10-04",
-      "rate": 61750,
-      "MA3": null
-  },
-  {
-      "date": "2024-10-05",
-      "rate": 62250,
-      "MA3": null
-  },
-  {
-      "date": "2024-10-06",
-      "rate": 63100,
-      "MA3": 63100
-  },
-  {
-      "date": "2024-10-07",
-      "rate": 62750,
-      "MA3": 63500
-  }
-]
+      // Iterate over the keys of each record object
+      Object.keys(record).forEach(key => {
+          // If the key includes 'moa', replace 'moa' with 'MA'
+          if (key.includes('moa')) {
+              const newKey = key.replace('moa', 'MA');
+              updatedRecord[newKey] = (record as any)[key]; // Use 'any' type assertion here
+          } else {
+              // Otherwise, keep the original key and value
+              updatedRecord[key] = (record as any)[key];
+          }
+      });
 
-function standizeRate (current7dData : Array<I7Days> ):Array<I7Days>{
-  // To accurately display the fluctuating trend
-  // Step 1: Extract the rates from pre_days
-  const rates = current7dData.map(day => day.rate);
-
-  // Step 2: Find min and max values of rates
-  const minRate = Math.min(...rates);
-  const maxRate = Math.max(...rates);
-
-  // Step 3: Standardize the rates using min-max normalization
-  current7dData = current7dData.map(day => ({
-      ...day,
-      rate: (day.rate - minRate) / (maxRate - minRate)
-  }));
-  return current7dData
+      return updatedRecord as ICurrencyRecord; // Cast back to ICurrencyRecord
+  });
 }
-
-let formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
-});
 
 
 export function PredictNextDay() {
-  const {currentAsset} = useSelectedAsset()
-  const [simpleTrendData, setSimpleTrendData] = useState(null)
-  const [current7dData, setCurrent7dData] = useState<Record<string, any>[]>([])
-  const [currentDiffVal, setCurrentDiffVal] = useState<string | null>(null)
-  const [color, setColor] = useState<"positive" | "negative" | 'gray'>('gray')
+  const { currentAsset } = useSelectedAsset()
+  const [data, setData] = useState<IMAModel | null>(null)
+  const [assetData, setAssetData] = useState<ICurrencyRecord[] | [] >([])
   const [datas, setDatas] = useState<TooltipProps | null>(null)
+  const [value, setValue] = useState<LineChartEventProps>(null)
+  const [selected, setSelected] = useState(["MA3", "MA10"]);
+  const [cats, setCats] = useState<string[]>(['rate']);
 
+  const ShortTerm: string[] = ["MA3", "MA5", "MA10"];
+  const MidTerm: string[] = ["MA50", "MA100"];
+  const LongTerm: string[] = ["MA200", "MA300"];
+
+  function CustumCheckBox({
+    value,
+    label
+
+  }: {
+    value: string,
+    label: string
+
+  }) {
+    return (
+
+      <Checkbox classNames={{
+        base: cn(
+          "flex w-full max-w-md bg-content1 mb-4 ",
+          "hover:bg-content2 items-center justify-start ",
+          "cursor-pointer justify-right rounded-lg border-2 border-transparent ",
+          "data-[selected=true]:border-default ",
+        ),
+        label: "w-full text-xs",
+      }} value={value}>{label}</Checkbox>
+    )
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/analytics/simpletrend');
+        const response = await fetch('/api/analytics/ma');
         if (!response.ok) {
 
           throw new Error(`Error: ${response.statusText}`);
         }
         const result = await response.json();
-        const data = result[0].assets;
-        setSimpleTrendData(data)
-        
+        const data = result[0];
+        setData(data)
+
       } catch (error) {
-        console.log('Simple trend data is not reachable');
+        console.log('MA data is not reachable');
       }
     };
 
     fetchData();
   }, []);
 
+  useEffect(() => {
 
-  useEffect(()=>{
+    
+    if (data && assetData){
 
-    if (simpleTrendData !== null) {
-      
-      let n = Number(simpleTrendData[String(currentAsset.name)]['diff_per'])
-      setCurrent7dData(simpleTrendData[String(currentAsset.name)]['pre_days'])
-      setCurrentDiffVal(formatter.format(n))
-      setColor( n > 0
-        ? "positive"
-        : n == 0 ? "gray" : "negative"
-      )
-
+      const currencyData: ICurrencyRecord[] = data.ma[currentAsset.name];
+      currencyData.sort((a: { date: string | number | Date }, b: { date: string | number | Date }) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      setAssetData(replaceMoaWithMAInArray(currencyData))
     }
-    }  , [currentAsset, currentDiffVal, simpleTrendData]);
-    console.log(current7dData)
+    
+  }, [currentAsset])
+
+  useEffect(() => {
+
+    let freshCat = ['rate']
+
+    setCats(freshCat.concat(selected.filter(item => !freshCat.includes(item))))
+
+  }, [selected]);
+
   return (
-    <Card  className="mx-auto  max-w-lg items-center justify-between px- py-3.5"> 
+    <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5">
 
-<div>
-    <p className="text-base font-normal text-text-active">Moving Average</p>
+      <div className="w-full">
+        <p className="text-base font-normal text-text-active">Moving Average</p>
 
 
-      <LineChart
-        data={data}
-        index="date"
-        categories={["rate", "predict"]}
-        showLegend={false}
-        showYAxis={false}
-        autoMinValue={true}
-        // colors={["gray"]}
-        className="mb-3 mt-8 h-48"
-        tooltipCallback={(props) => {
-          if (props.active) {
-            setDatas((prev: any) => {
-              if (prev?.label === props.label) return prev
-              return props
-            })
-          } else {
-            setDatas(null)
-          }
-          return null
-        }}
-      />
-    </div>
+        <LineChart
+
+          data={assetData}
+          index="date"
+          categories={cats}
+          showLegend={true}
+          showYAxis={false}
+          showXAxis={false}
+          autoMinValue={true}
+          onValueChange={(v) => setValue(v)}
+          colors={['blue', 'gray', 'gray', "gray", "gray", "gray", "gray", "gray"]}
+          showGridLines={false}
+          className="mb-3 mt-8 h-48"
+          showTooltip={true}
+          refAreaX1={'2024-10-11'}
+          refAreaX2={'2024-10-12'}
+          tooltipCallback={(props) => {
+            if (props.active) {
+              setDatas((prev: any) => {
+                if (prev?.label === props.label) return prev
+                return props
+              })
+            } else {
+              setDatas(null)
+            }
+            return null
+          }}
+        />
+
+        <div className="flex flex-col mt-5">
+          <CheckboxGroup
+            value={selected}
+            onValueChange={setSelected}
+            color="default"
+          >
+            <div className="flex justify-between " >
+              <div className="flex flex-col w-1/3 mx-1 gap-2">
+                <div className="text-sm mb-3">Short-Term</div>
+                {
+                  ShortTerm.map(item => {
+                    return CustumCheckBox({ value: item, label: item })
+                  })
+                }
+              </div>
+
+              <div className="flex flex-col w-1/3 mx-1 gap-2">
+                <div className="text-sm mb-3">Mid-Term</div>
+                {
+                  MidTerm.map(item => {
+                    return CustumCheckBox({ value: item, label: item })
+                  })
+                }
+              </div>
+
+              <div className="flex flex-col w-1/3 mx-1 gap-2">
+                <div className="text-sm mb-3">Long-Term</div>
+                {
+                  LongTerm.map(item => {
+                    return CustumCheckBox({ value: item, label: item })
+                  })
+                }
+              </div>
+
+
+            </div>
+
+          </CheckboxGroup>
+        </div>
+      </div>
     </Card>
   )
 }

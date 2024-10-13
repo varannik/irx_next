@@ -11,6 +11,8 @@ import {
   Line,
   Legend as RechartsLegend,
   LineChart as RechartsLineChart,
+  ReferenceArea,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -494,6 +496,8 @@ interface LineChartProps extends React.HTMLAttributes<HTMLDivElement> {
   connectNulls?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
+  refAreaX1?: string,
+  refAreaX2?: string,
   legendPosition?: "left" | "center" | "right"
   tooltipCallback?: (tooltipCallbackContent: TooltipProps) => void
   customTooltip?: React.ComponentType<TooltipProps>
@@ -502,6 +506,7 @@ interface LineChartProps extends React.HTMLAttributes<HTMLDivElement> {
 const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
   (props, ref) => {
     const {
+
       data = [],
       categories = [],
       index,
@@ -526,6 +531,8 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
       tickGap = 5,
       xAxisLabel,
       yAxisLabel,
+      refAreaX1,
+      refAreaX2,
       legendPosition = "right",
       tooltipCallback,
       customTooltip,
@@ -764,6 +771,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 }
               />
             ) : null}
+            <ReferenceArea x1={refAreaX1} x2={refAreaX2}  opacity={0.1}  radius={2} label={{ value: 'Today', position: 'top' , color:'text-gray-600', fontSize: 8  }}/>
             {categories.map((category) => (
               <Line
                 className={cx(
@@ -860,14 +868,15 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 }}
                 key={category}
                 name={category}
-                type={"monotone"}     // {category.includes("MA") ? "monotone" : "linear"} 
+                type={category.includes("MA") ? "monotone" : "linear"} 
                 dataKey={category}
                 stroke=""
                 strokeWidth={2}
                 strokeLinejoin="round"
                 strokeLinecap="round"
-                isAnimationActive={false}
-                // strokeDasharray={category.includes("MA") ? "5 5" : "0"}  // Apply dashed line if category contains "MA"
+                isAnimationActive={true}
+
+                strokeDasharray={category.includes("MA") ? "2 2" : "0"}  // Apply dashed line if category contains "MA"
                 connectNulls={connectNulls}
               />
             ))}

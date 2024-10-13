@@ -1,7 +1,7 @@
 import { Schema, Document, models, model } from 'mongoose';
 
 // Define the interface for each currency record
-interface ICurrencyRecord  {
+export interface ICurrencyRecord  {
     date: string;
     rate: number;
     moa3: number;
@@ -27,7 +27,7 @@ const CurrencyRecordSchema: Schema = new Schema({
 });
 
 // Define the interface for the main schema
-interface IMAModel extends Document {
+export interface IMAModel extends Document {
     ma: {
         [key: string]: ICurrencyRecord[];
     };
