@@ -4,25 +4,38 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/re
 
 import ExploratoryAnalysisIcon from './UI/icons/ExplanetoryAnalysisIcon'
 import ForcastIcon from './UI/icons/ForcastIcon'
-
+import GaugeIcon from './UI/icons/GaugeIcon'
 import useMenuDrawerStore from '@/stores/useMenuDrawerStore'
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 
 import UserSign from './UserSign'
-
+import MAIcon from './UI/icons/MAIcon'
+import WeekdayIcon from './UI/icons/WeekDayIcon'
 
 
 const items = [
   {
     id: 1,
-    icon: ExploratoryAnalysisIcon,
-    href: '#',
+    icon: GaugeIcon,
+    href: '/analytics/gauge',
     current: true
   },
   {
     id: 2,
     icon: ForcastIcon,
-    href: '#',
+    href: '/analytics/trend',
+    current: true
+  },
+  {
+    id: 3,
+    icon: MAIcon,
+    href: '/analytics/ma',
+    current: true
+  },
+  {
+    id: 4,
+    icon: WeekdayIcon,
+    href: '/analytics/weekday',
     current: true
   },
 
