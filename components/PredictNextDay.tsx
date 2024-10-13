@@ -8,6 +8,7 @@ import { CheckboxGroup, Checkbox, cn } from "@nextui-org/react";
 import { IAsset } from "@/models/Countries"
 import { ICurrencyRecord, IMAModel } from "@/models/MAs"
 
+
 function replaceMoaWithMAInArray(records: ICurrencyRecord[]): ICurrencyRecord[] {
   return records.map(record => {
       const updatedRecord: any = {}; // Temporary 'any' type for flexibility
@@ -95,7 +96,8 @@ export function PredictNextDay() {
       setAssetData(replaceMoaWithMAInArray(currencyData))
     }
     
-  }, [currentAsset])
+    
+  }, [assetData, currentAsset, data])
 
   useEffect(() => {
 
@@ -126,8 +128,8 @@ export function PredictNextDay() {
           showGridLines={false}
           className="mb-3 mt-8 h-48"
           showTooltip={true}
-          refAreaX1={'2024-10-11'}
-          refAreaX2={'2024-10-12'}
+          refAreaX1={assetData.length > 0 ? assetData[assetData.length-2].date : 'null'}
+          refAreaX2={assetData.length > 0 ? assetData[assetData.length-1].date : 'null'}
           tooltipCallback={(props) => {
             if (props.active) {
               setDatas((prev: any) => {
