@@ -13,6 +13,7 @@ export default function AssetsList() {
 
   const { currentAsset, setCurrentAsset } = useSelectedAsset();
   const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
+  const [assetListdata, setAssetListdata] = useState<IAsset[]>([]) 
 
   const [currencies, setCurrencies] = useState<IAsset[]>([]) 
   const [isLoading, setLoading] = useState(true)
@@ -28,11 +29,8 @@ export default function AssetsList() {
         }
         const result = await response.json();
         const data = result[0].assets;
-        const dataSorted = data.sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
-        const filterData = dataSorted.filter((obj:IAsset) => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
+        setAssetListdata(data)
 
-        setCurrencies(filterData);
-        setLoading(false)
       } catch (error) {
         console.log('List of currencies are not reachable');
 
@@ -41,6 +39,17 @@ export default function AssetsList() {
 
     fetchData();
   }, [currencies, currentAsset]);
+
+  useEffect(()=>{
+    if (assetListdata){
+      const dataSorted = assetListdata.slice().sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
+      const filterData = dataSorted.filter((obj:IAsset) => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
+  
+      setCurrencies(filterData);
+      setLoading(false)
+    }
+ 
+  },[assetListdata, currentAsset])
 
   if (isLoading || currencies == null) {return <SpinerIcon />} 
   else {
