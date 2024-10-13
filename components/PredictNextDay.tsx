@@ -37,7 +37,7 @@ export function PredictNextDay() {
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [value, setValue] = useState<LineChartEventProps>(null)
   const [selected, setSelected] = useState(["MA3", "MA10"]);
-  const [cats, setCats] = useState<string[]>(['rate']);
+  const [cats, setCats] = useState<string[]>(['Rate']);
 
   const ShortTerm: string[] = ["MA3", "MA5", "MA10"];
   const MidTerm: string[] = ["MA50", "MA100"];
@@ -101,7 +101,7 @@ export function PredictNextDay() {
 
   useEffect(() => {
 
-    let freshCat = ['rate']
+    let freshCat = ['Rate']
 
     setCats(freshCat.concat(selected.filter(item => !freshCat.includes(item))))
 
