@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
+import { Switch, Tab, Tabs } from "@nextui-org/react";
 
 import ExploratoryAnalysisIcon from './UI/icons/ExplanetoryAnalysisIcon'
 import ForcastIcon from './UI/icons/ForcastIcon'
@@ -11,6 +12,11 @@ import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 import UserSign from './UserSign'
 import MAIcon from './UI/icons/MAIcon'
 import WeekdayIcon from './UI/icons/WeekDayIcon'
+import { title } from 'process'
+import SelectCalendar from './SelectCalendar';
+import useCalendarDrawerStore from '@/stores/useCalendarDrawerStore';
+import useSelectedCalendar from '@/stores/useSelectedCalendarStore';
+
 
 
 const items = [
@@ -18,23 +24,27 @@ const items = [
     id: 1,
     icon: GaugeIcon,
     href: '/analytics/gauge',
+    title: "Current Max & Min",
     current: true
   },
   {
     id: 2,
     icon: ForcastIcon,
     href: '/analytics/trend',
+    title: "Trend",
     current: true
   },
   {
     id: 3,
     icon: MAIcon,
     href: '/analytics/ma',
+    title: "Moving Avarage",
     current: true
   },
   {
     id: 4,
     icon: WeekdayIcon,
+    title: "WeekDay",
     href: '/analytics/weekday',
     current: true
   },
@@ -43,7 +53,8 @@ const items = [
 ]
 
 export default function SidebarMenu() {
-
+  const { openCalendar, setCalendarDrawerOpen } = useCalendarDrawerStore()
+  const { currentCalendar, setCurrentCalendar } = useSelectedCalendar()
   const { openMenu, setMenuDrawerOpen } = useMenuDrawerStore();
   const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
 
@@ -73,7 +84,7 @@ export default function SidebarMenu() {
                 leaveTo="-translate-x-full"
               >
 
-                <DialogPanel className="relative flex w-full max-w-20 flex-1 ">
+                <DialogPanel className="relative flex w-full max-w-48 flex-1 ">
                   <div className="flex grow flex-col gap-y-5 overflow-hidden bg-gray-900 px-3 pb-2 ">
                     <nav className="flex flex-1 flex-col ">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7 ">
@@ -82,15 +93,38 @@ export default function SidebarMenu() {
 
                             {items.map((item) => (
 
-                              <li key={item.id} className="px-4 py-4 hover:bg-slate-800 hover:rounded-md">
+                              <li key={item.id} className="px-1 py-4 hover:bg-slate-800 hover:rounded-md max-w-48">
                                 <Link onClick={() => setMenuDrawerOpen(false)}
                                   href={item.href}>
-                                  <item.icon />
+                                  <div className='grid grid-cols-4 justify-start items-center'>
+                                    <div className='w-8 '><item.icon /></div>
+                                    <div className='text-xs col-span-3'>{item.title}</div>
+                                  </div>
+
+
                                 </Link>
                               </li>
                             ))}
                           </ul>
                         </li>
+                        <div className="flex flex-wrap gap-4 justify-center">
+                          <div className=''>
+                          Calendar Type
+                            </div>
+                          <Tabs key='calendar' radius={'md'} aria-label="Tabs radius"
+                            color='default'
+                            classNames={{
+                              tabList: "bg-hov-c ",
+                            }}
+                            selectedKey={currentCalendar}
+                            onSelectionChange={setCurrentCalendar} >
+
+                            <Tab key='J' title="Persian" />
+
+                            <Tab key='G' title="Gregorian" />
+
+                          </Tabs>
+                        </div>
                         <li className="">
                           <UserSign onClick={() => {
                             setProfileDrawerOpen(true)

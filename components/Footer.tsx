@@ -3,13 +3,14 @@ import useCalendarDrawerStore from "@/stores/useCalendarDrawerStore";
 import useMenuDrawerStore from "@/stores/useMenuDrawerStore"
 import { Bars3Icon , CurrencyDollarIcon, CalendarIcon} from "@heroicons/react/24/outline";
 import clsx from "clsx";
+import Link from "next/link";
 
 const tabs = [
   { name: 'My Account', href: '#', current: true },
   { name: 'Company', href: '#', current: false },
 ]
 
-const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer1 basis-1/3 px-3 py-2 text-sm font-semibold text-gray-900 div hover:bg-slate-800 focus:z-10"
+const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer1 basis-1/3 px-3 py-2 text-md text-text-active font-semibold  hover:bg-slate-800 focus:z-10"
 
 export function Footer() {
   const {openMenu, setMenuDrawerOpen } = useMenuDrawerStore();
@@ -27,12 +28,12 @@ export function Footer() {
           <Bars3Icon  className="stroke-text-active h-6 w-6" aria-hidden="true" />
         </button>
 
-        <button onClick={() => setCalendarDrawerOpen(true)}
-          type="button"
+        <Link href={'/analytics/AI'} 
+
           className={clsx(className)}
         >
-          <CalendarIcon className="stroke-text-active h-6 w-6" aria-hidden="true" />
-        </button>
+          AI
+        </Link>
         <button onClick={() => setAssetDrawerOpen(true)}
           type="button"
           className={clsx(className)}

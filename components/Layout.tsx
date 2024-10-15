@@ -5,7 +5,7 @@ import { Footer } from './Footer'
 import SelectAsset from './SelectAsset'
 import SidebarMenu from './SidebarMenu'
 import Header from './Header'
-import SelectCalendar from './SelectCalendar'
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div>
         <Header />
         <SidebarMenu />
-        <SelectCalendar />
         <LoginPage />
         <SelectAsset />
         <Footer />

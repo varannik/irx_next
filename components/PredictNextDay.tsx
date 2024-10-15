@@ -45,22 +45,27 @@ export function PredictNextDay() {
 
   function CustumCheckBox({
     value,
-    label
-
+    label,
+    key
   }: {
     value: string,
     label: string
-
+    key:string
   }) {
     return (
 
-      <Checkbox classNames={{
+
+
+
+      <Checkbox key={key} classNames={{
         base: cn(
-          "flex w-full max-w-md bg-content1 mb-4 ",
+
+          "flex w-full max-w-md bg-content1 mb-4 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
           "hover:bg-content2 items-center justify-start ",
           "cursor-pointer justify-right rounded-lg border-2 border-transparent ",
-          "data-[selected=true]:border-default ",
+          "data-[selected=true]:border-border-selected",
         ),
+        wrapper: 'group-data-[selected=true]:border-border-selected z-0',
         label: "w-full text-xs",
       }} value={value}>{label}</Checkbox>
     )
@@ -154,7 +159,7 @@ export function PredictNextDay() {
                 <div className="text-sm mb-3">Short-Term</div>
                 {
                   ShortTerm.map(item => {
-                    return CustumCheckBox({ value: item, label: item })
+                    return CustumCheckBox({ value: item, label: item , key:item})
                   })
                 }
               </div>
@@ -163,7 +168,7 @@ export function PredictNextDay() {
                 <div className="text-sm mb-3">Mid-Term</div>
                 {
                   MidTerm.map(item => {
-                    return CustumCheckBox({ value: item, label: item })
+                    return CustumCheckBox({ value: item, label: item , key:item})
                   })
                 }
               </div>
@@ -172,7 +177,7 @@ export function PredictNextDay() {
                 <div className="text-sm mb-3">Long-Term</div>
                 {
                   LongTerm.map(item => {
-                    return CustumCheckBox({ value: item, label: item })
+                    return CustumCheckBox({ value: item, label: item, key:item })
                   })
                 }
               </div>
