@@ -3,31 +3,10 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@/components/UI/cardTremor"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
-import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChart"
+import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChartMA"
 import { CheckboxGroup, Checkbox, cn } from "@nextui-org/react";
-import { IAsset } from "@/models/Countries"
 import { ICurrencyRecord, IMAModel } from "@/models/MAs"
 
-
-// function replaceMoaWithMAInArray(records: ICurrencyRecord[]): ICurrencyRecord[] {
-//   return records.map(record => {
-//       const updatedRecord: any = {}; // Temporary 'any' type for flexibility
-
-//       // Iterate over the keys of each record object
-//       Object.keys(record).forEach(key => {
-//           // If the key includes 'moa', replace 'moa' with 'MA'
-//           if (key.includes('moa')) {
-//               const newKey = key.replace('moa', 'MA');
-//               updatedRecord[newKey] = (record as any)[key]; // Use 'any' type assertion here
-//           } else {
-//               // Otherwise, keep the original key and value
-//               updatedRecord[key] = (record as any)[key];
-//           }
-//       });
-
-//       return updatedRecord as ICurrencyRecord; // Cast back to ICurrencyRecord
-//   });
-// }
 
 
 export function PredictNextDay() {
@@ -53,9 +32,6 @@ export function PredictNextDay() {
     key:string
   }) {
     return (
-
-
-
 
       <Checkbox key={key} classNames={{
         base: cn(

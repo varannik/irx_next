@@ -868,7 +868,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 }}
                 key={category}
                 name={category}
-                type={category.includes("MA") ? "monotone" : "linear"} 
+                type={category.includes("Rate") ? "linear" : "monotone"} 
                 dataKey={category}
                 stroke=""
                 strokeWidth={2}
@@ -876,7 +876,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 strokeLinecap="round"
                 isAnimationActive={true}
 
-                strokeDasharray={category.includes("MA") ? "2 2" : "0"}  // Apply dashed line if category contains "MA"
+                strokeDasharray={category.includes("Rate") ? "0" : "5 5"}  // Apply dashed line if category contains "MA"
                 connectNulls={connectNulls}
               />
             ))}

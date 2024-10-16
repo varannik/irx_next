@@ -1,7 +1,7 @@
 import { Schema, Document, Model, models, model } from "mongoose";
 
 // Define the interface for a single Rate entry
-interface IBBDay {
+export interface IBBDay {
   date: string;
   Rate: number;
   Lower: number;
@@ -10,12 +10,12 @@ interface IBBDay {
 }
 
 // Define the interface for the Moving Averages (MA3, MA5, MA10)
-interface IBBMovs {
+export interface IBBMovs {
   [key: string]: IBBDay[];
 }
 
 // Define the main interface that extends Document for Mongoose
-interface IBBAsset extends Document {
+export interface IBBAsset extends Document {
   bb: {
     [key: string]: IBBMovs;
   };

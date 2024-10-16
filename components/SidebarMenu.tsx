@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import { Switch, Tab, Tabs } from "@nextui-org/react";
 
-import ExploratoryAnalysisIcon from './UI/icons/ExplanetoryAnalysisIcon'
+
 import ForcastIcon from './UI/icons/ForcastIcon'
 import GaugeIcon from './UI/icons/GaugeIcon'
 import useMenuDrawerStore from '@/stores/useMenuDrawerStore'
@@ -12,10 +12,10 @@ import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
 import UserSign from './UserSign'
 import MAIcon from './UI/icons/MAIcon'
 import WeekdayIcon from './UI/icons/WeekDayIcon'
-import { title } from 'process'
-import SelectCalendar from './SelectCalendar';
+
 import useCalendarDrawerStore from '@/stores/useCalendarDrawerStore';
 import useSelectedCalendar from '@/stores/useSelectedCalendarStore';
+import BBIcon from './UI/icons/BBIcon';
 
 
 
@@ -48,7 +48,13 @@ const items = [
     href: '/analytics/weekday',
     current: true
   },
-
+  {
+    id: 5,
+    icon: BBIcon,
+    title: "Bollinger Bands",
+    href: '/analytics/bb',
+    current: true
+  },
   // More items...
 ]
 
