@@ -3,28 +3,26 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@/components/UI/cardTremor"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
-import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChartBB"
+import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChartRSI"
 import { RadioGroup } from "@nextui-org/react";
-import { IBBAsset, IBBDay } from "@/models/BollingerBands"
+import { IRSIEntry, IRSIModel } from "@/models/RSI"
 import { CustomRadio } from "./UI/selectRangeDays"
-import { RSI } from "./RSI"
 
 
 
-export function BollingerBands() {
+export function RSI() {
   const { currentAsset } = useSelectedAsset()
-  const [data, setData] = useState<IBBAsset | null>(null)
-  const [assetData, setAssetData] = useState<IBBDay[] | [] >([])
+  const [data, setData] = useState<IRSIModel | null>(null)
+  const [assetData, setAssetData] = useState<IRSIEntry[] | [] >([])
 
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [value, setValue] = useState<LineChartEventProps>(null)
-  const [selected, setSelected] = useState("MA3");
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/analytics/bb');
+        const response = await fetch('/api/analytics/rsi');
         if (!response.ok) {
 
           throw new Error(`Error: ${response.statusText}`);
@@ -46,39 +44,33 @@ export function BollingerBands() {
     
     if (data && assetData){
 
-      const currencyData = data.bb[currentAsset.name][selected];
+      const currencyData = data.rsi[currentAsset.name];
 
       const sortedData = currencyData.sort((a: { date: string | number | Date }, b: { date: string | number | Date }) => new Date(a.date).getTime() - new Date(b.date).getTime());
       setAssetData(sortedData)
     }
-  }, [assetData, currentAsset, data, selected])
+  }, [assetData, currentAsset, data])
 
-//   useEffect(() => {
-
-//     let freshCat = ['Rate']
-
-//     setCats(freshCat.concat(selected.filter(item => !freshCat.includes(item))))
-
-//   }, [selected]);
 
   return (
     <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5">
 
       <div className="w-full">
-        <p className="text-base font-normal text-text-active">Bollinger Bands </p>
+        <p className="text-base font-normal text-text-active">RSI </p>
 
   
         <LineChart
 
           data={assetData}
           index="date"
-          categories={['Rate', 'Upper','Middle','Lower']}
-          showLegend={true}
+          categories={['RSI']}
+          showLegend={false}
           showYAxis={false}
           showXAxis={false}
-          autoMinValue={true}
+          maxValue={100}
+          minValue={0}
           onValueChange={(v) => setValue(v)}
-          colors={['blue',  'positive', 'gray', "negative"]}
+          colors={['blue']}
           showGridLines={false}
           className="mb-3 mt-8 h-48"
           showTooltip={true}
@@ -99,30 +91,6 @@ export function BollingerBands() {
 
         <div className="flex flex-col mt-5">
 
-
-
-     <RadioGroup
-      classNames={{
-        wrapper:
-          "grid grid-cols-3 gap-2 "
-      }}
-      defaultValue={selected}
-      onValueChange={setSelected}
-      
-      description=" ">
-
-      <CustomRadio  description="SD3" value="MA3">
-      MA3
-      </CustomRadio>
-
-      <CustomRadio description="SD5" value="MA5">
-      MA5
-      </CustomRadio>
-
-      <CustomRadio description="SD10" value="MA10">
-      MA10
-      </CustomRadio>
-      </RadioGroup>
         </div>
       </div>
     </Card>

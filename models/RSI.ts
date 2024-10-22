@@ -1,13 +1,13 @@
 import  { Schema, Document, models, model } from 'mongoose';
 
 // Define the RSI data schema for each currency
-interface IRSIEntry {
+export interface IRSIEntry {
     date: string;
     RSI: number;
 }
 
 // Define the main RSI schema
-interface IRSIModel extends Document {
+export interface IRSIModel extends Document {
     rsi: {
         [key:string]:IRSIEntry[]
     };
