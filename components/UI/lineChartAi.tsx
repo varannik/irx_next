@@ -771,9 +771,8 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 }
               />
             ) : null}
-            <ReferenceArea x1={refAreaX1} x2={refAreaX2}  opacity={0.1}  radius={2} label={{ value: 'Today', position: 'centerTop' , color:'text-gray-600', fontSize: 8  }}/>
-            <ReferenceLine y={30}  opacity={0.5}  label={{ value: '30', position: 'insideBottomLeft' , color:'text-gray-600', fontSize: 8  }}/>
-            <ReferenceLine y={70}  opacity={0.5}  label={{ value: '70', position: 'insideBottomLeft' , color:'text-gray-600', fontSize: 8  }}/>
+            <ReferenceArea x1={refAreaX1} x2={refAreaX2}  opacity={0.1}  radius={2} label={{ value: 'Today', position: 'top' , color:'text-gray-600', fontSize: 8  }}/>
+
             {categories.map((category) => (
               <Line
                 className={cx(
@@ -870,7 +869,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 }}
                 key={category}
                 name={category}
-                type={category.includes("MA") ? "monotone" : "linear"} 
+                type={"linear"} 
                 dataKey={category}
                 stroke=""
                 strokeWidth={2}
@@ -878,7 +877,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 strokeLinecap="round"
                 isAnimationActive={true}
 
-                strokeDasharray={category.includes("MA") ? "5 5" : "0"}  // Apply dashed line if category contains "MA"
+                strokeDasharray={category.includes("Future") ? "5 5" : "0"}  // Apply dashed line if category contains "MA"
                 connectNulls={connectNulls}
               />
             ))}

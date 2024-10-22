@@ -7,9 +7,10 @@ import { cx } from "@/lib/utils"
 
 interface Itooltip {
   date:string,
-  RC: number,
-  PC:number
+  "Real Change": number,
+  "Predicted Change":number
 }
+
 
 interface TrackerBlockProps {
   key?: string | number
@@ -57,25 +58,43 @@ const Block = ({
             // text color
             "text-white dark:text-gray-900",
             // background color
-            " bg-bg-layer3 dark: bg-bg-layer3",
+            " bg-bg-layer3 dark:bg-bg-layer3",
           )}
         >
-          <div className="flex flex-col text-text-active">
-            <div>
-              Date:{tooltip?.date}
+          <div className="grid grid-cols-3 text-gray-300  text-xs">
+            <div className="col-span-2">
+            <div >
+              Date: 
             </div>
             <div >
               Real Change:
-              <span className={ tooltip?.RC > 0 ? 'text-red-500' : tooltip?.RC < 0 ? 'text-green-500' : 'text-gray-500'}>
-                {tooltip?.RC}%
-              </span>
+  
             </div>
             <div>
               Predicted Change:
-              <span className={tooltip?.PC > 0 ? 'text-red-500' : tooltip?.RC < 0 ? 'text-green-500' : 'text-gray-500'}>
-                {tooltip?.PC}%
-              </span>
+
             </div>
+            </div>
+            <div className="grid col-span-1">
+              <div>
+              {tooltip?.date}
+              </div>
+              <div>
+              <span className={ tooltip?.["Real Change"] > 0 ? 'text-red-500' : tooltip?.["Real Change"] < 0 ? 'text-green-500' : 'text-gray-500'}>
+                {tooltip?.["Real Change"]}%
+              </span>
+              </div>
+              <div>
+              <span className={tooltip?.["Predicted Change"] > 0 ? 'text-red-500' : tooltip?.["Predicted Change"] < 0 ? 'text-green-500' : 'text-gray-500'}>
+              { tooltip?.["Predicted Change"]}%
+              </span>
+              </div>
+
+            </div>
+
+
+
+
 
           </div>
         </HoverCardPrimitives.Content>

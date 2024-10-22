@@ -15,7 +15,7 @@ interface AiPerformanceDay{
     TP:string
 }
 
-interface IAiPredict10Days {
+export interface IAiPredict10Days {
     trend: IAiPredictDay[],
     tracker:AiPerformanceDay[]
 }
@@ -39,7 +39,8 @@ const AiPredictDaySchema: Schema = new Schema<IAiPredictDay>({
 const AiPerformanceDaySchema: Schema = new Schema<AiPerformanceDay>({
     date: { type: String, required: true },
     RC: { type: Number, required: true },
-    PC: { type: Number, required: true }
+    PC: { type: Number, required: true },
+    TP: { type: String, required: true },
 });
 
 // Mongoose schema for IAiPredict10Days

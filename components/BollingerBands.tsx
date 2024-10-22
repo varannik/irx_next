@@ -8,6 +8,7 @@ import { RadioGroup } from "@nextui-org/react";
 import { IBBAsset, IBBDay } from "@/models/BollingerBands"
 import { CustomRadio } from "./UI/selectRangeDays"
 import { RSI } from "./RSI"
+import SpinerIcon from "./UI/icons/Spinner"
 
 
 
@@ -53,13 +54,15 @@ export function BollingerBands() {
     }
   }, [assetData, currentAsset, data, selected])
 
-//   useEffect(() => {
-
-//     let freshCat = ['Rate']
-
-//     setCats(freshCat.concat(selected.filter(item => !freshCat.includes(item))))
-
-//   }, [selected]);
+  if (data == null ) return (
+    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
+      <p className="text-base font-normal text-text-active">Ai</p>
+      <div className="flex items-center justify-center">
+      <SpinerIcon />
+      </div>
+      
+    </Card>
+  )
 
   return (
     <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5">
