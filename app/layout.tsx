@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="h-full ">
         <Providers >
-          <div className="w-full bg-black">
+          <div className="w-full">
             <Layout>{children}</Layout>
           </div>
         </Providers>
