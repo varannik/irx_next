@@ -11,14 +11,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
 
-      <div>
+      <div className='bg-black'>
         <Header />
         <SidebarMenu />
         <LoginPage />
         <SelectAsset />
         <Footer />
 
-        <main className="py-10 bg-black">
+        <main className="py-10 ">
           <div className="px-4 sm:px-6 lg:px-6">{children}</div>
         </main>
       </div>
