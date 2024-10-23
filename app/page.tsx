@@ -12,7 +12,6 @@ export default function Home() {
               <div className="flex flex-col max-w-2xl  gap-3">
                 <SimpleTrend />
                 <MaxMinGauge />
-
               </div>
             </Container>
           </>

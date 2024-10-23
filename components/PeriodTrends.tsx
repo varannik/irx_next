@@ -45,7 +45,7 @@ export const CustomRadio = (props:any) => {
         ),
         control: 'bg-gray-light ',
         wrapper: 'group-data-[selected=true]:border-border-selected z-0 ',
-        label:'text-xs',
+        label:'text-xs text-gray-light',
         description:'text-xs'
       }}
     >

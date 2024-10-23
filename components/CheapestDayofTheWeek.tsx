@@ -100,11 +100,11 @@ export default function CheapestDayofTheWeek() {
   return (
     // <div className="max-w-sm w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
       <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5">
-      <div className="flex">
+      <div className="flex justify-around">
         <div className="flex justify-center">
           <p className="text-base font-normal text-text-active">Highest & Lowest weekday</p>
         </div>
-        <div className="ml-1 p-1 grow flex flex-col items-center bg-bg-layer3 rounded-lg text-xs">
+        <div className="ml-1 p-1 just flex flex-col items-center bg-bg-layer3 rounded-lg text-xs text-gray-mid">
 
                 {cheapestDay}
 
@@ -134,10 +134,12 @@ export default function CheapestDayofTheWeek() {
 
           <Pagination
             classNames={{
-
+              base: "text-gray-mid",
               wrapper:'bg-bg-layer3 ',
               item:'bg-bg-layer3 ',
-              cursor:'bg-gray-light text-bg-layer0'
+              cursor:'bg-gray-light text-bg-layer0',
+
+
             }}
             total={12}
             page={currentStepsBack}
@@ -145,7 +147,7 @@ export default function CheapestDayofTheWeek() {
           />
           <div className="flex gap-2">
             <Button
-              className='bg-bg-layer3'
+              className='bg-bg-layer3 text-gray-light'
               size="sm"
               variant="flat"
               onPress={() => setCurrenStepsBack((prev) => (prev > 1 ? prev - 1 : prev))}
@@ -153,7 +155,7 @@ export default function CheapestDayofTheWeek() {
               -1 Step
             </Button>
             <Button
-            className='bg-bg-layer3'
+            className='bg-bg-layer3 text-gray-light'
               size="sm"
               variant="flat"
               onPress={() => setCurrenStepsBack((prev) => (prev < 12 ? prev + 1 : prev))}

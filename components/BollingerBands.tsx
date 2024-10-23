@@ -106,8 +106,7 @@ export function BollingerBands() {
 
      <RadioGroup
       classNames={{
-        wrapper:
-          "grid grid-cols-3 gap-2 "
+        wrapper:"grid grid-cols-3 gap-2 ",
       }}
       defaultValue={selected}
       onValueChange={setSelected}

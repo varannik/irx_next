@@ -18,7 +18,7 @@ export const CustomRadio = (props:any) => {
         ),
         control: 'bg-gray-light ',
         wrapper: 'group-data-[selected=true]:border-border-selected z-0',
-        label:' w-full text-xs',
+        label:' w-full text-xs text-gray-light',
         description:'text-xs'
       }}
     >
@@ -40,8 +40,8 @@ export const CustomRadioSidbar = (props:any) => {
           "data-[selected=true]:border-border-selected"
         ),
         labelWrapper: "grow ",
-        control: 'bg-gray-light',
-        label:'text-xs',
+        control: 'bg-gray-light text-gray-mid',
+        label:'text-xs text-gray-light',
         wrapper: 'group-data-[selected=true]:border-border-selected z-0'
 
       }}

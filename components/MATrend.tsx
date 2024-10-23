@@ -9,7 +9,7 @@ import { ICurrencyRecord, IMAModel } from "@/models/MAs"
 
 
 
-export function PredictNextDay() {
+export function MATrend() {
   const { currentAsset } = useSelectedAsset()
   const [data, setData] = useState<IMAModel | null>(null)
   const [assetData, setAssetData] = useState<ICurrencyRecord[] | [] >([])
@@ -42,7 +42,7 @@ export function PredictNextDay() {
           "data-[selected=true]:border-border-selected",
         ),
         wrapper: 'group-data-[selected=true]:border-border-selected z-0',
-        label: "w-full text-xs",
+        label: "w-full text-xs text-gray-light",
       }} value={value}>{label}</Checkbox>
     )
   }

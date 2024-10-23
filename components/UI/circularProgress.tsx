@@ -9,7 +9,8 @@ export default function RefreshWaiting({value}:{value:number}) {
       value={value}
       showValueLabel={true}
       classNames={{
-        indicator:'stroke-gray-mid'
+        indicator:'stroke-gray-mid',
+        value:'text-gray-light'
       }}
     />
   );

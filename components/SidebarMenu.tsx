@@ -104,7 +104,7 @@ export default function SidebarMenu() {
                                   href={item.href}>
                                   <div className='grid grid-cols-4 justify-start items-center'>
                                     <div className='w-8 '><item.icon /></div>
-                                    <div className='text-xs col-span-3'>{item.title}</div>
+                                    <div className='text-xs col-span-3 text-gray-light'>{item.title}</div>
                                   </div>
 
 

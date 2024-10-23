@@ -33,7 +33,7 @@ export default function UserSign({ ...props }) {
         return (
             <div className="grid justify-center h-12 hover:bg-slate-800 hover:rounded-lg">
                 <button {...props} className="">
-                    <ArrowRightEndOnRectangleIcon className="h-9 w-8" />
+                    <ArrowRightEndOnRectangleIcon className="h-9 w-8 stroke-gray-light" />
                 </button>
             </div>
 
