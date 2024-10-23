@@ -139,7 +139,7 @@ export function TrackerAi() {
   return (
     <Card  className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5 "> 
 
-        <div className="flex-none font-medium text-gray-700 dark:text-gray-300">Ai</div>
+        <div className="flex-none font-medium text-gray-300">Ai</div>
         <div  className="">
         <LineChart
 
@@ -171,7 +171,7 @@ export function TrackerAi() {
         />
         </div>
 
-        <div className="flex-none font-medium text-xs mb-3 text-gray-700 dark:text-gray-300">Accurately predicted rate shifts</div>
+        <div className="flex-none font-medium text-xs mb-3 text-gray-300">Accurately predicted rate shifts</div>
 
         <Tracker className="w-full" data={trackerData} hoverEffect={true} />
 

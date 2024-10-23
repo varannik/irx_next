@@ -56,7 +56,7 @@ export function BollingerBands() {
 
   if (data == null ) return (
     <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
-      <p className="text-base font-normal text-text-active">Ai</p>
+      <p className="text-base font-normal text-text-active">Bollinger Bands</p>
       <div className="flex items-center justify-center">
       <SpinerIcon />
       </div>

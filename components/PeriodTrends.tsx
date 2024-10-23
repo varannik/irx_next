@@ -117,7 +117,7 @@ export function PeriodTrends() {
 
     <div>
     <p className="text-base font-normal text-text-active">Trend</p>
-      <p className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">
+      <p className="mt-2 text-xl font-semibold text-gray-50">
       {lastRate(datas, latestValue)}
       </p>
 

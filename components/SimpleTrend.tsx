@@ -78,7 +78,7 @@ export function SimpleTrend() {
   return (
     <Card  className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5 "> 
       <div className="flex grow items-center space-x-2.5">
-        <div className="flex-none font-medium text-gray-700 dark:text-gray-300">7 Days </div>
+        <div className="flex-none font-medium text-gray-300">7 Days </div>
         <div className="flex justify-center grow">
         <SparkAreaChart
         data={current7dData}
@@ -92,9 +92,7 @@ export function SimpleTrend() {
       </div>
 
       <div className="flex items-center space-x-2.5 pl-4 ">
-        {/* <span className="text-sm text-gray-700 dark:text-gray-300">
-        Pre day
-        </span> */}
+
         <span  className={cx(
           "rounded px-2 py-1 text-sm font-medium text-white",
           color == 'positive'

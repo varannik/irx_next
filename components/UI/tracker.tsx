@@ -56,9 +56,9 @@ const Block = ({
             // base
             "w-auto rounded-md px-2 py-1 text-sm shadow-md",
             // text color
-            "text-white dark:text-gray-900",
+            "text-gray-900",
             // background color
-            " bg-bg-layer3 dark:bg-bg-layer3",
+            " bg-bg-layer3",
           )}
         >
           <div className="grid grid-cols-3 text-gray-300  text-xs">
@@ -115,7 +115,7 @@ const Tracker = React.forwardRef<HTMLDivElement, TrackerProps>(
   (
     {
       data = [],
-      defaultBackgroundColor = "bg-gray-400 dark:bg-gray-400",
+      defaultBackgroundColor = "bg-gray-400",
       className,
       hoverEffect,
       ...props

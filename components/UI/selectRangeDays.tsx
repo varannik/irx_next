@@ -102,7 +102,7 @@ export default function SelectRangeDays() {
           renderThumb={(props) => (
             <div
               {...props}
-              className="group p-1 top-1/2 bg-gray-800 border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
+              className="group p-1 top-1/2 bg-gray-800 border-small  border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
             >
               <span className="transition-transform bg-gray-200 rounded-full w-4 h-4 block group-data-[dragging=true]:scale-80" />
             </div>
