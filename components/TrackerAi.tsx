@@ -10,6 +10,7 @@ import {  IAiPredictAsset } from "@/models/AiPredict"
 import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChartAi"
 import SpinerIcon from "./UI/icons/Spinner"
 import { AvailableChartColorsKeys } from "@/lib/chartUtils"
+import Alert from "./UI/alert"
 
 interface Itooltip {
     date:string,
@@ -173,6 +174,8 @@ export function TrackerAi() {
         <div className="flex-none font-medium text-xs mb-3 text-gray-700 dark:text-gray-300">Accurately predicted rate shifts</div>
 
         <Tracker className="w-full" data={trackerData} hoverEffect={true} />
+
+        <Alert />
     </Card>
   )
 }
