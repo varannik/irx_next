@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const secret = process.env.JWT_SECRET as string;
 
-export const jwtMiddleware = async (req: NextRequest, res: NextResponse) => {
+export const jwtMiddleware = async (req: NextRequest) => {
 
     const authHeader = req.headers.get('authorization'); // Use get method to access headers
     const token = authHeader && authHeader.split(' ')[1];
