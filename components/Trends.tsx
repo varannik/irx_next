@@ -67,7 +67,7 @@ export function Trends() {
   const { currentAsset } = useSelectedAsset()
   const [fullData, setFullData] = useState(null)
   const [durationData, setDurationData] = useState<IAsset>({trend:[], asset:''})
-  const [selectedRange, setSelectedRange] = useState('week')
+  const [selectedRange, setSelectedRange] = useState('p_week')
   const [trendData, setTrendData] = useState<DataItem[] | null >(null)
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [latestValue, setLatestValue] = useState(0)
@@ -214,7 +214,7 @@ export function Trends() {
       <CustomRadio description="Past" value="d_90">
       90 Days
       </CustomRadio>
-      <CustomRadio description="Past" value="d_365">
+      <CustomRadio className={" col-start-2"}  description="Past" value="d_365">
       1 Year
       </CustomRadio>
     </RadioGroup>
