@@ -31,7 +31,6 @@ const config: Config = {
         'border-selected':"#94a3b8",
         'div-diff': '#1e293b',
         'text-active': '#f3f4f6',
-        background: '#000000'
 
             },
             keyframes: {
