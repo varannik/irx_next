@@ -1,13 +1,13 @@
 import { Schema, Document, models, model } from "mongoose";
 
 // Define the interface for the Trend
-interface Iday {
-    date: Date;
+export interface Iday {
+    date: string;
     rate: number;
 }
 
 // Define the interface for the Asset document
-interface IAsset extends Document{
+export interface IAsset extends Document{
     asset: string;
     trend: Iday[];
 }
@@ -15,7 +15,7 @@ interface IAsset extends Document{
 // Create the schema for the Asset
 const daySchema: Schema = new Schema<Iday>({
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     rate: {

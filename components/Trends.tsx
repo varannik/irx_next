@@ -7,10 +7,20 @@ import { Card } from "./UI/cardTremor"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
 import useSelectedCalendar from "@/stores/useSelectedCalendarStore"
 import SpinerIcon from "./UI/icons/Spinner";
+import { IAsset } from "@/models/Trend";
 
 interface DataItem {
   date: string
   rate: number
+}
+interface Iday {
+  date: string;
+  rate: number;
+}
+
+interface IAsset {
+  asset: string;
+  trend: Iday[];
 }
 
 function lastRate (datas : any, latestValue:number){
@@ -56,11 +66,12 @@ export const CustomRadio = (props:any) => {
 
 
 
-export function PeriodTrends() {
+export function Trends() {
 
   const { currentCalendar } = useSelectedCalendar()
   const { currentAsset } = useSelectedAsset()
   const [fullData, setFullData] = useState(null)
+  const [durationData, setDurationData] = useState<IAsset>({trend:[], asset:''})
   const [selectedRange, setSelectedRange] = useState('week')
   const [trendData, setTrendData] = useState<DataItem[] | null >(null)
   const [datas, setDatas] = useState<TooltipProps | null>(null)
@@ -88,16 +99,50 @@ export function PeriodTrends() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const response = await fetch(`/api/analytics/trend/${currentAsset.name}`);
+        if (!response.ok) {
+
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const result = await response.json();
+        const data = result;
+        setDurationData(data)
+
+        // 
+      } catch (error) {
+       
+        console.log('trend data are not reachable');
+      }
+    };
+
+    fetchData();
+  }, [currentAsset]);
 
   useEffect(()=>{
-    if (fullData !== null ){
-      setTrendData(fullData[currentCalendar][String(currentAsset.name)][selectedRange])
+    if (fullData !== null && durationData !==null){
+
+
+        if (selectedRange.includes("p")) {
+          let range = selectedRange.replace("p_", "");
+          setTrendData(fullData[currentCalendar][String(currentAsset.name)][range])
+        } else {
+
+          let range = selectedRange.replace("d_", "");
+          let number = Number(range);
+          let filteredData = durationData.trend.slice(-number)
+          setTrendData(filteredData)
+        }
+     
     
     }
     if (trendData !==null){
       setLatestValue(trendData[trendData.length - 1].rate)
     }
-  },[currentCalendar, currentAsset, fullData, trendData, selectedRange])
+  },[currentCalendar, currentAsset, fullData, selectedRange])
 
 
   if (fullData == null || trendData == null) return (
@@ -154,16 +199,28 @@ export function PeriodTrends() {
       
       description=" ">
 
-      <CustomRadio  description="Current" value="week">
+      <CustomRadio  description="Current" value="p_week">
       Week
       </CustomRadio>
 
-      <CustomRadio description="Current" value="month">
+      <CustomRadio description="Current" value="p_month">
       Month
       </CustomRadio>
 
-      <CustomRadio description="Current" value="quarter">
+      <CustomRadio description="Current" value="p_quarter">
       Quarter
+      </CustomRadio>
+      <CustomRadio description="Past" value="d_7">
+      7 Days
+      </CustomRadio>
+      <CustomRadio description="Past" value="d_30">
+      30 Days
+      </CustomRadio>
+      <CustomRadio description="Past" value="d_90">
+      90 Days
+      </CustomRadio>
+      <CustomRadio description="Past" value="d_365">
+      1 Year
       </CustomRadio>
     </RadioGroup>
 </Card>

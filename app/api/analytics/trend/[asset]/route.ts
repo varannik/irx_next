@@ -41,7 +41,7 @@ export async function POST(request: NextRequest, { params }: { params: { asset:s
         { status: 200 }
       );
     } catch (error) {
-        console.log(asset)
+   
       console.error("Error saving data:", error);
       return NextResponse.json(
         { message: "Error saving data" },
