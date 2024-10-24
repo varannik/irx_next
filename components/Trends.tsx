@@ -7,20 +7,15 @@ import { Card } from "./UI/cardTremor"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
 import useSelectedCalendar from "@/stores/useSelectedCalendarStore"
 import SpinerIcon from "./UI/icons/Spinner";
-import { IAsset } from "@/models/Trend";
 
 interface DataItem {
   date: string
   rate: number
 }
-interface Iday {
-  date: string;
-  rate: number;
-}
 
 interface IAsset {
   asset: string;
-  trend: Iday[];
+  trend: DataItem[];
 }
 
 function lastRate (datas : any, latestValue:number){
