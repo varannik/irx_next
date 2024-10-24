@@ -30,7 +30,8 @@ const config: Config = {
         'hov-c' :'#1e293b',
         'border-selected':"#94a3b8",
         'div-diff': '#1e293b',
-        'text-active': '#f3f4f6'
+        'text-active': '#f3f4f6',
+        background: '#000000'
 
             },
             keyframes: {

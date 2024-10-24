@@ -44,12 +44,12 @@ export const CustomRadio = (props:any) => {
       {...otherProps}
       classNames={{
         base: cn(
-          "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
-          "flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-1  border-2 border-transparent",
+          "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c items-center justify-around",
+          "flex-row-reverse min-w-full  cursor-pointer rounded-lg gap-1  border-2 border-transparent",
           "data-[selected=true]:border-border-selected"
         ),
         control: 'bg-gray-light ',
-        wrapper: 'group-data-[selected=true]:border-border-selected z-0 ',
+        wrapper: 'group-data-[selected=true]:border-border-selected z-0   ',
         label:'text-xs text-gray-light',
         description:'text-xs'
       }}
@@ -134,10 +134,14 @@ export function Trends() {
      
     
     }
+
+  },[currentCalendar, currentAsset, fullData, selectedRange])
+
+  useEffect(()=>{
     if (trendData !==null){
       setLatestValue(trendData[trendData.length - 1].rate)
     }
-  },[currentCalendar, currentAsset, fullData, selectedRange])
+  },[trendData])
 
 
   if (fullData == null || trendData == null) return (
@@ -185,38 +189,56 @@ export function Trends() {
     </div>
 
     <RadioGroup
-      classNames={{
-        wrapper:
-          "grid grid-cols-3 gap-2 "
-      }}
+      // classNames={{
+      //   wrapper:
+      //     "grid grid-cols-3 gap-2 "
+      // }}
       defaultValue={selectedRange}
       onValueChange={setSelectedRange}
       
       description=" ">
+        <p className="text-sm">
+    Current
+  </p>
+<div className="grid grid-cols-3 gap-1">
 
-      <CustomRadio  description="Current" value="p_week">
+<CustomRadio  description="" value="p_week">
       Week
       </CustomRadio>
 
-      <CustomRadio description="Current" value="p_month">
+      <CustomRadio  description="" value="p_month">
       Month
       </CustomRadio>
 
-      <CustomRadio description="Current" value="p_quarter">
+      <CustomRadio description="" value="p_quarter">
       Quarter
       </CustomRadio>
-      <CustomRadio description="Past" value="d_7">
-      7 Days
+
+</div>
+<p className="text-sm">
+    Past
+  </p>
+<div className="grid grid-cols-3  gap-1">
+
+<CustomRadio  description="Days" value="d_7">
+      7 
       </CustomRadio>
-      <CustomRadio description="Past" value="d_30">
-      30 Days
+      <CustomRadio  description="Days" value="d_30">
+      30
       </CustomRadio>
-      <CustomRadio description="Past" value="d_90">
-      90 Days
+      <CustomRadio  description="Days" value="d_90">
+      90
       </CustomRadio>
-      <CustomRadio className={" col-start-2"}  description="Past" value="d_365">
+</div>
+<div className="grid grid-cols-2  gap-1">
+<CustomRadio  description="180 Days" value="d_180">
+      6 months
+      </CustomRadio>
+
+      <CustomRadio  description="365 Days" value="d_365">
       1 Year
       </CustomRadio>
+      </div>
     </RadioGroup>
 </Card>
   )
