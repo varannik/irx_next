@@ -17,6 +17,7 @@
     "@remixicon/react": "^4.2.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.30",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.3",
     "next": "14.2.6",
     "next-auth": "^4.24.7",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

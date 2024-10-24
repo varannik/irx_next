@@ -36,5 +36,5 @@ export const authOptions: NextAuthOptions = {
         session.user = sessionUser
         return session;
       },
-    },
+    }
   }
