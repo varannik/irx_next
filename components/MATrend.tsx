@@ -132,7 +132,7 @@ export function MATrend() {
           >
             <div className="flex justify-between " >
               <div className="flex flex-col w-1/3 mx-1 gap-2">
-                <div className="text-sm mb-3">Short-Term</div>
+                <div className="text-sm text-gray-light mb-3">Short-Term</div>
                 {
                   ShortTerm.map(item => {
                     return CustumCheckBox({ value: item, label: item , key:item})
@@ -141,7 +141,7 @@ export function MATrend() {
               </div>
 
               <div className="flex flex-col w-1/3 mx-1 gap-2">
-                <div className="text-sm mb-3">Mid-Term</div>
+                <div className="text-sm text-gray-light mb-3">Mid-Term</div>
                 {
                   MidTerm.map(item => {
                     return CustumCheckBox({ value: item, label: item , key:item})
@@ -150,7 +150,7 @@ export function MATrend() {
               </div>
 
               <div className="flex flex-col w-1/3 mx-1 gap-2">
-                <div className="text-sm mb-3">Long-Term</div>
+                <div className="text-sm text-gray-light mb-3">Long-Term</div>
                 {
                   LongTerm.map(item => {
                     return CustumCheckBox({ value: item, label: item, key:item })

@@ -18,7 +18,7 @@ interface IAsset {
   trend: DataItem[];
 }
 
-function lastRate (datas : any, latestValue:number){
+function lastRate(datas: any, latestValue: number) {
 
   const currencyFormatter = (number: number) =>
     `${Intl.NumberFormat("us").format(number)}`
@@ -34,8 +34,8 @@ function lastRate (datas : any, latestValue:number){
 }
 
 
-export const CustomRadio = (props:any) => {
-  
+export const CustomRadio = (props: any) => {
+
 
   const { children, ...otherProps } = props;
 
@@ -50,8 +50,8 @@ export const CustomRadio = (props:any) => {
         ),
         control: 'bg-gray-light ',
         wrapper: 'group-data-[selected=true]:border-border-selected z-0   ',
-        label:'text-xs text-gray-light',
-        description:'text-xs'
+        label: 'text-xs text-gray-light',
+        description: 'text-xs'
       }}
     >
       {children}
@@ -66,9 +66,9 @@ export function Trends() {
   const { currentCalendar } = useSelectedCalendar()
   const { currentAsset } = useSelectedAsset()
   const [fullData, setFullData] = useState(null)
-  const [durationData, setDurationData] = useState<IAsset>({trend:[], asset:''})
+  const [durationData, setDurationData] = useState<IAsset>({ trend: [], asset: '' })
   const [selectedRange, setSelectedRange] = useState('p_week')
-  const [trendData, setTrendData] = useState<DataItem[] | null >(null)
+  const [trendData, setTrendData] = useState<DataItem[] | null>(null)
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [latestValue, setLatestValue] = useState(0)
 
@@ -83,7 +83,7 @@ export function Trends() {
         }
         const result = await response.json();
         const data = result[0]['periods'];
-        
+
         setFullData(data)
         // 
       } catch (error) {
@@ -97,7 +97,7 @@ export function Trends() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
+
         const response = await fetch(`/api/analytics/trend/${currentAsset.name}`);
         if (!response.ok) {
 
@@ -109,7 +109,7 @@ export function Trends() {
 
         // 
       } catch (error) {
-       
+
         console.log('trend data are not reachable');
       }
     };
@@ -117,40 +117,40 @@ export function Trends() {
     fetchData();
   }, [currentAsset]);
 
-  useEffect(()=>{
-    if (fullData !== null && durationData !==null){
+  useEffect(() => {
+    if (fullData !== null && durationData !== null) {
 
 
-        if (selectedRange.includes("p")) {
-          let range = selectedRange.replace("p_", "");
-          setTrendData(fullData[currentCalendar][String(currentAsset.name)][range])
-        } else {
+      if (selectedRange.includes("p")) {
+        let range = selectedRange.replace("p_", "");
+        setTrendData(fullData[currentCalendar][String(currentAsset.name)][range])
+      } else {
 
-          let range = selectedRange.replace("d_", "");
-          let number = Number(range);
-          let filteredData = durationData.trend.slice(-number)
-          setTrendData(filteredData)
-        }
-     
-    
+        let range = selectedRange.replace("d_", "");
+        let number = Number(range);
+        let filteredData = durationData.trend.slice(-number)
+        setTrendData(filteredData)
+      }
+
+
     }
 
-  },[currentCalendar, currentAsset, fullData, selectedRange])
+  }, [currentCalendar, currentAsset, fullData, selectedRange])
 
-  useEffect(()=>{
-    if (trendData !==null){
+  useEffect(() => {
+    if (trendData !== null) {
       setLatestValue(trendData[trendData.length - 1].rate)
     }
-  },[trendData])
+  }, [trendData])
 
 
   if (fullData == null || trendData == null) return (
     <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
       <p className="text-base font-normal text-text-active">Trend</p>
       <div className="flex items-center justify-center">
-      <SpinerIcon />
+        <SpinerIcon />
       </div>
-      
+
     </Card>
   )
 
@@ -158,88 +158,88 @@ export function Trends() {
   return (
     <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
 
-    <div>
-    <p className="text-base font-normal text-text-active">Trend</p>
-      <p className="mt-2 text-xl font-semibold text-gray-50">
-      {lastRate(datas, latestValue)}
-      </p>
+      <div>
+        <p className="text-base font-normal text-text-active">Trend</p>
+        <p className="mt-2 text-xl font-semibold text-gray-50">
+          {lastRate(datas, latestValue)}
+        </p>
 
-      <AreaChart
-        data={trendData}
-        index="date"
-        categories={["rate"]}
-        showLegend={false}
-        showYAxis={false}
-        startEndOnly={true}
-        autoMinValue={true}
-        // colors={["gray"]}
-        className="mb-3 mt-8 h-48"
-        tooltipCallback={(props) => {
-          if (props.active) {
-            setDatas((prev: any) => {
-              if (prev?.label === props.label) return prev
-              return props
-            })
-          } else {
-            setDatas(null)
-          }
-          return null
-        }}
-      />
-    </div>
-
-    <RadioGroup
-      // classNames={{
-      //   wrapper:
-      //     "grid grid-cols-3 gap-2 "
-      // }}
-      defaultValue={selectedRange}
-      onValueChange={setSelectedRange}
-      
-      description=" ">
-        <p className="text-sm">
-    Current
-  </p>
-<div className="grid grid-cols-3 gap-1">
-
-<CustomRadio  description="" value="p_week">
-      Week
-      </CustomRadio>
-
-      <CustomRadio  description="" value="p_month">
-      Month
-      </CustomRadio>
-
-      <CustomRadio description="" value="p_quarter">
-      Quarter
-      </CustomRadio>
-
-</div>
-<p className="text-sm">
-    Past
-  </p>
-<div className="grid grid-cols-3  gap-1">
-
-<CustomRadio  description="Days" value="d_7">
-      7 
-      </CustomRadio>
-      <CustomRadio  description="Days" value="d_30">
-      30
-      </CustomRadio>
-      <CustomRadio  description="Days" value="d_90">
-      90
-      </CustomRadio>
-</div>
-<div className="grid grid-cols-2  gap-1">
-<CustomRadio  description="180 Days" value="d_180">
-      6 months
-      </CustomRadio>
-
-      <CustomRadio  description="365 Days" value="d_365">
-      1 Year
-      </CustomRadio>
+        <AreaChart
+          data={trendData}
+          index="date"
+          categories={["rate"]}
+          showLegend={false}
+          showYAxis={false}
+          startEndOnly={true}
+          autoMinValue={true}
+          // colors={["gray"]}
+          className="mb-3 mt-8 h-48"
+          tooltipCallback={(props) => {
+            if (props.active) {
+              setDatas((prev: any) => {
+                if (prev?.label === props.label) return prev
+                return props
+              })
+            } else {
+              setDatas(null)
+            }
+            return null
+          }}
+        />
       </div>
-    </RadioGroup>
-</Card>
+
+      <RadioGroup
+        // classNames={{
+        //   wrapper:
+        //     "grid grid-cols-3 gap-2 "
+        // }}
+        defaultValue={selectedRange}
+        onValueChange={setSelectedRange}
+
+        description=" ">
+        <p className="text-sm text-gray-light">
+          Current
+        </p>
+        <div className="grid grid-cols-3 gap-1">
+
+          <CustomRadio description="" value="p_week">
+            Week
+          </CustomRadio>
+
+          <CustomRadio description="" value="p_month">
+            Month
+          </CustomRadio>
+
+          <CustomRadio description="" value="p_quarter">
+            Quarter
+          </CustomRadio>
+
+        </div>
+        <p className="text-sm text-gray-light">
+          Past
+        </p>
+        <div className="grid grid-cols-3  gap-1">
+
+          <CustomRadio description="Days" value="d_7">
+            7
+          </CustomRadio>
+          <CustomRadio description="Days" value="d_30">
+            30
+          </CustomRadio>
+          <CustomRadio description="Days" value="d_90">
+            90
+          </CustomRadio>
+        </div>
+        <div className="grid grid-cols-2  gap-1">
+          <CustomRadio description="180 Days" value="d_180">
+            6 months
+          </CustomRadio>
+
+          <CustomRadio description="365 Days" value="d_365">
+            1 Year
+          </CustomRadio>
+        </div>
+      </RadioGroup>
+    </Card>
   )
 }
