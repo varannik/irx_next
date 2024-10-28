@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Bands } from '@/components/Bands';
 import WeekDays from '@/components/WeekDays';
 import { Container } from '@/components/Container'
@@ -15,14 +15,6 @@ import { useEffect, useState } from 'react';
 export default function Analytics() {
 
   const { currentComp } = useAnalyticsCompStore()
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
-
-  useEffect(() => {
-    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, [window.innerWidth]);
 
   // Function to switch components by title
   const renderComponent = (current: string) => {
@@ -51,10 +43,8 @@ export default function Analytics() {
       </Container>
 
       {/* Desktop version of analytics  */}
-      {isLargeScreen && 
       
-      <Card className='mt-9'>
-        
+      <Card className='mt-9 lg:block hidden'>
         <div className=" grid grid-cols-2 mt-3  gap-x-7 gap-y-6   mx-auto max-w-7xl px-2 ">
           <div className=' rounded-lg shadow-sm border border-gray-800 '>
             <MaxMinGauge />
@@ -73,7 +63,7 @@ export default function Analytics() {
           </div>
         </div>
       </Card>    
-      }
+  
     </>
   );
 }
