@@ -9,8 +9,8 @@ const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer
 
 export default function MainMenuDesktop(){
 
-  const {openMenu, setMenuDrawerOpen } = useMenuDrawerStore();
-  const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
+  const {setMenuDrawerOpen } = useMenuDrawerStore();
+  const {setProfileDrawerOpen } = useProfileDrawerStore();
 
     return (
 

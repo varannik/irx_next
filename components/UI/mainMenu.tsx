@@ -7,7 +7,6 @@ import AnalyticsIcon from "./icons/AnalyticsIcon";
 import FutureIcon from "./icons/FutureIcon";
 import UserIcon from "./icons/UserIcon";
 import useProfileDrawerStore from "@/stores/useProfileDrawerStore";
-
 const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer1 basis-1/3 px-3 py-2 text-md text-text-active font-semibold  hover:bg-slate-800 focus:z-10"
 
 
