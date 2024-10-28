@@ -107,12 +107,12 @@ export default function SidebarMenu() {
                             {items.map((item) => (
 
                               <li key={item.id} className="px-1 py-4 hover:bg-slate-800 hover:rounded-md max-w-48">
-                                <button onClick={()=>handleClick(item.title)}>
+                                <Link  href='/analytics/analytics' onClick={()=>handleClick(item.title)}>
                                   <div className='flex justify-start items-center'>
                                     <div className='w-8 '><item.icon /></div>
                                     <div className='text-xs  text-gray-light pl-3'>{item.title}</div>
                                   </div>
-                                </button>
+                                </Link>
                               </li>
                             ))}
                           </ul>
