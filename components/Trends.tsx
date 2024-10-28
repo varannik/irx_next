@@ -156,13 +156,19 @@ export function Trends() {
 
 
   return (
-    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
-
-      <div>
-        <p className="text-base font-normal text-text-active">Trend</p>
-        <p className="mt-2 text-xl font-semibold text-gray-50">
+    <Card >
+            <div className="flex justify-between">
+        <div>
+          <p className="text-base font-normal text-text-active">Trend</p>
+          <p className="mt-2 text-xl font-semibold text-gray-50">
           {lastRate(datas, latestValue)}
         </p>
+        </div>
+
+      </div>
+
+      <div>
+
 
         <AreaChart
           data={trendData}

@@ -118,7 +118,7 @@ export function TrackerAi() {
   if (currentAsset.name !== 'US Dollar' ) return (
     <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
       <p className="text-base font-normal text-text-active">Ai</p>
-      <div className="flex items-center justify-center text-xs">
+      <div className="flex items-center justify-center text-xs text-gray-light">
       Exclusively available in USD.
       </div>
       

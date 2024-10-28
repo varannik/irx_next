@@ -4,7 +4,7 @@ import LoginPage from './SigninProfile'
 import { Footer } from './Footer'
 import SelectAsset from './SelectAsset'
 import SidebarMenu from './SidebarMenu'
-import Header from './Header'
+import Header from './HeaderM'
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SelectAsset />
         <Footer />
 
-        <main className="py-10 ">
+        <main className="py-10">
           <div className="px-4 sm:px-6 lg:px-6">{children}</div>
         </main>
     </>

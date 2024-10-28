@@ -6,6 +6,7 @@ import useSelectedAsset from "@/stores/useSelectedAssetStore"
 import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChartMA"
 import { CheckboxGroup, Checkbox, cn } from "@nextui-org/react";
 import { ICurrencyRecord, IMAModel } from "@/models/MAs"
+import SpinerIcon from "./UI/icons/Spinner"
 
 
 
@@ -37,7 +38,7 @@ export function MATrend() {
         base: cn(
 
           "flex w-full max-w-md bg-content1 mb-4 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
-          "hover:bg-content2 items-center justify-start ",
+          "items-center justify-start ",
           "cursor-pointer justify-right rounded-lg border-2 border-transparent ",
           "data-[selected=true]:border-border-selected",
         ),
@@ -88,12 +89,24 @@ export function MATrend() {
 
   }, [selected]);
 
+  if (assetData == null || data == null || selected == null) return (
+    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
+      <p className="text-base font-normal text-text-active">Moving average</p>
+      <div className="flex items-center justify-center">
+        <SpinerIcon />
+      </div>
+
+    </Card>
+  )
+
   return (
-    <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5">
+    <Card >
 
-      <div className="w-full">
-        <p className="text-base font-normal text-text-active">Moving Average</p>
-
+        <div className="flex justify-between">
+            <div>
+              <p className="text-base font-normal text-text-active">Moving average</p>
+            </div>
+          </div>
 
         <LineChart
 
@@ -163,7 +176,6 @@ export function MATrend() {
 
           </CheckboxGroup>
         </div>
-      </div>
     </Card>
   )
 }

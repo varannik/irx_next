@@ -13,9 +13,10 @@ import UserSign from './UserSign'
 import MAIcon from './UI/icons/MAIcon'
 import WeekdayIcon from './UI/icons/WeekDayIcon'
 
-import useCalendarDrawerStore from '@/stores/useCalendarDrawerStore';
+import useCalendarDrawerStore from '@/stores/useHeaderDrawerStore';
 import useSelectedCalendar from '@/stores/useSelectedCalendarStore';
 import BBIcon from './UI/icons/BBIcon';
+import useAnalyticsCompStore from '@/stores/useAnalyticsCompStore';
 
 
 
@@ -24,14 +25,14 @@ const items = [
     id: 1,
     icon: GaugeIcon,
     href: '/analytics/gauge',
-    title: "Current Max & Min",
+    title: "Max & Min",
     current: true
   },
   {
     id: 2,
     icon: ForcastIcon,
     href: '/analytics/trend',
-    title: "Trend",
+    title: "Trends",
     current: true
   },
   {
@@ -44,14 +45,14 @@ const items = [
   {
     id: 4,
     icon: WeekdayIcon,
-    title: "WeekDay",
+    title: "WeekDays",
     href: '/analytics/weekday',
     current: true
   },
   {
     id: 5,
     icon: BBIcon,
-    title: "Bollinger Bands",
+    title: "Bands",
     href: '/analytics/bb',
     current: true
   },
@@ -59,10 +60,16 @@ const items = [
 ]
 
 export default function SidebarMenu() {
-  const { openCalendar, setCalendarDrawerOpen } = useCalendarDrawerStore()
+  
   const { currentCalendar, setCurrentCalendar } = useSelectedCalendar()
   const { openMenu, setMenuDrawerOpen } = useMenuDrawerStore();
-  const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
+
+  const {setcurrentComp}=useAnalyticsCompStore()
+
+  const handleClick = (title:string) => {
+    setMenuDrawerOpen(false)
+    setcurrentComp(title);            // Update message
+  };
 
   return (
     <>
@@ -100,15 +107,12 @@ export default function SidebarMenu() {
                             {items.map((item) => (
 
                               <li key={item.id} className="px-1 py-4 hover:bg-slate-800 hover:rounded-md max-w-48">
-                                <Link onClick={() => setMenuDrawerOpen(false)}
-                                  href={item.href}>
-                                  <div className='grid grid-cols-4 justify-start items-center'>
+                                <button onClick={()=>handleClick(item.title)}>
+                                  <div className='flex justify-start items-center'>
                                     <div className='w-8 '><item.icon /></div>
-                                    <div className='text-xs col-span-3 text-gray-light'>{item.title}</div>
+                                    <div className='text-xs  text-gray-light pl-3'>{item.title}</div>
                                   </div>
-
-
-                                </Link>
+                                </button>
                               </li>
                             ))}
                           </ul>
@@ -131,12 +135,12 @@ export default function SidebarMenu() {
 
                           </Tabs>
                         </div>
-                        <li className="">
+                        {/* <li className="">
                           <UserSign onClick={() => {
                             setProfileDrawerOpen(true)
                             setMenuDrawerOpen(false)
                           }} />
-                        </li>
+                        </li> */}
                       </ul>
                     </nav>
                   </div>

@@ -7,6 +7,7 @@ import { SparkAreaChart } from "@/components/UI/sparkChart"
 import useSelectedAsset from "@/stores/useSelectedAssetStore"
 import { cx } from "@/lib/utils"
 import { I7Days } from "@/models/SimpleTrend"
+import SpinerIcon from "./UI/icons/Spinner"
 
 function standizeRate (current7dData : Array<I7Days> ):Array<I7Days>{
   // To accurately display the fluctuating trend
@@ -75,8 +76,19 @@ export function SimpleTrend() {
     }
     }  , [currentAsset, currentDiffVal, simpleTrendData]);
 
+    if (simpleTrendData == null || currentAsset ==null || currentDiffVal ==null) return (
+      <Card  >
+        <p className="text-base font-normal text-text-active">7 Days</p>
+        <div className="flex items-center justify-center">
+          <SpinerIcon />
+        </div>
+      </Card>
+    )
+
+
   return (
-    <Card  className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5 "> 
+    <div className="flex mb-3"> 
+
       <div className="flex grow items-center space-x-2.5">
         <div className="flex-none font-medium text-gray-300">7 Days </div>
         <div className="flex justify-center grow">
@@ -85,14 +97,10 @@ export function SimpleTrend() {
         categories={["rate"]}
         index={"dyn"}
         colors={[color]}
-        className="h-8 w-20 sm:h-10 sm:w-36"
-      />
+        className="h-8 w-20 sm:h-10 sm:w-36 "/>
         </div>
-
       </div>
-
       <div className="flex items-center space-x-2.5 pl-4 ">
-
         <span  className={cx(
           "rounded px-2 py-1 text-sm font-medium text-white",
           color == 'positive'
@@ -102,7 +110,7 @@ export function SimpleTrend() {
           % {currentDiffVal}
         </span>
       </div>
-    </Card>
+    </div>
   )
 }
 

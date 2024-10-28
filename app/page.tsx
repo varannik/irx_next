@@ -1,6 +1,6 @@
 
 import { Container } from '@/components/Container'
-import MaxMinGauge from '@/components/GaugeChart';
+import MaxMinGauge from '@/components/MaxMinGauge';
 
 import { SimpleTrend } from '@/components/SimpleTrend';
 

@@ -7,6 +7,7 @@ import { LineChart, LineChartEventProps, TooltipProps } from "./UI/lineChartRSI"
 import { RadioGroup } from "@nextui-org/react";
 import { IRSIEntry, IRSIModel } from "@/models/RSI"
 import { CustomRadio } from "./UI/selectRangeDays"
+import SpinerIcon from "./UI/icons/Spinner"
 
 
 
@@ -52,13 +53,13 @@ export function RSI() {
   }, [assetData, currentAsset, data])
 
 
+  if (data == null || assetData == null) return (
+
+    <SpinerIcon />
+
+  )
+
   return (
-    <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5">
-
-      <div className="w-full">
-        <p className="text-base font-normal text-text-active">RSI </p>
-
-  
         <LineChart
 
           data={assetData}
@@ -88,11 +89,5 @@ export function RSI() {
             return null
           }}
         />
-
-        <div className="flex flex-col mt-5">
-
-        </div>
-      </div>
-    </Card>
   )
 }

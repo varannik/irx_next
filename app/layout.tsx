@@ -26,12 +26,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className="h-full bg-black ">
+    <html lang="en" className="h-full bg-black antialiased" suppressHydrationWarning>
+      <body className="w-full flex min-h-full flex-col">
         <Providers >
-          <div className="w-full bg-black">
             <Layout>{children}</Layout>
-          </div>
         </Providers>
       </body>
     </html>

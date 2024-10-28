@@ -279,11 +279,11 @@ const SparkBarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
     return (
       <div
         ref={forwardedRef}
-        className={cx("h-12 w-28 ", className)}
+        className={cx("absolute h-12 w-28 ", className)}
         tremor-id="tremor-raw"
         {...other}
       >
-        <ResponsiveContainer>
+        <ResponsiveContainer className={"h-full w-full"}>
           <RechartsBarChart
             data={data}
             margin={{

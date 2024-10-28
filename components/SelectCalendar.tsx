@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import useSelectedCalendar from '@/stores/useSelectedCalendarStore'
-import useCalendarDrawerStore from '@/stores/useCalendarDrawerStore'
+import useCalendarDrawerStore from '@/stores/useHeaderDrawerStore'
 
 import { Tab, Tabs } from '@nextui-org/react'
 
@@ -12,7 +12,7 @@ export default function SelectCalendar() {
 
   return (
     <Transition show={openCalendar}>
-      <Dialog className="relative z-50 " onClose={setCalendarDrawerOpen}>
+      <Dialog className="relative z-50" onClose={setCalendarDrawerOpen}>
         <TransitionChild
           enter="ease-in-out duration-500"
           enterFrom="opacity-0"

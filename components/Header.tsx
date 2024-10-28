@@ -94,6 +94,10 @@ export default function Header() {
     fetchData();
   }, [lastUpdate, ])
 
+  function setAssetDrawerOpen(arg0: boolean): void {
+    throw new Error('Function not implemented.')
+  }
+
   return (
     <div>
       <div className="fixed items-center flex inset-x-0 top-0 h-14  pl-5 pr-2 py-2 text-sm z-10  divide-x divide-div-diff overflow-hidden rounded-b-lg bg-bg-layer1 shadow ">
@@ -116,12 +120,16 @@ export default function Header() {
         </div>
 
         <div className='grid justify-items-center px-2'>
+        <button onClick={() => setAssetDrawerOpen(true)} type="button">
           <div className='text-xs text-gray-600 '>
-            Current currency
+            Current currenc y
           </div>
           <div className='text-sx text-gray-400'>
-            {currentAsset.name}
+          
+          {currentAsset.name}
+          
           </div>
+          </button>
         </div>
 
         <div className='grid justify-items-center px-2'>

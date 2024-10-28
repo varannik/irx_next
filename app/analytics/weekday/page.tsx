@@ -1,4 +1,4 @@
-import CheapestDayofTheWeek from '@/components/CheapestDayofTheWeek';
+import CheapestDayofTheWeek from '@/components/WeekDays';
 import { Container } from '@/components/Container'
 
 

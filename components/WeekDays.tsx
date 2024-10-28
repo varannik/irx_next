@@ -15,7 +15,7 @@ import { IndexCurrentCalendar } from "@/utils/keyIndex";
 function fibonacci(n: number): number {
 
   let a = 0, b = 1;
-  for (let i = 3; i <= n+2; i++) {
+  for (let i = 3; i <= n + 2; i++) {
     let next = a + b;
     a = b;
     b = next;
@@ -41,13 +41,13 @@ function findLowestDab(week: IWeek): number | null {
 }
 
 
-export default function CheapestDayofTheWeek() {
+export default function WeekDays() {
 
   const { currentAsset } = useSelectedAsset()
   const { currentCalendar } = useSelectedCalendar()
   const [weekDaysData, setWeekDaysData] = useState<null | IWeekDays>(null)
   const [filteredData, setFilteredData] = useState<IWeek>([])
-  const [cheapestDay , setCheapestDay] = useState<string>('')
+  const [cheapestDay, setCheapestDay] = useState<string>('')
 
 
   const [currentStepsBack, setCurrenStepsBack] = useState(1);
@@ -75,12 +75,12 @@ export default function CheapestDayofTheWeek() {
 
   useEffect(() => {
     // filteredData(weekDaysData, currentAsset, currentCalendar)
-  
+
     if (weekDaysData !== null) {
 
       const data = weekDaysData['weekdays'][IndexCurrentCalendar(currentCalendar)][String(currentAsset.name)][fibonacci(currentStepsBack)]
       let lowestDay = findLowestDab(data)
-      
+
       setCheapestDay(getWeekdayName(IndexCurrentCalendar(currentCalendar), lowestDay, "full"))
       setFilteredData(data)
     }
@@ -88,58 +88,43 @@ export default function CheapestDayofTheWeek() {
   }, [weekDaysData, currentCalendar, currentAsset, currentStepsBack, cheapestDay])
 
 
-  if (weekDaysData == null ) return (
-    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
+  if (weekDaysData == null) return (
+    <Card  >
       <p className="text-base font-normal text-text-active">Highest & Lowest weekday</p>
       <div className="flex items-center justify-center">
-      <SpinerIcon />
+        <SpinerIcon />
       </div>
     </Card>
   )
 
   return (
-    // <div className="max-w-sm w-full rounded-lg shadow-[0px_0px_2px_1px_#2d3748] bg-bg-layer1 p-4 md:p-6">
-      <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5">
-      <div className="flex justify-around">
-        <div className="flex justify-center">
+    <Card >
+      <div className="flex justify-between">
+        <div>
           <p className="text-base font-normal text-text-active">Highest & Lowest weekday</p>
         </div>
-        <div className="ml-1 p-1 just flex flex-col items-center bg-bg-layer3 rounded-lg text-xs text-gray-mid">
-
-                {cheapestDay}
-
-            </div>
-
       </div>
-
       <div className="py-10">
-
         <BarChartWeekDays data={filteredData} />
         <div className="flex flex-col gap-4  items-center mt-5">
 
           <div className="flex">
             <div >
               <div className="text-small text-default-500">
-              Count of preceding weeks: {fibonacci(currentStepsBack)}
+                Count of preceding weeks: {fibonacci(currentStepsBack)}
               </div>
               <div className='text-xs italic text-default-300' >
-                  From Fibonachi sequence
+                From Fibonachi sequence
               </div>
             </div>
 
           </div>
-
-
-
-
           <Pagination
             classNames={{
               base: "text-gray-mid",
-              wrapper:'bg-bg-layer3 ',
-              item:'bg-bg-layer3 ',
-              cursor:'bg-gray-light text-bg-layer0',
-
-
+              wrapper: 'bg-bg-layer3 ',
+              item: 'bg-bg-layer3 ',
+              cursor: 'bg-gray-light text-bg-layer0',
             }}
             total={12}
             page={currentStepsBack}
@@ -155,7 +140,7 @@ export default function CheapestDayofTheWeek() {
               -1 Step
             </Button>
             <Button
-            className='bg-bg-layer3 text-gray-light'
+              className='bg-bg-layer3 text-gray-light'
               size="sm"
               variant="flat"
               onPress={() => setCurrenStepsBack((prev) => (prev < 12 ? prev + 1 : prev))}
@@ -167,8 +152,6 @@ export default function CheapestDayofTheWeek() {
       </div>
       <div className="w-64">
       </div>
-      </Card>
-    // </div>
-
+    </Card>
   )
 }
