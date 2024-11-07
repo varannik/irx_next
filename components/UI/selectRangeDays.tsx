@@ -91,7 +91,7 @@ export default function SelectRangeDays() {
           maxValue={90}
           defaultValue={1}
           getValue={(day) => `Last ${day}  days`}
-          onChangeEnd={(value) => {
+          onChangeEnd={(value)=> {
             setRange({  ...selectedRange, selectedDaysAsRange: value })
           }}
 

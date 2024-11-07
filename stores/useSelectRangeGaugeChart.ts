@@ -7,7 +7,7 @@ type TRange = 'days' | 'week' | 'month' | 'today' | string
 
 interface IRange {
     range : TRange,
-    selectedDaysAsRange : number
+    selectedDaysAsRange : number | number[]
 }
 
 interface IRangeRadioGroup {
