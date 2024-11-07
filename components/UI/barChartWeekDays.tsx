@@ -24,9 +24,9 @@ import {
 } from "@/lib/chartUtils"
 import { useOnWindowResize } from "@/lib/useOnWindowResize"
 import { cx } from "@/lib/utils"
-import { IWeek, IWeekDay } from "@/models/WeekDays";
 import useSelectedCalendar from "@/stores/useSelectedCalendarStore"
 import { getWeekdayName } from "@/lib/weekDays"
+import { IWeek } from "@/types/WeekDays"
 
 
 
