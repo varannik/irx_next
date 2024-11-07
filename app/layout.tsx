@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Providers } from '@/app/providers'
 import Layout from '@/components/Layout'
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 import '@/styles/tailwind.css'
 import { Session } from "next-auth";
 
