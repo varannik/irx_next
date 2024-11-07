@@ -1,5 +1,5 @@
+import { IAsset } from '@/types/Assets';
 import {create} from 'zustand';
-import { IAsset } from '@/models/Countries';
 
 const defaultAsset = {'name': 'US Dollar', 'info': {'COUNTRY_NAME': 'United States of America', 'ALPHA_2': 'US', 'ALPHA_3': 'USA', 'NUMERIC': 840.0}}
 
