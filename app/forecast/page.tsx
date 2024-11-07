@@ -171,7 +171,7 @@ export default function Home() {
                 max={Number(currentRate) + (Number(currentRate) * .05)}
 
                 type="number"
-                label="Rate"
+                // label="Rate"
                 placeholder="0.0"
                 labelPlacement="outside"
                 value={newValue}
@@ -195,10 +195,10 @@ export default function Home() {
                 step={0.2}
                 maxValue={5}
                 minValue={-5}
-                fillOffset={0}
+                // fillOffset={0}
                 defaultValue={0}
                 className="max-w-md"
-                formatOptions={{ signDisplay: 'always' }}
+                // formatOptions={{ signDisplay: 'always' }}
               />
             </div>
           </Card>
