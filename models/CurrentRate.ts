@@ -1,16 +1,7 @@
-import mongoose, { Schema, Document, models, model  } from 'mongoose';
+import { ICurrentRate } from '@/types/Current';
+import { Schema, models, model  } from 'mongoose';
 
-interface IPrice {
-  buy: number;
-  sell: number;
-}
 
-interface ICurrentRate extends Document {
-  currentrate: Record<string, {
-    price: IPrice;
-  }>;
-  last_update: Date;
-}
 
 const currentRateSchema: Schema<ICurrentRate> = new Schema({
   currentrate: {

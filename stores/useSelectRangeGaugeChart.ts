@@ -3,11 +3,11 @@ import {create} from 'zustand'
 
 const defaultRange = { range: 'today' , selectedDaysAsRange: 1 }
 
-type TRange = 'days' | 'week' | 'month' | 'today' 
+type TRange = 'days' | 'week' | 'month' | 'today' | string
 
 interface IRange {
-    range : string | TRange,
-    selectedDaysAsRange : null | number | number[]
+    range : TRange,
+    selectedDaysAsRange : number
 }
 
 interface IRangeRadioGroup {

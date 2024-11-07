@@ -1,27 +1,5 @@
-import { Schema, Document, models, model } from 'mongoose';
-
-interface IDataItem {
-    date: string
-    rate: number
-  }
-
-interface IDataList {
-  week:IDataItem[],
-  month:IDataItem[],
-  quarter:IDataItem[],
-}
-
-interface IAssetData {
-  [key:string]:IDataList
-}
-
-interface IPeriodicTrend extends Document{
-
-    periods:{
-        'G':IAssetData,
-        'J':IAssetData,
-    }
-}
+import { IDataItem, IDataList, IPeriodicTrend } from '@/types/PeriodTrend';
+import { Schema, models, model } from 'mongoose';
 
 
 // Define the IDataItem schema

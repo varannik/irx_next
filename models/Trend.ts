@@ -1,18 +1,7 @@
+import { IAsset, Iday } from "@/types/DurationTrend";
 import { Schema, Document, models, model } from "mongoose";
 
-// Define the interface for the Trend
-export interface Iday {
-    date: string;
-    rate: number;
-}
 
-// Define the interface for the Asset document
-export interface IAsset extends Document{
-    asset: string;
-    trend: Iday[];
-}
-
-// Create the schema for the Asset
 const daySchema: Schema = new Schema<Iday>({
     date: {
         type: String,

@@ -15,12 +15,12 @@ export default function MainMenuDesktop(){
     return (
 
         <div className="flex m-2 lg:gap-5 divide-x lg:divide-x-0 divide-solid divide-div-diff  text-xs">
-        <Link href={'/analytics/analytics'} className={clsx(className)}>
+        <Link href={'/analytics'} className={clsx(className)}>
           Analytics
         </Link>
     
-        <Link href={'/analytics/AI'} className={clsx(className)}>
-          Forcast
+        <Link href={'/forecast'} className={clsx(className)}>
+          Forecast
         </Link>
         <button  onClick={() => {
                             setProfileDrawerOpen(true)

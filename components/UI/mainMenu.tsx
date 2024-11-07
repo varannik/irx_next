@@ -1,10 +1,10 @@
-
+'use client'
 import useMenuDrawerStore from "@/stores/useMenuDrawerStore"
 import clsx from "clsx";
 import Link from "next/link";
 import UserSign from "../UserSign";
 import AnalyticsIcon from "./icons/AnalyticsIcon";
-import FutureIcon from "./icons/FutureIcon";
+import ForecastIcon from "./icons/ForecastIcon";
 import UserIcon from "./icons/UserIcon";
 import useProfileDrawerStore from "@/stores/useProfileDrawerStore";
 const className = "flex items-center hover:rounded-lg justify-center bg-bg-layer1 basis-1/3 px-3 py-2 text-md text-text-active font-semibold  hover:bg-slate-800 focus:z-10"
@@ -18,11 +18,8 @@ export default function MainMenu(){
 
         <div className="flex m-2 lg:gap-5 divide-x lg:divide-x-0 divide-solid divide-div-diff  ">
 
-        <button onClick={() => setMenuDrawerOpen(true)}
-          type="button"
-          className={clsx(className)}
-        >
-          <div className="flex flex-col mx-auto justify-center items-center gap-1 pb-2">
+        <Link href={'/analytics'} className={clsx(className)}>
+        <div className="flex flex-col mx-auto justify-center items-center gap-1 pb-2">
           <div className="h-6 w-6">
           <AnalyticsIcon />
           </div>
@@ -30,16 +27,14 @@ export default function MainMenu(){
           Analysis
           </p>
           </div>
-        </button>
-    
-        <Link href={'/analytics/AI'} className={clsx(className)}>
-
+        </Link>
+        <Link href={'/forecast'} className={clsx(className)}>
         <div className="flex flex-col mx-auto justify-center items-center gap-1 pb-2">
           <div className="h-6 w-6">
-          <FutureIcon />
+          <ForecastIcon />
           </div>
           <p className="text-xs">
-          Forcast
+          Forecast
           </p>
           </div>
         </Link>

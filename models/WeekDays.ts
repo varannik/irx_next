@@ -1,31 +1,5 @@
-import { Schema, Document, models, model } from "mongoose";
-
-
-export interface IWeekDay {
-    dyn:number,
-    dab:number,
-    das:number
-}
-
-
-export interface IWeek extends Array<IWeekDay[]> {
-    [key: number]: IWeekDay[]
-}
-
-export interface IPastWeeks {
-    [key:number]:IWeek
-}
-
-interface IAssetWeeks {
-    [key:string]:IPastWeeks
-}
-
-export interface IWeekDays extends Document {
-    'weekdays':{
-        'J':IAssetWeeks,
-        'G':IAssetWeeks,
-    } 
-}
+import { IWeekDays } from "@/types/WeekDays";
+import { Schema, models, model } from "mongoose";
 
 
 // Create the weekdays schema

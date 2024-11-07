@@ -1,23 +1,5 @@
-import { Schema, Document, models, model } from "mongoose";
-
-
-export interface I7Days {
-    dyn:number,
-    rate:number,
-}
-
-interface ITrend {
-    pre_days: I7Days[],
-    diff_per: number,
-}
-
-interface IAsset {
-    [key:string]:ITrend
-}
-
-interface ISimpleTrend  extends Document{
-    assets : IAsset
-}
+import { I7Days, ISimpleTrend, ITrend } from "@/types/SimpleTrend";
+import { Schema, models, model } from "mongoose";
 
 
 // Define the I7Days schema

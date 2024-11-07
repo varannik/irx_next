@@ -1,19 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    esmExternals: "loose",
-  },
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'lh3.googleusercontent.com',
-          port: '',
-          pathname: '/a/**',
-        },
-      ],
-    },
-  };
+const nextConfig = {};
 
 export default nextConfig;
 

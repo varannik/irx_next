@@ -1,20 +1,8 @@
-import { Schema, Document, models, model } from 'mongoose';
-
-// Define the interface for each currency record
-export interface ICurrencyRecord  {
-    date: string;
-    Rate: number;
-    MA3: number;
-    MA5: number;
-    MA10: number;
-    MA50: number;
-    MA100: number;
-    MA200: number;
-    MA300: number;
-}
+import { ICurrencyRecord, IMAModel } from '@/types/MA';
+import { Schema, models, model } from 'mongoose';
 
 // Define the schema for each currency record
-const CurrencyRecordSchema: Schema = new Schema({
+const CurrencyRecordSchema: Schema = new Schema<ICurrencyRecord>({
     date: { type: String, required: true },
     Rate: { type: Number, required: true },
     MA3: { type: Number, required: true },
@@ -26,13 +14,6 @@ const CurrencyRecordSchema: Schema = new Schema({
     MA300: { type: Number, required: true }
 });
 
-// Define the interface for the main schema
-export interface IMAModel extends Document {
-    ma: {
-        [key: string]: ICurrencyRecord[];
-    };
-}
-
 // Define the main schema that holds multiple currencies
 const MASchema: Schema = new Schema({
     ma: {
@@ -41,7 +22,6 @@ const MASchema: Schema = new Schema({
         required: true
     }
 });
-
 
 // Create the CurrentRate model
 const MA = models.MA || model<IMAModel >('MA', MASchema);

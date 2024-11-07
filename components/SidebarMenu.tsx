@@ -1,10 +1,11 @@
+'use client'
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import { Switch, Tab, Tabs } from "@nextui-org/react";
 
 
-import ForcastIcon from './UI/icons/ForcastIcon'
+import ForcastIcon from './UI/icons/ForecastIcon'
 import GaugeIcon from './UI/icons/GaugeIcon'
 import useMenuDrawerStore from '@/stores/useMenuDrawerStore'
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'

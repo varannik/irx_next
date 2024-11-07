@@ -2,54 +2,31 @@
 
 import useSelectedAsset from '@/stores/useSelectedAssetStore'
 import { useState, useEffect } from 'react'
-import { IAsset, IAssetCollection, IAssetInfo } from '@/models/Countries'
 import Flag from 'react-world-flags'
-
 import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
 import SpinerIcon from './icons/Spinner'
+import { IAsset } from '@/types/Assets'
 
 
-export default function AssetsList() {
+export default function AssetsList({AssetListData}:{AssetListData:IAsset[]}) {
 
   const { currentAsset, setCurrentAsset } = useSelectedAsset();
   const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
-  const [assetListdata, setAssetListdata] = useState<IAsset[]>([]) 
 
   const [currencies, setCurrencies] = useState<IAsset[]>([]) 
   const [isLoading, setLoading] = useState(true)
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/analytics/countries', { next: { revalidate: 3600 }, cache: 'force-cache' });
-        if (!response.ok) {
-
-          throw new Error(`Error: ${response.statusText}`);
-        }
-        const result = await response.json();
-        const data = result[0].assets;
-        setAssetListdata(data)
-
-      } catch (error) {
-        console.log('List of currencies are not reachable');
-
-      }
-    };
-
-    fetchData();
-  }, []);
-
   useEffect(()=>{
-    if (assetListdata){
-      const dataSorted = assetListdata.sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
+    if (AssetListData){
+      const dataSorted = AssetListData.sort((a:IAsset, b:IAsset) => a.info.NUMERIC - b.info.NUMERIC);
       const filterData = dataSorted.filter((obj:IAsset) => obj.info.ALPHA_2 !== currentAsset.info.ALPHA_2);
   
       setCurrencies(filterData);
       setLoading(false)
     }
  
-  },[assetListdata, currentAsset])
+  },[AssetListData, currentAsset])
 
   if (isLoading || currencies == null) {return <SpinerIcon />} 
   else {

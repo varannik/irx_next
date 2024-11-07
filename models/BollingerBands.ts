@@ -1,25 +1,7 @@
-import { Schema, Document, Model, models, model } from "mongoose";
+import { IBBAsset, IBBDay, IBBMovs } from "@/types/BB";
+import { Schema, models, model } from "mongoose";
 
-// Define the interface for a single Rate entry
-export interface IBBDay {
-  date: string;
-  Rate: number;
-  Lower: number;
-  Middle: number;
-  Upper: number;
-}
 
-// Define the interface for the Moving Averages (MA3, MA5, MA10)
-export interface IBBMovs {
-  [key: string]: IBBDay[];
-}
-
-// Define the main interface that extends Document for Mongoose
-export interface IBBAsset extends Document {
-  bb: {
-    [key: string]: IBBMovs;
-  };
-}
 
 // Define the schema for a single Rate entry (IBBDay)
 const BBDaySchema: Schema = new Schema<IBBDay>({

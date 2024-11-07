@@ -1,23 +1,8 @@
-import mongoose, { Schema, Document, models, model } from 'mongoose';
+import { IMaxMin } from '@/types/MaxMin';
+import { Schema, models, model } from 'mongoose';
 
-interface IMaxMin extends Document {
-  maxmin: {
-    J: Record<string, {
-      week: { max: number, min: number },
-      month: { max: number, min: number },
-      today: { max: number, min: number },
-      days: Record<number, { max: number, min: number }>
-    }>,
-    G: Record<string, {
-      week: { max: number, min: number },
-      month: { max: number, min: number },
-      today: { max: number, min: number },
-      days: Record<number, { max: number, min: number }>
-    }>
-  };
-}
 
-const MaxMinSchema: Schema = new Schema({
+const MaxMinSchema: Schema = new Schema<IMaxMin>({
   maxmin: {
     J: {
       type: Map,
