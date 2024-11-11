@@ -11,33 +11,11 @@ export const authOptions: NextAuthOptions = {
       }),
     ],
     adapter: MongoDBAdapter(clientPromise),
-    
+    session: {
+      strategy: "database", // Use the database strategy for sessions
+      maxAge: 30 * 24 * 60 * 60, // Session expiration in seconds (e.g., 30 days)
+    },
     callbacks: {
-      // async signIn({ profile}) {
-  
-      //   try {
-      //     await connectDB()
-      //     const userExist = await User.findOne({email:profile?.email})
-      //     if (!userExist) {
-      //       await User.create({
-      //         email: profile?.email,
-      //         name: profile?.name,
-      //         image: profile?.picture
-      //       })
-      //     }
-  
-      //     return true
-  
-      //   } catch(error){
-      //     console.log(error)
-      //     return false
-      //   }
-      // },
-      // async session({ session }) {
-      //   const sessionUser = await User.findOne({email: session.user?.email})
-      //   session.user = sessionUser
-      //   return session;
-      // },
       async jwt({ token, account }) {
         // If the user is logging in, persist the accessToken in the token object
         if (account) {
@@ -46,13 +24,10 @@ export const authOptions: NextAuthOptions = {
         return token;
       },
       
-      async session({ session, token ,user }) {
-        session.user.accessToken = token?.accessToken as string;
-        session.user.id = token?.id as string;
+      async session({ session ,user }) {
+        session.user.id = user.id as string;
         return session;
     },
-
-    
   },
   
   secret: process.env.NEXTAUTH_SECRET

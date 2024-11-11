@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
 export const PredictSchemaVl = z.object({
-  nextDay: z.number()
+  selectedAsset: z.string(),
+  nextDayRate: z.number()
 });

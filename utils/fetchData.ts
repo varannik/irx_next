@@ -1,7 +1,6 @@
 // Fetch data from dymanic routes 
 
 export const fetchCollectionData = async <T>(collection:string , revalidate: number): Promise<T>=> {
-  console.log(`${process.env.API_URL}/api/int/${collection}`)
     const res = await fetch(`${process.env.API_URL}/api/int/${collection}`, {
       next: { revalidate },
     });
