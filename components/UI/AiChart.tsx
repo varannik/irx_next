@@ -45,8 +45,6 @@ export function Forecast() {
   
 
 
-
-
   useEffect(() => {
     if (data && currentAsset.name == 'US Dollar'){
 
