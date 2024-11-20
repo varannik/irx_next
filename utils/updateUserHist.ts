@@ -1,7 +1,5 @@
 import clientPromise from "@/lib/gMangodb";
 import { IDayPredict, IDayPredictAsset, IPredict, IUpdateAssetRequest, IUserHistoryPredict } from "@/types/HistPredict";
-import { ObjectId } from "mongodb";
-import { string } from "zod";
 
 
 // Utility to get the MongoDB collection
@@ -16,7 +14,6 @@ export const getUserHistLastUpdate = async (userId:string)=> {
     
     // Return the lastUpdate field, or handle if not found
     if (user) {
-      console.log(user.lastUpdate)
       return user.lastUpdate;
     } else {
       return 'No assets or lastUpdate found for the given userId.';
