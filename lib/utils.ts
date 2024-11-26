@@ -49,13 +49,14 @@ export function trackerColor (value: boolean | null ){
     return "bg-green-high"
   } if (value == false){
     return "bg-red-high"
+  } else {
+    return "bg-gray-600"
   }
 }
 
 
 export function futureTrendColor(value: number | null ):AvailableChartColorsKeys{
 
-  console.log("begai inja", value)
   if (value == null || undefined){
     return 'gray'
   } if (value > 0){
@@ -80,6 +81,21 @@ export function resModule (data: any, assetName: string, day: string, att: strin
   }
 }
 
+export function resModuleB (data: any, assetName: string, day: string, att: string):boolean | null {
+  if (data) {
+    let ad = data[assetName].find((obj: IDayPredictAsset) => obj[day])
+    if (ad) {
+      return ad[day][att]
+    } else {
+      return null
+    }
+  } else {
+    return null
+  }
+}
+
+
+
 export function createTrackData({
   module
   ,type
@@ -100,7 +116,7 @@ export function createTrackData({
 
     if (type == "c"){
       return {
-        color: trackerColor(resModule(module, asset, d, 'csp'))
+        color: trackerColor(resModuleB(module, asset, d, 'csp'))
         ,tooltip: {
           date: d
           , "Forcasted Shift %": resModule(module, asset, d, 'pct_predicted')
