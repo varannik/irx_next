@@ -1,7 +1,7 @@
 "use server";
 
 import { authOptions } from "@/utils/auth";
-import { getCollection } from "@/utils/getCollection";
+import { getCollection } from "@/utils/dbActions/getCollection";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 

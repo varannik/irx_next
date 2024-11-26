@@ -8,7 +8,6 @@ import useSelectedCalendar from "@/stores/useSelectedCalendarStore";
 import useSelectRangeGaugeChart from "@/stores/useSelectRangeGaugeChart";
 import { Card } from "@/components/UI/cardTremor"
 import SpinerIcon from "./icons/Spinner";
-import { IndexRange } from "@/utils/keyIndex";
 import { SparkAreaChart } from "./sparkChart";
 import { cx } from "@/lib/utils";
 import { I7Days, IAsset } from "@/types/SimpleTrend";
@@ -65,7 +64,7 @@ function limitsArcs(data: objAsset) {
   return [{ limit: low }, { limit: mid }, { limit: high }]
 }
 
-export default function MaxMinGauge({CurrentRateData, SimpleData, MaxMinData}:{CurrentRateData:IAssetCurrentRate, SimpleData:IAsset, MaxMinData:IMaxMinCal}) {
+export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }: { CurrentRateData: IAssetCurrentRate, SimpleData: IAsset, MaxMinData: IMaxMinCal }) {
 
   const { currentAsset } = useSelectedAsset()
   const { currentCalendar } = useSelectedCalendar()
@@ -76,7 +75,7 @@ export default function MaxMinGauge({CurrentRateData, SimpleData, MaxMinData}:{C
   const [currentMaxMin, setCurrentMaxMin] = useState<IDayMaxMin>({ 'min': 0, 'max': 100 })
   const [current7dData, setCurrent7dData] = useState<Record<string, any>[]>([])
   const [currentDiffVal, setCurrentDiffVal] = useState<string | null>(null)
-  
+
   const [color, setColor] = useState<"positive" | "negative" | 'gray'>('gray')
 
 
@@ -114,22 +113,17 @@ export default function MaxMinGauge({CurrentRateData, SimpleData, MaxMinData}:{C
   }, [currentAsset, MaxMinData, currentCalendar, selectedRange, currentMaxMin, CurrentRateData]);
 
 
-  if (currentMaxMin.min == 0 || current7dData == null || currentRate==0) return (
+  if (currentMaxMin.min == 0 || current7dData == null || currentRate == 0) return (
 
     <Card  >
       <div className="flex flex-col divide-y-1 divide-div-diff gap-4 ">
         <div>
-          <p className="text-base font-normal text-text-active">7 Days</p>
+          <p className="text-lg font-normal text-text-active">Momentum</p>
           <div className="flex items-center justify-center">
             <SpinerIcon />
           </div>
         </div>
-        <div>
-          <p className="text-base font-normal text-text-active">Max and Min</p>
-          <div className="flex items-center justify-center">
-            <SpinerIcon />
-          </div>
-        </div>
+
       </div>
 
     </Card>
@@ -138,81 +132,82 @@ export default function MaxMinGauge({CurrentRateData, SimpleData, MaxMinData}:{C
   return (
 
     <Card >
-      <div className="flex flex-col divide-y-1 divide-div-diff gap-4 ">
+      {/* Header with 2 row span */}
+      <div className="grid grid-cols-8 h-full row-span-1  ">
 
-        {/* Last 7 Days  */}
-        <div className="flex mb-3">
-          <div className="flex grow items-center space-x-2.5">
-            <div className="flex-none font-medium text-gray-300">7 Days</div>
-            <div className="flex justify-center grow max-w-2xl">
-              <SparkAreaChart
-                data={current7dData}
-                categories={["rate"]}
-                index={"dyn"}
-                colors={[color]}
-                className="h-8 w-20  sm:h-10 sm:w-36"/>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2.5 pl-4 ">
-            <span className={cx(
-              "rounded px-2 py-1 text-sm font-medium text-white",
-              color == 'positive'
-                ? "bg-red-high"
-                : color == 'negative' ? "bg-green-high" : "bg-gray-mid"
-            )}>
-              % {currentDiffVal}
-            </span>
+        <div className="col-span-3 text-lg font-normal text-text-active ">Momentum</div>
+
+        <div className="flex col-span-3 font-semibold text-gray-50 items-center justify-center ">
+          <SparkAreaChart
+            data={current7dData}
+            categories={["rate"]}
+            index={"dyn"}
+            colors={[color]}
+            className="h-8 w-24  sm:h-10 " />
+        </div>
+
+        <div className="col-span-2 flex items-center justify-center ml-2 ">
+          <div className={cx(
+            "rounded px-2 text-xs h-8 flex items-center  font-medium text-white",
+            color == 'positive'
+              ? "bg-red-high"
+              : color == 'negative' ? "bg-green-high" : "bg-gray-mid"
+          )}>
+            % {currentDiffVal}
           </div>
         </div>
 
-        {/* Min Max */}
-        <div className="pt-3">
-          <div className="flex justify-between">
-            <div>
-              <p className="text-base font-normal text-text-active">Max and Min</p>
-            </div>
-          </div>
-          <div className=" py-5">
-            <div className="flex justify-center items-center">
-              <GaugeComponent
-                value={currentRate}
-                type="radial"
-                labels={{
-                  tickLabels: {
-                    type: "outer",
 
-                    ticks: [
-                      { value: adjustMinMax(currentMaxMin)['min'] },
-                      { value: adjustMinMax(currentMaxMin)['max'] }
-                    ]
-                  }
-                  ,
-                }}
-                arc={{
-                  colorArray: ['#008068', '#9EABB3', '#D64E52'],
-                  subArcs: limitsArcs(adjustMinMax(currentMaxMin)),
-                  padding: 0.02,
-                  width: 0.2
-                }}
-                minValue={adjustMinMax(currentMaxMin)['min']}
-                maxValue={adjustMinMax(currentMaxMin)['max']}
-                pointer={{
-                  elastic: true,
-                  animationDelay: 0,
-                  type: "needle",
-                  color: "#edf6f9",
+      </div>
 
-                }}
-              />
-            </div>
 
-          </div>
 
-          {/* Select current week or month */}
-          <SelectRangeDays />
-          {/* </div> */}
-        </div>
+      {/* End of header  */}
+      {/* Chart or content  */}
 
+      <div className="flex row-span-5 h-full items-center justify-center">
+        <GaugeComponent
+          value={currentRate}
+          type="radial"
+          className="w-72 h-56"
+          labels={{
+            tickLabels: {
+              type: "outer",
+
+              ticks: [
+                { value: adjustMinMax(currentMaxMin)['min'] },
+                { value: adjustMinMax(currentMaxMin)['max'] }
+              ]
+            }
+            ,
+          }}
+          arc={{
+            colorArray: ['#008068', '#9EABB3', '#D64E52'],
+            subArcs: limitsArcs(adjustMinMax(currentMaxMin)),
+            padding: 0.02,
+            width: 0.2
+          }}
+          minValue={adjustMinMax(currentMaxMin)['min']}
+          maxValue={adjustMinMax(currentMaxMin)['max']}
+          pointer={{
+            elastic: true,
+            animationDelay: 0,
+            type: "needle",
+            color: "#edf6f9",
+
+          }}
+        />
+      </div>
+      {/* End of chart area */}
+      {/* Description area*/}
+      <div className=" row-span-1 h-full">
+         
+      </div>
+      {/* End Description */}
+
+      {/* Adjustments area 3 row span */}
+      <div className="  row-span-3 h-full">
+        <SelectRangeDays />
       </div>
     </Card>
   )

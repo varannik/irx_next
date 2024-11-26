@@ -5,30 +5,52 @@ import Trends from '@/components/Trends';
 import MATrend  from '@/components/MATrend';
 import MaxMin from '@/components/MaxMin';
 
+const items = [
+  { id: 1 
+    ,content: <MaxMin />
+  }
+  ,{
+    id:2
+    ,content: <Trends />
+   }
+   ,{
+    id:5
+    ,content: <MATrend />
+   }
+
+  ,{
+    id:4
+    ,content: <Bands />
+   }
+
+   ,{
+    id:3
+    ,content: <WeekDays />
+   }
+]
+
+
 
 export default function Analytics() {
 
   return (
-    <>
-      <Card className='mt-9 '>
-        <div className=" grid lg:grid-cols-2 grid-cols-1 mt-3  gap-x-7 gap-y-6   mx-auto max-w-7xl px-2 ">
-          <div className=' rounded-lg shadow-sm border border-gray-800 '>
-            <MaxMin />
-          </div>
-          <div className='rounded-lg shadow-sm border border-gray-800 '>
-            <Trends />
-          </div>
-          <div className='rounded-lg shadow-sm border border-gray-800 '>
-            <WeekDays />
-          </div>
-          <div className='rounded-lg shadow-sm border border-gray-800 '>
-            <Bands />
-          </div>
-          <div className='rounded-lg shadow-sm border border-gray-800 '>
-            <MATrend />
-          </div>
-        </div>
-      </Card>    
-    </>
+
+
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row  gap-x-3 gap-y-4  mb-14">
+      
+      {items.map((item) => (
+        <div key={item.id} className=" ">
+        {item.content}
+      </div>
+
+    ))}
+
+    </div>
+
+
+
+
   );
 }
+
+

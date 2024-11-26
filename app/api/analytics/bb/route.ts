@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { BBAssetSchemaValidation } from './vl'
-import { connectDB } from '@/utils/db'
+import { connectDB } from '@/utils/dbActions/db'
 import BB  from '@/models/BollingerBands'; // Adjust the path as necessary
 
 

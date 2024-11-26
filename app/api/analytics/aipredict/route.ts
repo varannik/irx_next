@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { AiPredictSchemaValidation } from './vl'
-import { connectDB } from '@/utils/db'
+import { connectDB } from '@/utils/dbActions/db'
 import AiPredict  from '@/models/AiPredict'; // Adjust the path as necessary
 
 
@@ -69,4 +69,3 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ message: 'Unauthorized source' }, { status: 401 });
   }
 }
-

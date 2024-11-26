@@ -1,5 +1,5 @@
 import { IKey } from "@/stores/useSelectedCalendarStore";
-import { IndexCurrentCalendar } from "@/utils/keyIndex";
+import { IndexCurrentCalendar } from "@/utils/global/keyIndex";
 
 export function getWeekdayName(caltype: IKey, day: number| null, nameType: '2l' | 'full'): string {
 

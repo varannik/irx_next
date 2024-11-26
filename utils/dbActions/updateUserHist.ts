@@ -1,5 +1,5 @@
 import clientPromise from "@/lib/gMangodb";
-import { IDayPredict, IDayPredictAsset, IPredict, IUpdateAssetRequest, IUserHistoryPredict } from "@/types/HistPredict";
+import { IDayPredict, IDayPredictAsset, IUpdateAssetRequest, IUserHistoryPredict } from "@/types/HistPredict";
 
 
 // Utility to get the MongoDB collection

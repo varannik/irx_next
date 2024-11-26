@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { AssetCollectionSchemaVal } from './vl'
-import { connectDB } from '@/utils/db'
+import { connectDB } from '@/utils/dbActions/db'
 import Country  from '@/models/Countries'; // Adjust the path as necessary
 
 

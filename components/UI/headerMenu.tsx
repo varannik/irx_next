@@ -11,7 +11,7 @@ import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
 import MainMenuDesktop from './mainMenuDesktop'
 import WaitToRefresh from './waitToRefresh'
 import { Logo } from '../QuanticalLogo'
-import { getCorrectTimeZone } from '@/utils/getCorrectTimeZone'
+import { getCorrectTimeZone } from '@/utils/global/getCorrectTimeZone'
 
 
 
@@ -67,7 +67,7 @@ export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
         <div
           className={clsx([
             // Base styles
-            'fixed items-center flex mx-auto max-w-7xl px-6 lg:px-8 inset-x-0 top-0 h-14  pl-5 pr-2 py-2 text-sm z-50  divide-x divide-div-diff overflow-hidden rounded-b-lg bg-bg-layer1 shadow',
+            'fixed items-center flex mx-auto max-w-7xl inset-x-0 top-0 h-12  pl-5 pr-2 py-2 text-sm z-50  divide-x divide-div-diff overflow-hidden rounded-b-lg bg-bg-layer1 shadow',
             // Shared closed styles
             'data-[closed]:opacity-0',
             // Entering styles
@@ -92,7 +92,7 @@ export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
             
           </div>
           <div className='grow ml-6'>
-            <div className='hidden lg:flex '>
+            <div className='hidden md:flex '>
              <MainMenuDesktop />
             </div>
           

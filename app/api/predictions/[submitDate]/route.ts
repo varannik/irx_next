@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCollection } from '@/utils/getCollection';
-import { parseDate } from '@/utils/parseDate';
+import { getCollection } from '@/utils/dbActions/getCollection';
+import { parseDate } from '@/utils/global/parseDate';
 import { jwtMiddleware } from '@/utils/jwt';
 
 

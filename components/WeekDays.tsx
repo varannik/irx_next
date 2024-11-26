@@ -1,4 +1,4 @@
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import WeekDayBar from './UI/weekDayBar';
 import { IWeekDayCal } from '@/types/WeekDays';
 

@@ -4,8 +4,8 @@ import useSelectedAsset from "@/stores/useSelectedAssetStore";
 import { IAssetCurrentRate } from "@/types/Current";
 import { Session } from "next-auth";
 import { forcastAction } from "@/app/actions/forcastAction";
-import { IUserForcastRes } from "@/types/UserDailyPredict";
-import { getToday } from "@/utils/currentday";
+import { IUserForcastRes, IUserPredict } from "@/types/UserDailyPredict";
+import { getToday } from "@/utils/global/currentday";
 
 import {
     SliderValue,
@@ -35,13 +35,13 @@ const currentDay = today.toISOString().split('T')[0];
 today.setDate(today.getDate() + 1); // Adds one day
 const nextDay = today.toISOString().split('T')[0];
 
-function getPredictOfAsset({ selectedAsset, ForcastedRateS }: { selectedAsset: string, ForcastedRateS: IUserForcastRes }): predictOfAsset {
-    const asset = ForcastedRateS.data.find((item) => item.selectedAsset === selectedAsset);
+function getPredictOfAsset({ selectedAsset, ForcastedRateS }: { selectedAsset: string, ForcastedRateS: IUserPredict[] }): predictOfAsset {
+    const asset = ForcastedRateS.find((item) => item.selectedAsset === selectedAsset);
     return asset?.nextDayRate || null;
 }
 
 
-export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserForcastRes, AssetListData: IAsset[] }) {
+export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[] }) {
 
     const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
     const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
@@ -108,7 +108,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
 
     if (currentAsset.name !== 'US Dollar') return (
-        <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2" >
+        <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2 bg-black" >
             <CardHeader className="flex flex-col items-start px-4 pb-5 pt-4">
                 <div className="flex justify-between w-full ">
                     <div className="text-large grow-1">Forcast details</div>
@@ -130,7 +130,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
     return (
         <>
-            <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2" >
+            <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2 bg-black" >
                 <CardHeader className="flex flex-col items-start px-4 pb-5 pt-4">
                     <div className="flex justify-between w-full ">
                         <div className="text-large grow-1">Forcast details</div>

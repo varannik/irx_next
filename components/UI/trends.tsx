@@ -36,7 +36,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           "inline-flex m-0 bg-bg-layer3 hover:bg-hov-c items-center justify-around",
-          "flex-row-reverse min-w-full  cursor-pointer rounded-lg gap-1  border-2 border-transparent",
+          "flex-row-reverse min-w-full h-12 cursor-pointer rounded-lg gap-1  border-2 border-transparent",
           "data-[selected=true]:border-border-selected"
         ),
         control: 'bg-gray-light ',
@@ -51,15 +51,15 @@ export const CustomRadio = (props: any) => {
 };
 
 type d = {
-  date:string,
-  rate:number
+  date: string,
+  rate: number
 }
 
-export function TrendsChart({DurationData, PeriodData}:{PeriodData:Record<string, IAssetData>, DurationData:IAssetDays[]}) {
+export function TrendsChart({ DurationData, PeriodData }: { PeriodData: Record<string, IAssetData>, DurationData: IAssetDays[] }) {
 
   const { currentCalendar } = useSelectedCalendar()
   const { currentAsset } = useSelectedAsset()
-  
+
   const [selectedRange, setSelectedRange] = useState('p_week')
 
   const [trendData, setTrendData] = useState<d[]>([])
@@ -81,7 +81,7 @@ export function TrendsChart({DurationData, PeriodData}:{PeriodData:Record<string
         let number = Number(range);
 
         const assetdata = DurationData.find(item => item.asset === currentAsset.name);
-        if (assetdata!==undefined){
+        if (assetdata !== undefined) {
           let filteredData = assetdata.trend.slice(-number)
           setTrendData(filteredData)
         }
@@ -89,13 +89,13 @@ export function TrendsChart({DurationData, PeriodData}:{PeriodData:Record<string
     }
   }, [currentCalendar, currentAsset, selectedRange])
 
-  const latestValue = trendData.length==0 ? 0 : trendData[trendData.length - 1].rate 
+  const latestValue = trendData.length == 0 ? 0 : trendData[trendData.length - 1].rate
 
 
-  if (trendData == null || trendData?.length==0) return (
+  if (trendData == null || trendData?.length == 0) return (
 
-    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
-      <p className="text-base font-normal text-text-active">Trend</p>
+    <Card  >
+      <p className="text-lg font-normal text-text-active">Trend</p>
       <div className="flex items-center justify-center">
         <SpinerIcon />
       </div>
@@ -104,16 +104,27 @@ export function TrendsChart({DurationData, PeriodData}:{PeriodData:Record<string
 
   return (
     <Card >
-      <div className="flex justify-between">
-        <div>
-          <p className="text-base font-normal text-text-active">Trend</p>
-          <p className="mt-2 text-xl font-semibold text-gray-50">
+      {/* Header with 2 row span */}
+
+
+
+      <div className="grid grid-cols-6 h-full row-span-1  ">
+
+          <div className="col-span-4 text-lg font-normal text-text-active  ">Trend</div>
+
+        <div className="col-span-2 text-lg font-semibold text-gray-50 justify-self-end">
             {lastRate(datas, latestValue)}
-          </p>
-        </div>
+          </div>
       </div>
-      <div>
-      <AreaChart
+
+
+      {/* End of header  */}
+      {/* Chart or content  */}
+
+
+
+      <div className="flex  row-span-5 h-full items-center justify-center">
+        <AreaChart
           data={trendData}
           index="date"
           categories={["rate"]}
@@ -121,7 +132,7 @@ export function TrendsChart({DurationData, PeriodData}:{PeriodData:Record<string
           showYAxis={false}
           startEndOnly={true}
           autoMinValue={true}
-          className="mb-3 mt-8 h-48"
+          className="h-56"
           tooltipCallback={(props) => {
             if (props.active) {
               setDatas((prev) => {
@@ -132,57 +143,86 @@ export function TrendsChart({DurationData, PeriodData}:{PeriodData:Record<string
               setDatas(null)
             }
             return null
-          }}  
+          }}
         />
       </div>
 
+
+      {/* End of chart area */}
+      {/* Description area*/}
+      <div className=" row-span-1 h-full">
+         
+      </div>
+      {/* End Description */}
+
+      {/* Adjustments area 3 row span */}
+
+
+      <div className="  row-span-3 h-full">
       <RadioGroup
+        classNames={{
+          'base':"h-full  gap-0"
+          ,'wrapper':"h-full  py-0 gap-0 "
+          ,'label':""
+        }}
         defaultValue={selectedRange}
         onValueChange={setSelectedRange}
         description=" ">
-        <p className="text-sm text-gray-light">
-          Current
-        </p>
-        <div className="grid grid-cols-3 gap-1">
+          <div className="grid  h-full  grid-rows-3">
 
-          <CustomRadio description="" value="p_week">
-            Week
-          </CustomRadio>
+          <div className="grid place-items-center grid-cols-3 gap-1">
+            <CustomRadio description="Current" value="p_week">
+              Week
+            </CustomRadio>
 
-          <CustomRadio description="" value="p_month">
-            Month
-          </CustomRadio>
+            <CustomRadio description="Current" value="p_month">
+              Month
+            </CustomRadio>
 
-          <CustomRadio description="" value="p_quarter">
-            Quarter
-          </CustomRadio>
+            <CustomRadio description="Current" value="p_quarter">
+              Quarter
+            </CustomRadio>
+          </div>
 
-        </div>
-        <p className="text-sm text-gray-light">
-          Past
-        </p>
-        <div className="grid grid-cols-3  gap-1">
 
-          <CustomRadio description="Days" value="d_7">
-            7
-          </CustomRadio>
-          <CustomRadio description="Days" value="d_30">
-            30
-          </CustomRadio>
-          <CustomRadio description="Days" value="d_90">
-            90
-          </CustomRadio>
-        </div>
-        <div className="grid grid-cols-2  gap-1">
-          <CustomRadio description="180 Days" value="d_180">
-            6 months
-          </CustomRadio>
 
-          <CustomRadio description="365 Days" value="d_365">
-            1 Year
-          </CustomRadio>
-        </div>
+          <div className="grid  place-items-center grid-cols-3  gap-1">
+            <CustomRadio description="Days" value="d_7">
+              7
+            </CustomRadio>
+            <CustomRadio description="Days" value="d_30">
+              30
+            </CustomRadio>
+            <CustomRadio description="Days" value="d_90">
+              90
+            </CustomRadio>
+          </div>
+
+
+          <div className="grid  place-items-center grid-cols-2  gap-1">
+            <CustomRadio description="180 Days" value="d_180">
+              6 months
+            </CustomRadio>
+            <CustomRadio description="365 Days" value="d_365">
+              1 Year
+            </CustomRadio>
+          </div>
+
+
+
+
+          </div>
+
+
       </RadioGroup>
+      </div>
+
+
+
+
+
+
+      {/* End of Adjustments */}
     </Card>
   )
 }

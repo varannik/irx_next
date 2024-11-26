@@ -4,18 +4,25 @@ import React from "react"
 import * as HoverCardPrimitives from "@radix-ui/react-hover-card"
 
 import { cx } from "@/lib/utils"
+import { recCatTrackTooltip } from "@/types/Forcasts"
 
-interface Itooltip {
-  date:string,
-  "Real Change": number,
-  "Predicted Change":number
+
+function trackTooltipColor (value: number | null){
+  if (value == null){
+    return 'text-gray-500'
+  } if (value > 0 ) {
+    return 'text-red-500'
+  } if (value < 0 ){
+    return 'text-green-500'
+  }
 }
+
 
 
 interface TrackerBlockProps {
   key?: string | number
   color: string
-  tooltip: Itooltip
+  tooltip: recCatTrackTooltip
   hoverEffect?: boolean
   defaultBackgroundColor?: string
 }
@@ -67,12 +74,10 @@ const Block = ({
               Date: 
             </div>
             <div >
-              Real Change:
-  
+              Actual Shift %:
             </div>
             <div>
-              Predicted Change:
-
+                Forcasted Shift %:
             </div>
             </div>
             <div className="grid col-span-1">
@@ -80,21 +85,16 @@ const Block = ({
               {tooltip?.date}
               </div>
               <div>
-              <span className={ tooltip?.["Real Change"] > 0 ? 'text-red-500' : tooltip?.["Real Change"] < 0 ? 'text-green-500' : 'text-gray-500'}>
-                {tooltip?.["Real Change"]}%
+              <span className={trackTooltipColor(tooltip["Actual Shift %"])}>
+                {tooltip?.["Actual Shift %"]}%
               </span>
               </div>
               <div>
-              <span className={tooltip?.["Predicted Change"] > 0 ? 'text-red-500' : tooltip?.["Predicted Change"] < 0 ? 'text-green-500' : 'text-gray-500'}>
-              { tooltip?.["Predicted Change"]}%
+              <span className={trackTooltipColor(tooltip["Forcasted Shift %"])}>
+              { tooltip?.["Forcasted Shift %"]}%
               </span>
               </div>
-
             </div>
-
-
-
-
 
           </div>
         </HoverCardPrimitives.Content>

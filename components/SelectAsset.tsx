@@ -1,4 +1,4 @@
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import Assets from './UI/Assets';
 import { IAssets } from '@/types/Assets';
 

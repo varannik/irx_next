@@ -9,10 +9,10 @@ import SpinerIcon from "./icons/Spinner"
 import { ICurrencyRecord, IMAModel } from "@/types/MA"
 
 
-export function MA({MAData}:{MAData:IMAModel}) {
+export function MA({ MAData }: { MAData: IMAModel }) {
 
   const { currentAsset } = useSelectedAsset()
-  const [assetData, setAssetData] = useState<ICurrencyRecord[] | [] >([])
+  const [assetData, setAssetData] = useState<ICurrencyRecord[] | []>([])
 
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [value, setValue] = useState<LineChartEventProps>(null)
@@ -31,14 +31,14 @@ export function MA({MAData}:{MAData:IMAModel}) {
   }: {
     value: string,
     label: string
-    key:string
+    key: string
   }) {
     return (
 
       <Checkbox key={key} classNames={{
         base: cn(
 
-          "flex w-full max-w-md bg-content1 mb-4 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
+          "flex w-full max-w-md bg-content1 -m-0 h-12 bg-bg-layer3 hover:bg-hov-c  items-center justify-around",
           "items-center justify-start ",
           "cursor-pointer justify-right rounded-lg border-2 border-transparent ",
           "data-[selected=true]:border-border-selected",
@@ -51,7 +51,7 @@ export function MA({MAData}:{MAData:IMAModel}) {
 
   useEffect(() => {
 
-    if (MAData !==null){
+    if (MAData !== null) {
       const currencyData: ICurrencyRecord[] = MAData.ma[currentAsset.name];
       const sortedData = currencyData.sort((a: { date: string | number | Date }, b: { date: string | number | Date }) => new Date(a.date).getTime() - new Date(b.date).getTime());
       setAssetData(sortedData)
@@ -67,9 +67,9 @@ export function MA({MAData}:{MAData:IMAModel}) {
 
 
 
-  if (assetData.length == 0  ) return (
-    <Card className="mx-auto  max-w-lg items-center justify-between px-4 py-3.5" >
-      <p className="text-base font-normal text-text-active">Moving average</p>
+  if (assetData.length == 0) return (
+    <Card  >
+      <p className="text-lg font-normal text-text-active">Moving average</p>
       <div className="flex items-center justify-center">
         <SpinerIcon />
       </div>
@@ -79,12 +79,14 @@ export function MA({MAData}:{MAData:IMAModel}) {
 
   return (
     <Card >
+      {/* Header with 1 row span */}
+      <div className="grid grid-cols-8 h-full row-span-1  ">
+        <div className="col-span-5 text-lg font-normal text-text-active ">Moving average</div>
+      </div>
+      {/* End of header  */}
+      {/* Chart or content  */}
+      <div className="flex  row-span-5 h-full ">
 
-        <div className="flex justify-between">
-            <div>
-              <p className="text-base font-normal text-text-active">Moving average</p>
-            </div>
-          </div>
 
         <LineChart
 
@@ -98,10 +100,10 @@ export function MA({MAData}:{MAData:IMAModel}) {
           onValueChange={(v) => setValue(v)}
           colors={['blue', 'gray', 'gray', "gray", "gray", "gray", "gray", "gray"]}
           showGridLines={false}
-          className="mb-3 mt-8 h-48"
+          className="h-56"
           showTooltip={true}
-          refAreaX1={assetData.length > 0 ? assetData[assetData.length-2].date : 'null'}
-          refAreaX2={assetData.length > 0 ? assetData[assetData.length-1].date : 'null'}
+          refAreaX1={assetData.length > 0 ? assetData[assetData.length - 2].date : 'null'}
+          refAreaX2={assetData.length > 0 ? assetData[assetData.length - 1].date : 'null'}
           tooltipCallback={(props) => {
             if (props.active) {
               setDatas((prev: any) => {
@@ -115,45 +117,61 @@ export function MA({MAData}:{MAData:IMAModel}) {
           }}
         />
 
-        <div className="flex flex-col mt-5">
-          <CheckboxGroup
-            value={selected}
-            onValueChange={setSelected}
-            color="default"
-          >
-            <div className="flex justify-between " >
-              <div className="flex flex-col w-1/3 mx-1 gap-2">
-                <div className="text-sm text-gray-light mb-3">Short-Term</div>
-                {
-                  ShortTerm.map(item => {
-                    return CustumCheckBox({ value: item, label: item , key:item})
-                  })
-                }
-              </div>
+      </div>
 
-              <div className="flex flex-col w-1/3 mx-1 gap-2">
-                <div className="text-sm text-gray-light mb-3">Mid-Term</div>
-                {
-                  MidTerm.map(item => {
-                    return CustumCheckBox({ value: item, label: item , key:item})
-                  })
-                }
-              </div>
-
-              <div className="flex flex-col w-1/3 mx-1 gap-2">
-                <div className="text-sm text-gray-light mb-3">Long-Term</div>
-                {
-                  LongTerm.map(item => {
-                    return CustumCheckBox({ value: item, label: item, key:item })
-                  })
-                }
-              </div>
+      {/* End of chart area */}
+      {/* Description area*/}
+      <div className=" row-span-1 h-full">
+          <div className="grid grid-cols-3 place-items-center h-full">
+          <div className="text-sm text-gray-light ">Short-Term</div>
+          <div className="text-sm text-gray-light ">Mid-Term</div>
+          <div className="text-sm text-gray-light ">Long-Term</div>
+          </div>
+      </div>
 
 
+      {/* Adjustments area 3 row span */}
+      <div className="  row-span-3 h-full">
+        <CheckboxGroup
+        className="h-full"
+        classNames={{
+          base:'h-full'
+          ,'wrapper':'h-full'
+        }}
+          value={selected}
+          onValueChange={setSelected}
+          color="default"
+        >
+          <div className="grid grid-cols-3 h-full gap-1" >
+            <div className="grid grid-rows-3 place-items-center gap-1">
+              {
+                ShortTerm.map(item => {
+                  return CustumCheckBox({ value: item, label: item, key: item })
+                })
+              }
+            </div>
+            <div className="grid grid-rows-3  place-items-center gap-1">
+              {
+                MidTerm.map(item => {
+                  return CustumCheckBox({ value: item, label: item, key: item })
+                })
+              }
             </div>
 
-          </CheckboxGroup>
-        </div>
+            <div className="grid grid-rows-3  place-items-center gap-1">
+              {
+                LongTerm.map(item => {
+                  return CustumCheckBox({ value: item, label: item, key: item })
+                })
+              }
+            </div>
+
+
+          </div>
+
+        </CheckboxGroup>
+      </div>
+
     </Card>
   )
 }

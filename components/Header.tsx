@@ -1,5 +1,5 @@
 
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import HeaderMenu from './UI/headerMenu';
 import { IAssetCurrentRate } from '@/types/Current';
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCollection } from '@/utils/getCollection';
+import { getCollection } from '@/utils/dbActions/getCollection';
 
 
 export async function GET(req: NextRequest, { params }: { params: { collection: string } }) {

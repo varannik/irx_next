@@ -16,8 +16,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SelectAsset />
         <Footer />
 
-        <main className="py-10">
-          <div className="px-4 sm:px-6 lg:px-6">{children}</div>
+        <main className="mt-14">
+          <div className="container mx-auto max-w-7xl px-6">{children}</div>
         </main>
     </>
   )

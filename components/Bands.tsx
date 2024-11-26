@@ -2,7 +2,7 @@
 import { Card } from "@/components/UI/cardTremor"
 import { BollingerBands } from "./UI/BollingerBands"
 import { RSI } from "./UI/RSI"
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import { IRSIAsset } from "@/types/RSI";
 import { IBB } from "@/types/BB";
 
@@ -15,24 +15,34 @@ const Bands = async () => {
   ]);
   return (
     <Card >
-      <div className="flex flex-col divide-y-1 divide-div-diff gap-4">
-        <div>
-          <div className="flex justify-between">
-            <div>
-              <p className="text-base font-normal text-text-active">Bollinger Bands</p>
-            </div>
-          </div>
-          <BollingerBands BBData={BBData[0]}/>
-        </div>
-        <div className="pt-3">
-          <div className="flex justify-between">
-            <div>
-              <p className="text-base font-normal text-text-active">RSI</p>
-            </div>
-          </div>
-        </div>
+      {/* Header with 1 row span */}
+      <div className="grid grid-cols-8 h-full row-span-1  ">
+        <div className="col-span-5 text-lg font-normal text-text-active ">Bollinger Bands</div>
       </div>
+      {/* End of header  */}
+
+
+    
+      {/* Chart or content  */}
+      <div className="flex  row-span-5 h-full ">
+      <BollingerBands BBData={BBData[0]}/>
+      </div>
+      {/* End of chart area */}
+
+
+
+      {/* Header with 1 row span */}
+      <div className="grid grid-cols-8 h-full row-span-1  ">
+        <div className="col-span-5 text-lg font-normal text-text-active ">RSI</div>
+      </div>
+      {/* End of header  */}
+
+      {/* Chart or content  */}
+      <div className="flex  row-span-3 h-full ">
       <RSI RSIData={RSIData[0]}/>
+      </div>
+      {/* End of chart area */}
+      
     </Card>
   );
 };

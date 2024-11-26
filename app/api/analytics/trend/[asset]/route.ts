@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtMiddleware } from "@/utils/jwt";
 import { trendSchemaValidation } from "./vl";
-import { connectDB } from "@/utils/db";
+import { connectDB } from "@/utils/dbActions/db";
 import Trend from "@/models/Trend"; // Adjust the path as necessary
 
 export async function GET(request: NextRequest, { params }: { params: { asset:string}}) {

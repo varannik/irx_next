@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { RSISchemaValidation } from './vl'
-import { connectDB } from '@/utils/db'
+import { connectDB } from '@/utils/dbActions/db'
 import RSI  from '@/models/RSI'; // Adjust the path as necessary
 
 

@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { WeekDaysSchema } from './vl'
-import { connectDB } from '@/utils/db'
+import { connectDB } from '@/utils/dbActions/db'
 import WeekDays  from '@/models/WeekDays'; // Adjust the path as necessary
 
 

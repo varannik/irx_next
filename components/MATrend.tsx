@@ -1,4 +1,4 @@
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import {MA} from './UI/maTrend'
 import { IMAModel } from '@/types/MA';
 

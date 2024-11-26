@@ -41,7 +41,7 @@ export function RSI({RSIData}:{RSIData:IRSIAsset}) {
           onValueChange={(v) => setValue(v)}
           colors={['blue']}
           showGridLines={false}
-          className="mb-3 mt-8 h-48"
+          className=" h-40"
           showTooltip={true}
           refAreaX1={assetData.length > 0 ? assetData[assetData.length-2].date : 'null'}
           refAreaX2={assetData.length > 0 ? assetData[assetData.length-1].date : 'null'}

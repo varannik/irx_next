@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PredictSchemaVl } from './vl'
-import { getCollection } from '@/utils/getCollection';
+import { getCollection } from '@/utils/dbActions/getCollection';
 import { ObjectId } from 'mongodb';
-import { parseDate } from '@/utils/parseDate';
+import { parseDate } from '@/utils/global/parseDate';
 
 
 

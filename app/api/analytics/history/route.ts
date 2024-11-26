@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { vGetLastUpdate, vUpdateAssetRequestSchema, vUserHistoryPredictSchema } from './vl'
-import { getUserHistLastUpdate, insertFullData, sendHistUpdate } from '@/utils/updateUserHist';
+import { getUserHistLastUpdate, insertFullData, sendHistUpdate } from '@/utils/dbActions/updateUserHist';
 
 
 export async function GET(req:NextRequest){

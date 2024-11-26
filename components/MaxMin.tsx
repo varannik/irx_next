@@ -1,5 +1,5 @@
 
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import MaxMinGauge  from './UI/MaxMinGauge';
 import { IAssetCurrentRate } from '@/types/Current';
 import { IAssets } from '@/types/SimpleTrend';
@@ -15,7 +15,10 @@ const MaxMin = async () => {
   ]);
 
   return (
-        <MaxMinGauge CurrentRateData={CurrentRateData[0]} SimpleData={SimpleData[0].assets} MaxMinData = {MaxMinData[0]} />
+      
+      <MaxMinGauge CurrentRateData={CurrentRateData[0]} SimpleData={SimpleData[0].assets} MaxMinData = {MaxMinData[0]} />
+
+        
   );
 };
 

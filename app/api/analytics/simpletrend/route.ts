@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
 import { SimpleTrendSchemaVl } from './vl'
-import { connectDB } from '@/utils/db'
+import { connectDB } from '@/utils/dbActions/db'
 import SimpleTrend  from '@/models/SimpleTrend'; // Adjust the path as necessary
 
 

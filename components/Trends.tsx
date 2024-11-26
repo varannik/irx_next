@@ -1,6 +1,6 @@
 import { TrendsChart } from './UI/trends';
 import { ICalAsset } from '@/types/PeriodTrend';
-import { fetchCollectionData } from '@/utils/fetchData';
+import { fetchCollectionData } from '@/utils/apiActions/fetchData';
 import { IAssetDays } from '@/types/DurationTrend';
 
 const Trend = async () => {
