@@ -9,7 +9,7 @@ export default function Alert() {
         </div>
         <div className="ml-3">
           <h3 className="text-sm font-medium text-yellow-800">Attention needed</h3>
-          <div className="mt-2 text-sm text-yellow-700">
+          <div className="mt-2 text-xs text-yellow-700">
             <p>
             The new forecast for the next day will be calculated and updated after 12 PM Tehran time.
             </p>

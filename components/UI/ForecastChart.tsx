@@ -11,13 +11,24 @@ import { AvailableChartColorsKeys } from "@/lib/chartUtils"
 import Alert from "./alert"
 import { IChartData, recCatTrack, recTrend } from "@/types/Forcasts"
 import { futureTrendColor } from "@/lib/utils"
+import { CategoryBar } from "./base/charts/catChart"
+import { IAssetCurrentRate } from "@/types/Current"
+import { IGenDayPredictions } from "@/types/GensPredictions"
 
 
 
+function refineCenterCatBar(center: any , adjust : any ):number{
+  if ( typeof center === 'number' && !isNaN(center)){
+    const p = (adjust - center)/center *100
+    return  ((p + 5) / 10) * 100
+  } else {
+    return 50
+  }
+} 
 
 
 
-export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData , Title:string, Cats:string[]}) {
+export function ForecastChart({ ChartData, Title, Cats, CurrentRateS}: { ChartData: IChartData , Title:string, Cats:string[], CurrentRateS:IAssetCurrentRate}) {
 
   const { currentAsset } = useSelectedAsset()
 
@@ -46,24 +57,37 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
   const [value, setValue] = useState<LineChartEventProps>(null)
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [colors, setColors] = useState<AvailableChartColorsKeys[]>(['blue', 'gray']);
+  const [currentRate, setCurrentRate] = useState<number>(0)
+  const [catBarCenter, setCatBarCenter] = useState<number | null | undefined>(0)
+
 
 
   useEffect(() => {
     if (ChartData && currentAsset.name == 'US Dollar') {
-
-
       const assetData = ChartData[currentAsset.name]
       setTrendData(assetData.trend)
       if (Title=="AI"){
         setTrackerData(assetData.track.AI)
+        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length-2]["AI Forcast"])
       }if(Title=='Community Polling'){
         setTrackerData(assetData.track.Voting)
+        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length-2]["Voting Forcast"])
       }
+
       
 
     }
   }, [currentAsset, ChartData])
 
+  useEffect(() => {
+    if (CurrentRateS !== null) {
+
+        let cr = CurrentRateS.currentrate[currentAsset.name]['price']['sell']
+        setCurrentRate(cr)
+
+        
+    }
+}, [CurrentRateS, currentAsset])
 
 
     useEffect(() => {
@@ -71,10 +95,7 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
         let freshColors:AvailableChartColorsKeys[] = ['blue',  'gray']
         let futureColor:AvailableChartColorsKeys = futureTrendColor(trackerData[trackerData.length-1].tooltip["Forcasted Shift %"])
         setColors(freshColors.concat(futureColor))
-        console.log(trackerData)
       }, [trackerData]);
-
-
 
   if (currentAsset.name !== 'US Dollar') return (
     <Card  >
@@ -88,7 +109,7 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
 
 
   if (ChartData == null) return (
-    <Card  >
+    <Card>
       <p className="text-lg font-normal text-text-active">{Title}</p>
       <div className="flex items-center justify-center">
         <SpinerIcon />
@@ -109,6 +130,18 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
 
 
             {/* Chart or content  */}
+            <div className="grid  items-start justify-center h-full row-span-1 w-full ">
+            <div className="w-60">
+            <CategoryBar
+              forcastedValue = {catBarCenter?.toLocaleString()}
+              values={[0,49,2,49]}
+              marker={{ value: refineCenterCatBar(catBarCenter, currentRate), tooltip: `RealTime: ${currentRate?.toLocaleString()}`, showAnimation: true }}
+              colors={["negative","negative", "gray","positive","positive"]}
+              className="mx-auto max-w-sm"
+            />
+            </div>
+            </div>
+
             <div className="flex row-span-5 h-full items-center justify-center">
             <LineChart
                         data={trendData}
@@ -122,7 +155,7 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
                         colors={colors}
                         connectNulls={true}
                         showGridLines={false}
-                        className="mb-3 mt-8 h-48"
+                        className="mb-1 mt-1 h-48"
                         showTooltip={true}
                         refAreaX1={trendData.length > 2 ? trendData[trendData.length-3].date : 'null'}
                         refAreaX2={trendData.length > 2 ? trendData[trendData.length-2].date : 'null'}
@@ -146,9 +179,9 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
 
             {/* End of chart area */}
             {/* Description area*/}
-            <div className=" row-span-1 h-full">
+            {/* <div className=" row-span-1 h-full">
              hi
-            </div>
+            </div> */}
             {/* End Description */}
 
             {/* Adjustments area 3 row span */}
@@ -158,12 +191,6 @@ export function ForecastChart({ ChartData, Title, Cats}: { ChartData: IChartData
       <Tracker className="w-full" data={trackerData} hoverEffect={true} />
       <Alert />
             </div>
-
-      
-
-
-
-
     </Card>
   )
 }

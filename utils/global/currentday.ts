@@ -7,6 +7,11 @@ export function getToday() {
     return now
   }
 
+  export function get2DayAgo(date = new Date()) {
+    const previousDay = new Date(date);
+    previousDay.setDate(date.getDate() - 2); // Subtract 1 day
+    return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+  }
 
 
 export function getPreviousDay(date = new Date()) {
@@ -14,3 +19,17 @@ export function getPreviousDay(date = new Date()) {
     previousDay.setDate(date.getDate() - 1); // Subtract 1 day
     return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
   }
+
+  export function getCurrentDay(date = new Date()) {
+    const previousDay = new Date(date);
+    return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+  }
+
+
+
+export function getNextDay(date = new Date()) {
+  const previousDay = new Date(date);
+  previousDay.setDate(date.getDate() + 1); // Subtract 1 day
+  return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+}
+

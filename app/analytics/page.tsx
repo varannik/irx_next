@@ -36,7 +36,7 @@ export default function Analytics() {
   return (
 
 
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row  gap-x-3 gap-y-4  mb-14">
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row  gap-x-3 gap-y-4  mb-14  ">
       
       {items.map((item) => (
         <div key={item.id} className=" ">

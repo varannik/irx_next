@@ -10,7 +10,7 @@ import { fetchGenForcast } from '@/utils/apiActions/fetchGenForcast';
 import { IGenDayPredictions } from '@/types/GensPredictions';
 import { fetchUserHist } from '@/utils/apiActions/fetchUserHist';
 import { IDayPredictAsset } from '@/types/HistPredict';
-import { getPreviousDay } from '@/utils/global/currentday';
+import { get2DayAgo, getNextDay, getPreviousDay } from '@/utils/global/currentday';
 import { ForecastChart } from './UI/ForecastChart';
 import { IChartData, recCatTrack, recTrack, recTrend } from '@/types/Forcasts';
 import { createTrackData, resModule } from '@/lib/utils';
@@ -18,8 +18,9 @@ import { createTrackData, resModule } from '@/lib/utils';
 
 const today = new Date();
 const currentDay = today.toISOString().split('T')[0];
-
+const tomorrow = getNextDay()
 const yesterday = getPreviousDay();
+const prePreDay = get2DayAgo()
 
 const Forcast = async () => {
   // Fetch data with caching applied in the external file
@@ -27,14 +28,23 @@ const Forcast = async () => {
 
 
   if (session) {
-    const [CurrentRateData, UserForcast, AssetListData, GenData, UserHist, AiHist, VoteHist] = await Promise.all([
+    const [ CurrentRateData, AssetListData, 
+            UserForcastF, UserForcastC,
+            GenDataF, GenDataC , 
+            UserHist, AiHist, VoteHist] = await Promise.all([
+
       fetchCollectionData<IAssetCurrentRate[]>('currentrates', 60),
-      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
       fetchCollectionData<IAssets[]>('countries', 60),
+
+      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
+      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
+
       fetchGenForcast<IGenDayPredictions>({ date: currentDay }, 60),
-      fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 10 }, 60),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 10 }, 60),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 10 }, 60)
+      fetchGenForcast<IGenDayPredictions>({ date: yesterday }, 60),
+
+      fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12 }, 60),
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 12 }, 60),
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 60)
     ]);
 
 
@@ -53,24 +63,24 @@ const Forcast = async () => {
       }
       const dataArr = el[asset]
 
-      const userf = UserForcast.find(item => item.selectedAsset === asset)
-      const genf = GenData.assets.find((obj) => obj[asset] !== undefined)
-      if (genf){
-
-        let genfAi = genf[asset].find((obj) => obj["AAAAAAAAAAAAAAAAAAAAAAAA"] !== undefined)
-        let genfVote = genf[asset].find((obj) => obj["BBBBBBBBBBBBBBBBBBBBBBBB"] !== undefined)
-        let preDayRec = dataArr.find((obj) => obj[yesterday] !== undefined)
-
-        let gaf = genfAi ? genfAi["AAAAAAAAAAAAAAAAAAAAAAAA"] : null
-        let gvf = genfVote ? genfVote["BBBBBBBBBBBBBBBBBBBBBBBB"]: null
-        let uf = userf ? userf.nextDayRate : null
-        let rr = preDayRec? preDayRec[yesterday]['actualrate'] : null 
 
 
-        // let preRealRate = resModule(UserHist, asset, yesterday, 'actualrate')
-        
+      //  FUTURE ------------------------------------
+      if (GenDataF){
+        const userf = UserForcastF.find(item => item.selectedAsset === asset)
+        const genf = GenDataF.assets.find((obj) => obj[asset] !== undefined)
+        const crr = CurrentRateData[0].currentrate[asset]['price']['sell']
+
+        if(genf){
+          let genfAi = genf[asset].find((obj) => obj["AAAAAAAAAAAAAAAAAAAAAAAA"] !== undefined)
+          let genfVote = genf[asset].find((obj) => obj["BBBBBBBBBBBBBBBBBBBBBBBB"] !== undefined)
+  
+          let gaf = genfAi ? genfAi["AAAAAAAAAAAAAAAAAAAAAAAA"] : null
+          let gvf = genfVote ? genfVote["BBBBBBBBBBBBBBBBBBBBBBBB"]: null
+          let uf = userf ? userf.nextDayRate : null
+
           trend.push({
-            date:  currentDay
+            date:  tomorrow
             ,"AI": null
             , "Votes": null
             , "You": null
@@ -79,78 +89,108 @@ const Forcast = async () => {
             , "Voting Forcast": gvf
             , "Your Forcast": uf
           })
-
-          track.AI.push(createTrackData({module:undefined, type:"f", asset, d:currentDay, preRealRate:rr, forecastedRate:gaf}))
-          track.Voting.push(createTrackData({module:undefined, type:"f", asset, d:currentDay,  preRealRate:rr, forecastedRate:gvf}))
+          track.AI.push(createTrackData({module:undefined, type:"f", asset, d:currentDay, preRealRate:crr, forecastedRate:gaf}))
+          track.Voting.push(createTrackData({module:undefined, type:"f", asset, d:currentDay,  preRealRate:crr, forecastedRate:gvf}))
+          track.You.push(createTrackData({module:undefined, type:"f", asset, d:currentDay,  preRealRate:crr, forecastedRate:uf}))
+        }
       }
+
+      // CURRENT ------------------------------------
+
+      if(GenDataC){
+
+        const userC = UserForcastC.find(item => item.selectedAsset === asset)
+        const genC = GenDataC.assets.find((obj) => obj[asset] !== undefined)
+        const crrC= CurrentRateData[0].currentrate[asset]['price']['sell']
+        const preRec =  dataArr.find((obj) => obj[prePreDay])
+        
       
+      if (genC){
+        let gencAi = genC[asset].find((obj) => obj["AAAAAAAAAAAAAAAAAAAAAAAA"] !== undefined)
+        let gencVote = genC[asset].find((obj) => obj["BBBBBBBBBBBBBBBBBBBBBBBB"] !== undefined)
 
+        let gaC = gencAi ? gencAi["AAAAAAAAAAAAAAAAAAAAAAAA"] : null
+        let gvC = gencVote ? gencVote["BBBBBBBBBBBBBBBBBBBBBBBB"]: null
+        let uC = userC ? userC.nextDayRate : null
+        let preRealRate = preRec ? preRec[prePreDay]['actualrate'] : null
 
+        trend.push({
+          date:  currentDay
+          ,"AI": gaC
+          , "Votes": gvC
+          , "You": uC
+          , "Real": crrC
+          , "AI Forcast": gaC
+          , "Voting Forcast": gvC
+          , "Your Forcast": uC
+        })
+  
+        track.AI.push(createTrackData({module:undefined, type:"c", asset, d:currentDay, preRealRate, forecastedRate:gaC, currRealRate: crrC}))
+        track.Voting.push(createTrackData({module:undefined, type:"c", asset, d:currentDay,  preRealRate, forecastedRate:gvC, currRealRate:crrC }))
+        track.Voting.push(createTrackData({module:undefined, type:"c", asset, d:currentDay,  preRealRate, forecastedRate:uC, currRealRate:crrC }))
+      }
+      }
+
+      // HISTORY 
       dataArr.forEach((item) => {
 
         const d = Object.keys(item)[0]
+
+        let date = new Date(d);
+        let limit = new Date()
+        // Subtract 1 day (24 hours * 60 minutes * 60 seconds * 1000 milliseconds)
+        date.setDate(date.getDate() - 1);
+        limit.setDate(limit.getDate() - 11);
+        // Format the date back to string (optional)
+        let oneDayAgo = date.toISOString().split('T')[0]; // Outputs: YYYY-MM-DD
+        let limits = limit.toISOString().split('T')[0]; // Outputs: YYYY-MM-DD
+
+
         const u = UserHist.find((obj) => obj[asset] !== undefined)
         const a = AiHist.find((obj) => obj[asset] !== undefined)
         const v = VoteHist.find((obj) => obj[asset] !== undefined)
 
-        if (d == yesterday) {
           trend.push({
             date: d
-            , "AI": resModule(a, asset, d, 'predictedrate')
-            , "Votes": resModule(v, asset, d, 'predictedrate')
-            , "You": resModule(u, asset, d, 'predictedrate')
-            , "Real": resModule(a, asset, d, 'actualrate')
-            , "AI Forcast": resModule(a, asset, d, 'predictedrate')
-            , "Voting Forcast": resModule(v, asset, d, 'predictedrate')
-            , "Your Forcast": resModule(u, asset, d, 'predictedrate')
+            , "AI": resModule(a, asset, oneDayAgo, 'predictedrate')
+            , "Votes": resModule(v, asset, oneDayAgo, 'predictedrate')
+            , "You": resModule(u, asset, oneDayAgo, 'predictedrate')
+            , "Real": resModule(a, asset, oneDayAgo, 'actualrate')
           })
-
-        } else {
-          trend.push({
-            date: d
-            , "AI": resModule(a, asset, d, 'predictedrate')
-            , "Votes": resModule(v, asset, d, 'predictedrate')
-            , "You": resModule(u, asset, d, 'predictedrate')
-            , "Real": resModule(a, asset, d, 'actualrate')
-
-          })
+        
+        if (d > limits){
+          track.AI.push(createTrackData({module:a, type:"h", asset, d:oneDayAgo}))
+          track.Voting.push(createTrackData({module:v, type:"h", asset, d:oneDayAgo}))
+          track.You.push(createTrackData({module:u, type:"h", asset, d:oneDayAgo}))
         }
-
-        track.AI.push(createTrackData({module:a, type:"c", asset, d}))
-        track.Voting.push(createTrackData({module:v, type:"c", asset, d}))
-        track.You.push(createTrackData({module:u, type:"c", asset, d}))
-
-
       })
       trend.sort((a:recTrend, b:recTrend) => new Date(a.date).getTime() - new Date(b.date).getTime());
       track.AI.sort((a:recCatTrack, b:recCatTrack) => new Date(a.tooltip.date).getTime() - new Date(b.tooltip.date).getTime());
       track.Voting.sort((a:recCatTrack, b:recCatTrack) => new Date(a.tooltip.date).getTime() - new Date(b.tooltip.date).getTime());
       track.You.sort((a:recCatTrack, b:recCatTrack) => new Date(a.tooltip.date).getTime() - new Date(b.tooltip.date).getTime());
       ChartData[asset] = { trend, track }
+
     })
-
-
 
     return (
 
       <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row  gap-x-3 gap-y-4  mb-14'>
         <div>
-        <ForecastChart ChartData={ChartData} Title='AI' Cats={['Real', 'AI', 'AI Forcast']}/>
+        <ForecastChart ChartData={ChartData} CurrentRateS={CurrentRateData[0]} Title='AI' Cats={['Real', 'AI', 'AI Forcast']}/>
         </div>
         <div>
-        <ForecastChart ChartData={ChartData} Title='Community Polling' Cats={['Real', 'Votes', 'Voting Forcast']}/>
+        <ForecastChart ChartData={ChartData} CurrentRateS={CurrentRateData[0]} Title='Community Polling' Cats={['Real', 'Votes', 'Voting Forcast']}/>
         </div>
         <div>
-        <SubmitPredictionForm User={session} CurrentRateS={CurrentRateData[0]} ForcastedRateS={UserForcast} AssetListData={AssetListData[0].assets} />
+        <SubmitPredictionForm User={session} CurrentRateS={CurrentRateData[0]} ForcastedRateS={UserForcastF} AssetListData={AssetListData[0].assets} />
         </div>
-        
         
       </div>
 
     );
   } else {
     <div>
-      kose amat
+      Nothing
     </div>
   }
 
