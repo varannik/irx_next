@@ -65,9 +65,9 @@ export function futureTrendColor(value: number | null ):AvailableChartColorsKeys
   if (value == null || undefined){
     return 'gray'
   } if (value > 0){
-    return 'positive'
-  } if (value < 0 ){
     return 'negative'
+  } if (value < 0 ){
+    return 'positive'
   } else {
     return 'gray'
   }

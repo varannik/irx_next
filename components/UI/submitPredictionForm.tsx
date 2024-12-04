@@ -8,9 +8,6 @@ import { IUserForcastRes, IUserPredict } from "@/types/UserDailyPredict";
 import { getToday } from "@/utils/global/currentday";
 
 import {
-    SliderValue,
-    Card,
-    CardHeader,
     CardBody,
     Button,
     Avatar,
@@ -20,12 +17,14 @@ import {
     Autocomplete,
     AutocompleteItem,
     Slider,
+    SliderValue,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import useProfileDrawerStore from "@/stores/useProfileDrawerStore";
 import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
 import Flag from "react-world-flags";
 import { IAsset } from "@/types/Assets";
+import { Card } from "./cardTremor";
 
 
 type predictOfAsset = number | null
@@ -109,42 +108,45 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
     if (currentAsset.name !== 'US Dollar') return (
         <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2 bg-black" >
-            <CardHeader className="flex flex-col items-start px-4 pb-5 pt-4">
-                <div className="flex justify-between w-full ">
-                    <div className="text-large grow-1">Forcast details</div>
-                    <div className="flex text-xs grow-0 items-center justify-center ">
-                        <div className="mr-3  ">
-                            {currentAsset.name}
-                        </div>
-                        <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
 
+            <div className="flex justify-between w-full ">
+                <div className="text-large grow-1">Forcast details</div>
+                <div className="flex text-xs grow-0 items-center justify-center ">
+                    <div className="mr-3  ">
+                        {currentAsset.name}
                     </div>
+                    <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
 
                 </div>
-                <div className="flex items-center justify-center text-xs text-gray-light">
-                    It is not available right now.
-                </div>
-            </CardHeader >
+
+            </div>
+            <div className="flex items-center justify-center text-xs text-gray-light">
+                It is not available right now.
+            </div>
+
         </Card>
     )
 
     return (
-        <>
-            <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2 bg-black" >
-                <CardHeader className="flex flex-col items-start px-4 pb-5 pt-4">
-                    <div className="flex justify-between w-full ">
-                        <div className="text-large grow-1">Forcast details</div>
-                        <div className="flex text-xs grow-0 items-center justify-center ">
+        <Card >
+            {/* Header with 2 row span */}
 
-                            <div className="mr-3  ">
-                                {currentAsset.name}
-                            </div>
-                            <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
-
+            <div className="grid grid-cols-8 h-full row-span-1  ">
+                <div className="col-span-5 text-large grow-1">Forcast details</div>
+                <div className="col-span-3 flex text-xs grow-0 items-start justify-center ">
+                    <div className="flex mt-1 justify-center items-center">
+                        <div className="mr-3  ">
+                            {currentAsset.name}
                         </div>
+                        <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
                     </div>
 
-                    <div className="flex gap-4 py-4 pt-5">
+                </div>
+            </div>
+            <div className="grid  h-full row-span-2 ">
+
+                <div className="flex flex-col items-start">
+                    <div className="flex gap-4  pt-2">
                         <Badge
                             classNames={{
                                 badge: "w-5 h-5",
@@ -176,15 +178,22 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         The photo will be used for your profile, and will be visible to other users of the
                         platform.
                     </p> */}
-                </CardHeader>
-                <CardBody className="grid grid-cols-1 gap-4 md:grid-cols-2  pb-5">
+                </div>
+            </div>
 
-                    {/* Current Date */}
+            {/* End of header  */}
+
+
+            {/* Chart or content  */}
+            <div className="grid  items-start justify-center h-full md:row-span-4 row-span-5 w-full ">
+
+                <div className="grid gap-4 grid-cols-2 ">
                     <Input
                         variant="bordered"
                         classNames={{
                             input: "border-none border-0"
                         }}
+                        className=""
                         isReadOnly
                         label="Current Date:" labelPlacement="outside" placeholder={currentDay} />
 
@@ -194,9 +203,10 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                             input: "border-none border-0"
                         }}
                         isReadOnly
-                        label="Your Prediction for:" labelPlacement="outside" placeholder={nextDay} />
-
-                    <Input className=""
+                        label="Prediction for:" labelPlacement="outside" placeholder={nextDay} />
+                </div>
+                <div>
+                    <Input className="md:col-span-2"
                         min={Number(currentRate) - (Number(currentRate) * .05)}
                         max={Number(currentRate) + (Number(currentRate) * .05)}
                         isDisabled={userPredictOfAsset !== null}
@@ -231,17 +241,28 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         defaultValue={0}
                         classNames={
                             {
-                                trackWrapper: "h-full"
+                                trackWrapper: "h-full "
                             }
                         }
-                        className="max-w-md"
+                        className="max-w-md md:col-span-2 mt-5" 
                         formatOptions={{ signDisplay: 'always' }}
                     />
+                </div>
+            </div>
 
-                </CardBody>
 
-                <CardFooter className="mt-4 justify-center lg:justify-end gap-2">
-                    {userPredictOfAsset == null
+
+            {/* End of chart area */}
+            {/* Description area*/}
+            {/* <div className=" row-span-1 h-full">
+         hi
+        </div> */}
+            {/* End Description */}
+
+            {/* Adjustments area 3 row span */}
+            <div className="  row-span-3 h-full">
+
+            {userPredictOfAsset == null
                         ?
                         <div className="flex ">
 
@@ -271,9 +292,8 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         </div>
 
                     }
-                </CardFooter>
-            </Card >
-        </>
+            </div>
+        </Card>
 
     );
 }

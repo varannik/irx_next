@@ -3,7 +3,7 @@ import clientPromise from "@/lib/gMangodb";
 import { IDayPredictAsset } from "@/types/HistPredict";
 
 
-export const fetchHistoy = async (userId:string, limit:number)=> {
+export const fetchHistoy = async (userId:string, limit:number) => {
   
     try {
       const client = await clientPromise;

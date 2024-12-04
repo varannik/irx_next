@@ -47,7 +47,6 @@ const Forcast = async () => {
       fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 60)
     ]);
 
-
     const ChartData: IChartData = {}
 
 
@@ -67,7 +66,9 @@ const Forcast = async () => {
 
       //  FUTURE ------------------------------------
       if (GenDataF){
-        const userf = UserForcastF.find(item => item.selectedAsset === asset)
+
+
+        const userf = UserForcastF.length > 0 ? UserForcastF.find(item => item.selectedAsset === asset) : null
         const genf = GenDataF.assets.find((obj) => obj[asset] !== undefined)
         const crr = CurrentRateData[0].currentrate[asset]['price']['sell']
 
@@ -99,7 +100,7 @@ const Forcast = async () => {
 
       if(GenDataC){
 
-        const userC = UserForcastC.find(item => item.selectedAsset === asset)
+        const userC = UserForcastC.length > 0 ? UserForcastC.find(item => item.selectedAsset === asset) : null
         const genC = GenDataC.assets.find((obj) => obj[asset] !== undefined)
         const crrC= CurrentRateData[0].currentrate[asset]['price']['sell']
         const preRec =  dataArr.find((obj) => obj[prePreDay])
@@ -145,8 +146,7 @@ const Forcast = async () => {
         let oneDayAgo = date.toISOString().split('T')[0]; // Outputs: YYYY-MM-DD
         let limits = limit.toISOString().split('T')[0]; // Outputs: YYYY-MM-DD
 
-
-        const u = UserHist.find((obj) => obj[asset] !== undefined)
+        const u = typeof UserHist !== "string" ? UserHist.find((obj) => obj[asset] !== undefined) : null
         const a = AiHist.find((obj) => obj[asset] !== undefined)
         const v = VoteHist.find((obj) => obj[asset] !== undefined)
 
@@ -161,7 +161,9 @@ const Forcast = async () => {
         if (d > limits){
           track.AI.push(createTrackData({module:a, type:"h", asset, d:oneDayAgo}))
           track.Voting.push(createTrackData({module:v, type:"h", asset, d:oneDayAgo}))
-          track.You.push(createTrackData({module:u, type:"h", asset, d:oneDayAgo}))
+          if (u !== null){
+            track.You.push(createTrackData({module:u, type:"h", asset, d:oneDayAgo}))
+          }
         }
       })
       trend.sort((a:recTrend, b:recTrend) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -190,7 +192,7 @@ const Forcast = async () => {
     );
   } else {
     <div>
-      Nothing
+      Something Wrong Happened
     </div>
   }
 
