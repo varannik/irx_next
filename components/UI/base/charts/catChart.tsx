@@ -97,10 +97,10 @@ const BarLabels = ({ values , forcastedValue }: { values: number[] , forcastedVa
               >
                 <div >
 
-                <div className="flex justify-center text-xs">
+                <div className="flex justify-center text-xs ">
                 Forecasted 
                 </div>
-                <div className="flex justify-center mb-2 text-xs">
+                <div className="flex justify-center mb-2 text-xs text-text-active">
                 {forcastedValue}
                  </div>
                 
@@ -112,7 +112,7 @@ const BarLabels = ({ values , forcastedValue }: { values: number[] , forcastedVa
           </div>
         )
       })}
-      <div className="absolute bottom-0 right-0 flex items-center text-xs">
+      <div className="absolute bottom-0 right-0 flex items-center text-xs text-text-active">
         +5%
       </div>
     </div>

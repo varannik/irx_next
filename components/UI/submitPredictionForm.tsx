@@ -110,9 +110,9 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
         <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2 bg-black" >
 
             <div className="flex justify-between w-full ">
-                <div className="text-large grow-1">Forcast details</div>
+                <div className="text-large grow-1 text-text-active">Forcast details</div>
                 <div className="flex text-xs grow-0 items-center justify-center ">
-                    <div className="mr-3  ">
+                    <div className="mr-3 text-slate-400 ">
                         {currentAsset.name}
                     </div>
                     <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
@@ -132,10 +132,10 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
             {/* Header with 2 row span */}
 
             <div className="grid grid-cols-8 h-full row-span-1  ">
-                <div className="col-span-5 text-large grow-1">Forcast details</div>
+                <div className="col-span-5 text-large grow-1 text-text-active">Forcast details</div>
                 <div className="col-span-3 flex text-xs grow-0 items-start justify-center ">
                     <div className="flex mt-1 justify-center items-center">
-                        <div className="mr-3  ">
+                        <div className="mr-3  text-slate-400">
                             {currentAsset.name}
                         </div>
                         <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
@@ -170,7 +170,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                             <Avatar className="h-14 w-14" src={User?.user.image} />
                         </Badge>
                         <div className="flex flex-col items-start justify-center">
-                            <p className="font-medium">{User?.user.name}</p>
+                            <p className="font-medium text-text-active">{User?.user.name}</p>
                             <span className="text-small text-default-500">Rank: #1</span>
                         </div>
                     </div>
@@ -187,26 +187,28 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
             {/* Chart or content  */}
             <div className="grid  items-start justify-center h-full md:row-span-4 row-span-5 w-full ">
 
-                <div className="grid gap-4 grid-cols-2 ">
+                <div className="grid gap-4 grid-cols-2  text-text-active">
                     <Input
                         variant="bordered"
                         classNames={{
-                            input: "border-none border-0"
+                            input: "border-none border-0",
+                            label:"group-data-[filled-within=true]:text-text-active text-text-active"
                         }}
-                        className=""
+                        className=" "
                         isReadOnly
                         label="Current Date:" labelPlacement="outside" placeholder={currentDay} />
 
                     <Input
                         variant="bordered"
                         classNames={{
-                            input: "border-none border-0"
+                            input:"border-none border-0 ",
+                            label:"group-data-[filled-within=true]:text-text-active text-text-active",
                         }}
-                        isReadOnly
-                        label="Prediction for:" labelPlacement="outside" placeholder={nextDay} />
+        
+                        label="Forecast for:" labelPlacement="outside" placeholder={nextDay} />
                 </div>
                 <div>
-                    <Input className="md:col-span-2"
+                    <Input className="md:col-span-2 "
                         min={Number(currentRate) - (Number(currentRate) * .05)}
                         max={Number(currentRate) + (Number(currentRate) * .05)}
                         isDisabled={userPredictOfAsset !== null}
@@ -218,8 +220,12 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         step={100}
                         onValueChange={setNewValue}
                         classNames={{
-                            input: "border-none border-0"
+
+                            input: "border-none border-0 ",
+                            label:"group-data-[filled-within=true]:text-text-active text-text-active",
+
                         }}
+                        
                         endContent={
                             <div className="pointer-events-none flex items-center">
                                 <span className="text-default-400 text-small">IRR</span>
@@ -241,7 +247,8 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         defaultValue={0}
                         classNames={
                             {
-                                trackWrapper: "h-full "
+                                trackWrapper: "h-full ",
+                                labelWrapper:"text-text-active",
                             }
                         }
                         className="max-w-md md:col-span-2 mt-5" 
@@ -279,8 +286,8 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         :
 
                         <div className="grid grid-rows-2 grid-col-3  grid-flow-col gap-1 ">
-                            <div className="row-span-1 col-span-2 text-sm">You have already submitted your forecast.</div>
-                            <div className="row-span-1 col-span-2 text-[10px] ">If you change your mind, delete it to edit or remove it. </div>
+                            <div className="row-span-1 col-span-2 text-text-active text-sm">You have submitted your forecast.</div>
+                            <div className="row-span-1 col-span-2 text-text-active text-[10px] ">If you change your mind, delete it to edit or remove it. </div>
                             <div className="row-span-2  col-span-1 ml-3">
                                 <Button onClick={() => {
                                     handleForcastSubmit("DELETE")

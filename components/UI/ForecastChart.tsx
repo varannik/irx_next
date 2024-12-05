@@ -149,6 +149,7 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
       <div className="flex row-span-5 h-full items-center justify-center">
         <LineChart
           data={trendData}
+          legendPosition={"center"} 
           index="date"
           categories={Cats}
           showLegend={true}
