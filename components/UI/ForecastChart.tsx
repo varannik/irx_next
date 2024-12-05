@@ -17,18 +17,18 @@ import { IGenDayPredictions } from "@/types/GensPredictions"
 
 
 
-function refineCenterCatBar(center: any , adjust : any ):number{
-  if ( typeof center === 'number' && !isNaN(center)){
-    const p = (adjust - center)/center *100
-    return  ((p + 5) / 10) * 100
+function refineCenterCatBar(center: any, adjust: any): number {
+  if (typeof center === 'number' && !isNaN(center)) {
+    const p = (adjust - center) / center * 100
+    return ((p + 5) / 10) * 100
   } else {
     return 50
   }
-} 
+}
 
 
 
-export function ForecastChart({ ChartData, Title, Cats, CurrentRateS}: { ChartData: IChartData , Title:string, Cats:string[], CurrentRateS:IAssetCurrentRate}) {
+export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartData: IChartData, Title: string, Cats: string[], CurrentRateS: IAssetCurrentRate }) {
 
   const { currentAsset } = useSelectedAsset()
 
@@ -43,6 +43,8 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS}: { ChartDa
     , "Your Forcast": 0
 
   }])
+
+
 
   const [trackerData, setTrackerData] = useState<recCatTrack[]>([{
     color: "bg-green-high",
@@ -66,15 +68,15 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS}: { ChartDa
     if (ChartData && currentAsset.name == 'US Dollar') {
       const assetData = ChartData[currentAsset.name]
       setTrendData(assetData.trend)
-      if (Title=="AI"){
+      if (Title == "AI") {
         setTrackerData(assetData.track.AI)
-        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length-2]["AI Forcast"])
-      }if(Title=='Community Polling'){
+        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length - 2]["AI Forcast"])
+      } if (Title == 'Community Polling') {
         setTrackerData(assetData.track.Voting)
-        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length-2]["Voting Forcast"])
+        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length - 2]["Voting Forcast"])
       }
 
-      
+
 
     }
   }, [currentAsset, ChartData])
@@ -82,20 +84,22 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS}: { ChartDa
   useEffect(() => {
     if (CurrentRateS !== null) {
 
-        let cr = CurrentRateS.currentrate[currentAsset.name]['price']['sell']
-        setCurrentRate(cr)
+      let cr = CurrentRateS.currentrate[currentAsset.name]['price']['sell']
+      setCurrentRate(cr)
 
-        
+
     }
-}, [CurrentRateS, currentAsset])
+  }, [CurrentRateS, currentAsset])
 
 
-    useEffect(() => {
+  useEffect(() => {
 
-        let freshColors:AvailableChartColorsKeys[] = ['blue',  'gray']
-        let futureColor:AvailableChartColorsKeys = futureTrendColor(trackerData[trackerData.length-1].tooltip["Forcasted Shift %"])
-        setColors(freshColors.concat(futureColor))
-      }, [trackerData]);
+    let freshColors: AvailableChartColorsKeys[] = ['blue', 'gray']
+    let futureColor: AvailableChartColorsKeys = futureTrendColor(trackerData[trackerData.length - 1].tooltip["Forcasted Shift %"])
+    setColors(freshColors.concat(futureColor))
+  }, [trackerData]);
+
+
 
   if (currentAsset.name !== 'US Dollar') return (
     <Card  >
@@ -120,77 +124,77 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS}: { ChartDa
 
   return (
     <Card >
-            {/* Header with 2 row span */}
+      {/* Header with 2 row span */}
 
-            <div className="grid grid-cols-8 h-full row-span-1  ">
-              <div className="col-span-5 text-lg font-normal text-text-active ">{Title}</div>
-            </div>
+      <div className="grid grid-cols-8 h-full row-span-1  ">
+        <div className="col-span-5 text-lg font-normal text-text-active ">{Title}</div>
+      </div>
 
-            {/* End of header  */}
-
-
-            {/* Chart or content  */}
-            <div className="grid  items-start justify-center h-full row-span-1 w-full ">
-            <div className="w-60">
-            <CategoryBar
-              forcastedValue = {catBarCenter?.toLocaleString()}
-              values={[0,49,2,49]}
-              marker={{ value: refineCenterCatBar(catBarCenter, currentRate), tooltip: `RealTime: ${currentRate?.toLocaleString()}`, showAnimation: true }}
-              colors={["negative","negative", "gray","positive","positive"]}
-              className="mx-auto max-w-sm"
-            />
-            </div>
-            </div>
-
-            <div className="flex row-span-5 h-full items-center justify-center">
-            <LineChart
-                        data={trendData}
-                        index="date"
-                        categories={Cats}
-                        showLegend={true}
-                        showYAxis={false}
-                        showXAxis={false}
-                        autoMinValue={true}
-                        onValueChange={(v) => setValue(v)}
-                        colors={colors}
-                        connectNulls={true}
-                        showGridLines={false}
-                        className="mb-1 mt-1 h-48"
-                        showTooltip={true}
-                        refAreaX1={trendData.length > 2 ? trendData[trendData.length-3].date : 'null'}
-                        refAreaX2={trendData.length > 2 ? trendData[trendData.length-2].date : 'null'}
-                        tooltipCallback={(props) => {
-                        if (props.active) {
-                            setDatas((prev: any) => {
-                            if (prev?.label === props.label) return prev
-                            return props
-                            })
-                        } else {
-                            setDatas(null)
-                        }
-                        return null
-                        }}
-                    />
+      {/* End of header  */}
 
 
-            </div>
+      {/* Chart or content  */}
+      <div className="grid  items-start justify-center h-full row-span-1 w-full ">
+        <div className="w-60">
+          <CategoryBar
+            forcastedValue={catBarCenter?.toLocaleString()}
+            values={[0, 49, 2, 49]}
+            marker={{ value: refineCenterCatBar(catBarCenter, currentRate), tooltip: `RealTime: ${currentRate?.toLocaleString()}`, showAnimation: true }}
+            colors={["negative", "negative", "gray", "positive", "positive"]}
+            className="mx-auto max-w-sm"
+          />
+        </div>
+      </div>
+
+      <div className="flex row-span-5 h-full items-center justify-center">
+        <LineChart
+          data={trendData}
+          index="date"
+          categories={Cats}
+          showLegend={true}
+          showYAxis={false}
+          showXAxis={false}
+          autoMinValue={true}
+          onValueChange={(v) => setValue(v)}
+          colors={colors}
+          connectNulls={true}
+          showGridLines={false}
+          className="mb-1 mt-1 h-48"
+          showTooltip={true}
+          refAreaX1={trendData.length > 2 ? trendData[trendData.length - 3].date : 'null'}
+          refAreaX2={trendData.length > 2 ? trendData[trendData.length - 2].date : 'null'}
+          tooltipCallback={(props) => {
+            if (props.active) {
+              setDatas((prev: any) => {
+                if (prev?.label === props.label) return prev
+                return props
+              })
+            } else {
+              setDatas(null)
+            }
+            return null
+          }}
+        />
+
+
+      </div>
 
 
 
-            {/* End of chart area */}
-            {/* Description area*/}
-            {/* <div className=" row-span-1 h-full">
+      {/* End of chart area */}
+      {/* Description area*/}
+      {/* <div className=" row-span-1 h-full">
              hi
             </div> */}
-            {/* End Description */}
+      {/* End Description */}
 
-            {/* Adjustments area 3 row span */}
-            <div className="  row-span-3 h-full">
+      {/* Adjustments area 3 row span */}
+      <div className="  row-span-3 h-full">
 
-            <div className="flex-none font-medium text-xs mb-3 text-gray-300">Accurately predicted rate shifts</div>
-      <Tracker className="w-full" data={trackerData} hoverEffect={true} />
-      <Alert />
-            </div>
+        <div className="flex-none font-medium text-xs mb-3 text-gray-300">Accurately predicted rate shifts</div>
+        <Tracker className="w-full" data={trackerData} hoverEffect={true} />
+        <Alert />
+      </div>
     </Card>
   )
 }

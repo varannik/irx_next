@@ -128,7 +128,6 @@ const Forcast = async () => {
   
         track.AI.push(createTrackData({module:undefined, type:"c", asset, d:currentDay, preRealRate, forecastedRate:gaC, currRealRate: crrC}))
         track.Voting.push(createTrackData({module:undefined, type:"c", asset, d:currentDay,  preRealRate, forecastedRate:gvC, currRealRate:crrC }))
-        track.Voting.push(createTrackData({module:undefined, type:"c", asset, d:currentDay,  preRealRate, forecastedRate:uC, currRealRate:crrC }))
       }
       }
 
