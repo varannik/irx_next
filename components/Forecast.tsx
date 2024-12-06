@@ -33,18 +33,18 @@ const Forcast = async () => {
             GenDataF, GenDataC , 
             UserHist, AiHist, VoteHist] = await Promise.all([
 
-      fetchCollectionData<IAssetCurrentRate[]>('currentrates', 60),
-      fetchCollectionData<IAssets[]>('countries', 60),
+      fetchCollectionData<IAssetCurrentRate[]>('currentrates', 10),
+      fetchCollectionData<IAssets[]>('countries', 10),
 
       fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
       fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
 
-      fetchGenForcast<IGenDayPredictions>({ date: currentDay }, 60),
-      fetchGenForcast<IGenDayPredictions>({ date: yesterday }, 60),
+      fetchGenForcast<IGenDayPredictions>({ date: currentDay }, 10),
+      fetchGenForcast<IGenDayPredictions>({ date: yesterday }, 10),
 
-      fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12 }, 60),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 12 }, 60),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 60)
+      fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12 }, 10),
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 12 }, 10),
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 10)
     ]);
 
     const ChartData: IChartData = {}

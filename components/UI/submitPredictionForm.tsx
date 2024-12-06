@@ -132,7 +132,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
             {/* Header with 2 row span */}
 
             <div className="grid grid-cols-8 h-full row-span-1  ">
-                <div className="col-span-5 text-large grow-1 text-text-active">Forcast details</div>
+                <div className="col-span-5 text-large grow-1 text-text-active">Forecast details</div>
                 <div className="col-span-3 flex text-xs grow-0 items-start justify-center ">
                     <div className="flex mt-1 justify-center items-center">
                         <div className="mr-3  text-slate-400">
