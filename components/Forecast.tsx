@@ -14,6 +14,8 @@ import { get2DayAgo, getNextDay, getPreviousDay } from '@/utils/global/currentda
 import { ForecastChart } from './UI/ForecastChart';
 import { IChartData, recCatTrack, recTrack, recTrend } from '@/types/Forcasts';
 import { createTrackData, resModule } from '@/lib/utils';
+import { IScore } from '@/types/Score';
+import { fetchScore } from '@/utils/apiActions/fetchScore';
 
 
 const today = new Date();
@@ -31,7 +33,9 @@ const Forcast = async () => {
     const [ CurrentRateData, AssetListData, 
             UserForcastF, UserForcastC,
             GenDataF, GenDataC , 
-            UserHist, AiHist, VoteHist] = await Promise.all([
+            UserHist, AiHist, VoteHist,
+            score
+          ] = await Promise.all([
 
       fetchCollectionData<IAssetCurrentRate[]>('currentrates', 10),
       fetchCollectionData<IAssets[]>('countries', 10),
@@ -44,8 +48,11 @@ const Forcast = async () => {
 
       fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12 }, 10),
       fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 12 }, 10),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 10)
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 10),
+
+      fetchScore<IScore[]>(10)
     ]);
+
 
     const ChartData: IChartData = {}
 
@@ -183,9 +190,8 @@ const Forcast = async () => {
         <ForecastChart ChartData={ChartData} CurrentRateS={CurrentRateData[0]} Title='Community Polling' Cats={['Real', 'Votes', 'Voting Forcast']}/>
         </div>
         <div>
-        <SubmitPredictionForm User={session} CurrentRateS={CurrentRateData[0]} ForcastedRateS={UserForcastF} AssetListData={AssetListData[0].assets} />
+        <SubmitPredictionForm User={session} CurrentRateS={CurrentRateData[0]} ForcastedRateS={UserForcastF} AssetListData={AssetListData[0].assets} Score={score}/>
         </div>
-        
       </div>
 
     );

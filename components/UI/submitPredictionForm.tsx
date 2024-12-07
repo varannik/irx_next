@@ -25,6 +25,7 @@ import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
 import Flag from "react-world-flags";
 import { IAsset } from "@/types/Assets";
 import { Card } from "./cardTremor";
+import { IScore } from "@/types/Score";
 
 
 type predictOfAsset = number | null
@@ -39,13 +40,40 @@ function getPredictOfAsset({ selectedAsset, ForcastedRateS }: { selectedAsset: s
     return asset?.nextDayRate || null;
 }
 
+function getScore({scores,userId, asset}:{scores: IScore[], userId:string | undefined, asset: string}) {
 
-export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[] }) {
+    if (userId == undefined) {
+
+        return null 
+        
+    } else {
+
+        const a = scores[0].assets.find((obj) => obj[asset] !== undefined)
+        if (a) {
+            console.log(a.length)
+            const u = a[asset].find((obj) => obj[userId] !== undefined)
+            if (u){
+                return u[userId].rank
+            }else{
+                return null 
+            }
+            return null
+        } else {
+           
+        return null
+        }
+
+    }
+}
+
+
+export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData, Score }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[] , Score: IScore[]}) {
 
     const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
     const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
     const { currentAsset, setCurrentAsset } = useSelectedAsset();
     const [userPredictOfAsset, setUserPredictOfAsset] = useState<predictOfAsset>(null);
+    const [usc, setUsc] = useState<number | null>(null)
 
     const [message, setMessage] = useState("");
 
@@ -56,12 +84,15 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     const [percent, setPercent] = useState<SliderValue>(0)
 
 
+   
+
     useEffect(() => {
         if (CurrentRateS !== null) {
             let cr = CurrentRateS.currentrate[currentAsset.name]['price']['sell']
             setCurrentRate(cr)
             setNewValue(String(cr))
             setUserPredictOfAsset(getPredictOfAsset({ selectedAsset: currentAsset.name, ForcastedRateS }))
+            setUsc(getScore({scores:Score, userId:User?.user.id , asset:currentAsset.name}))
         }
     }, [CurrentRateS, currentAsset])
 
@@ -143,7 +174,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
                 </div>
             </div>
-            <div className="grid  h-full row-span-2 ">
+            <div className="grid  h-full row-span-3 ">
 
                 <div className="flex flex-col items-start">
                     <div className="flex gap-4  pt-2">
@@ -156,7 +187,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                                 <Button
                                     onClick={() => setProfileDrawerOpen(true)}
                                     isIconOnly
-                                    className="p-0 text-primary-foreground"
+                                    className=" text-primary-foreground"
                                     radius="full"
                                     size="sm"
                                     variant="light"
@@ -171,9 +202,11 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         </Badge>
                         <div className="flex flex-col items-start justify-center">
                             <p className="font-medium text-text-active">{User?.user.name}</p>
-                            <span className="text-small text-default-500">Rank: #1</span>
+                            <span className="text-small text-default-500">Rank: {usc == null  ? "-" : `#${usc}`  }</span>
                         </div>
+                       
                     </div>
+                    <div className="mt-1 mb-1 text-xs text-gray-500"> {usc == null ? "Your rank will be determined after your first forecast.": ""} </div>
                     {/* <p className="text-small text-default-400">
                         The photo will be used for your profile, and will be visible to other users of the
                         platform.
@@ -185,7 +218,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
 
             {/* Chart or content  */}
-            <div className="grid  items-start justify-center h-full md:row-span-4 row-span-5 w-full ">
+            <div className="grid  items-start justify-center h-full md:row-span-4 row-span-4 w-full ">
 
                 <div className="grid gap-4 grid-cols-2  text-text-active">
                     <Input
