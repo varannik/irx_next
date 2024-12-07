@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
     try {
 
       const latestDate = await getLatesUpdate()
-      console.log(latestDate)
       return NextResponse.json(
         { success: true, data: latestDate },
         { status: 200 }

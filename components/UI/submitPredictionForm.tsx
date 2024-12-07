@@ -18,6 +18,7 @@ import {
     AutocompleteItem,
     Slider,
     SliderValue,
+    Chip,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import useProfileDrawerStore from "@/stores/useProfileDrawerStore";
@@ -40,40 +41,54 @@ function getPredictOfAsset({ selectedAsset, ForcastedRateS }: { selectedAsset: s
     return asset?.nextDayRate || null;
 }
 
-function getScore({scores,userId, asset}:{scores: IScore[], userId:string | undefined, asset: string}) {
+function getScore({ scores, userId, asset }: { scores: IScore[], userId: string | undefined, asset: string }): { rank: number | null, total: number | null } {
 
     if (userId == undefined) {
 
-        return null 
-        
+        return {
+            rank: null,
+            total: null
+        }
+
+
     } else {
 
         const a = scores[0].assets.find((obj) => obj[asset] !== undefined)
         if (a) {
-            console.log(a.length)
+
             const u = a[asset].find((obj) => obj[userId] !== undefined)
-            if (u){
-                return u[userId].rank
-            }else{
-                return null 
+            if (u) {
+                return {
+                    rank: u[userId].rank,
+                    total: a[asset].length
+                }
+
+            } else {
+                return {
+                    rank: null,
+                    total: a[asset].length
+                }
             }
-            return null
         } else {
-           
-        return null
+
+            return {
+                rank: null,
+                total: null
+            }
         }
 
     }
 }
 
 
-export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData, Score }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[] , Score: IScore[]}) {
+export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData, Score }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[], Score: IScore[] }) {
 
     const { openProfile, setProfileDrawerOpen } = useProfileDrawerStore();
     const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
     const { currentAsset, setCurrentAsset } = useSelectedAsset();
     const [userPredictOfAsset, setUserPredictOfAsset] = useState<predictOfAsset>(null);
     const [usc, setUsc] = useState<number | null>(null)
+    const [countUsers, seCountUsers] = useState<number | null>(null)
 
     const [message, setMessage] = useState("");
 
@@ -84,7 +99,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     const [percent, setPercent] = useState<SliderValue>(0)
 
 
-   
+
 
     useEffect(() => {
         if (CurrentRateS !== null) {
@@ -92,7 +107,9 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
             setCurrentRate(cr)
             setNewValue(String(cr))
             setUserPredictOfAsset(getPredictOfAsset({ selectedAsset: currentAsset.name, ForcastedRateS }))
-            setUsc(getScore({scores:Score, userId:User?.user.id , asset:currentAsset.name}))
+            const { rank, total } = getScore({ scores: Score, userId: User?.user.id, asset: currentAsset.name })
+            setUsc(rank)
+            seCountUsers(total)
         }
     }, [CurrentRateS, currentAsset])
 
@@ -174,45 +191,48 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
                 </div>
             </div>
-            <div className="grid  h-full row-span-3 ">
+            <div className="grid grid-col-6 gap-2 grid-flow-col h-full row-span-1 ">
 
-                <div className="flex flex-col items-start">
-                    <div className="flex gap-4  pt-2">
-                        <Badge
-                            classNames={{
-                                badge: "w-5 h-5",
-                            }}
-                            color="primary"
-                            content={
-                                <Button
-                                    onClick={() => setProfileDrawerOpen(true)}
-                                    isIconOnly
-                                    className=" text-primary-foreground"
-                                    radius="full"
-                                    size="sm"
-                                    variant="light"
-                                >
-                                    <Icon icon="solar:pen-2-linear" />
-                                </Button>
-                            }
-                            placement="bottom-right"
-                            shape="circle"
-                        >
-                            <Avatar className="h-14 w-14" src={User?.user.image} />
-                        </Badge>
-                        <div className="flex flex-col items-start justify-center">
-                            <p className="font-medium text-text-active">{User?.user.name}</p>
-                            <span className="text-small text-default-500">Rank: {usc == null  ? "-" : `#${usc}`  }</span>
-                        </div>
-                       
+                <div className="col-span-2 ">
+                    <Badge classNames={{
+                        badge: "w-5 h-5",
+                    }}
+                        color="primary" content={
+                            <Button
+                                onClick={() => setProfileDrawerOpen(true)}
+                                isIconOnly
+                                className=" text-primary-foreground"
+                                radius="full"
+                                size="sm"
+                                variant="light"
+                            >
+                                <Icon icon="solar:pen-2-linear" />
+                            </Button>
+                        } placement="bottom-right">
+                        <Avatar size="lg" isBordered radius="md" src={User?.user.image} />
+                    </Badge>
+                </div>
+
+                <div className="flex flex-col col-span-4">
+                    <div className="flex justify-center items-center font-medium text-text-active">{User?.user.name}</div>
+                    <div className="flex w-full justify-between items-center">
+                        <Chip color="warning" variant="bordered">
+                            <span className="text-xs text-default-500">Rank: {usc == null ? "-" : `#${usc}`}</span>
+                        </Chip>
+                        <div className="text-xs text-slate-400">{`${countUsers} Participants`}</div>
                     </div>
-                    <div className="mt-1 mb-1 text-xs text-gray-500"> {usc == null ? "Your rank will be determined after your first forecast.": ""} </div>
-                    {/* <p className="text-small text-default-400">
+                </div>
+            </div>
+
+
+
+
+
+            <div className="mt-1 mb-1 text-xs text-gray-500"> {usc == null ? "Your rank will be determined after your first forecast." : ""} </div>
+            {/* <p className="text-small text-default-400">
                         The photo will be used for your profile, and will be visible to other users of the
                         platform.
                     </p> */}
-                </div>
-            </div>
 
             {/* End of header  */}
 
@@ -225,7 +245,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         variant="bordered"
                         classNames={{
                             input: "border-none border-0",
-                            label:"group-data-[filled-within=true]:text-text-active text-text-active"
+                            label: "group-data-[filled-within=true]:text-text-active text-text-active"
                         }}
                         className=" "
                         isReadOnly
@@ -234,10 +254,10 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                     <Input
                         variant="bordered"
                         classNames={{
-                            input:"border-none border-0 ",
-                            label:"group-data-[filled-within=true]:text-text-active text-text-active",
+                            input: "border-none border-0 ",
+                            label: "group-data-[filled-within=true]:text-text-active text-text-active",
                         }}
-        
+
                         label="Forecast for:" labelPlacement="outside" placeholder={nextDay} />
                 </div>
                 <div>
@@ -255,10 +275,10 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         classNames={{
 
                             input: "border-none border-0 ",
-                            label:"group-data-[filled-within=true]:text-text-active text-text-active",
+                            label: "group-data-[filled-within=true]:text-text-active text-text-active",
 
                         }}
-                        
+
                         endContent={
                             <div className="pointer-events-none flex items-center">
                                 <span className="text-default-400 text-small">IRR</span>
@@ -281,10 +301,10 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         classNames={
                             {
                                 trackWrapper: "h-full ",
-                                labelWrapper:"text-text-active",
+                                labelWrapper: "text-text-active",
                             }
                         }
-                        className="max-w-md md:col-span-2 mt-5" 
+                        className="max-w-md md:col-span-2 mt-5"
                         formatOptions={{ signDisplay: 'always' }}
                     />
                 </div>
@@ -302,36 +322,36 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
             {/* Adjustments area 3 row span */}
             <div className="  row-span-3 h-full">
 
-            {userPredictOfAsset == null
-                        ?
-                        <div className="flex ">
+                {userPredictOfAsset == null
+                    ?
+                    <div className="flex ">
 
-                            <Button
-                                className=" max-w-20"
-                                onClick={() => {
-                                    handleForcastSubmit("CREATE")
-                                    setUserPredictOfAsset(Number(newValue))
-                                }} color="primary">
-                                Save
+                        <Button
+                            className=" max-w-20"
+                            onClick={() => {
+                                handleForcastSubmit("CREATE")
+                                setUserPredictOfAsset(Number(newValue))
+                            }} color="primary">
+                            Save
+                        </Button>
+
+                    </div>
+                    :
+
+                    <div className="grid grid-rows-2 grid-col-3  grid-flow-col gap-1 ">
+                        <div className="row-span-1 col-span-2 text-text-active text-sm">You have submitted your forecast.</div>
+                        <div className="row-span-1 col-span-2 text-text-active text-[10px] ">If you change your mind, delete it to edit or remove it. </div>
+                        <div className="row-span-2  col-span-1 ml-3">
+                            <Button onClick={() => {
+                                handleForcastSubmit("DELETE")
+                                setUserPredictOfAsset(null)
+                            }} color="danger">
+                                Delete
                             </Button>
-
                         </div>
-                        :
+                    </div>
 
-                        <div className="grid grid-rows-2 grid-col-3  grid-flow-col gap-1 ">
-                            <div className="row-span-1 col-span-2 text-text-active text-sm">You have submitted your forecast.</div>
-                            <div className="row-span-1 col-span-2 text-text-active text-[10px] ">If you change your mind, delete it to edit or remove it. </div>
-                            <div className="row-span-2  col-span-1 ml-3">
-                                <Button onClick={() => {
-                                    handleForcastSubmit("DELETE")
-                                    setUserPredictOfAsset(null)
-                                }} color="danger">
-                                    Delete
-                                </Button>
-                            </div>
-                        </div>
-
-                    }
+                }
             </div>
         </Card>
 

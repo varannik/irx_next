@@ -38,7 +38,6 @@ export async function insertGenData(genData:IGenDayPredictions) {
         const cl = db.collection('GenDailyPredicts');
 
         const result = await cl.findOne({date:genDate})
-        console.log("Generative predictions successfully fetched",result)
         return result
 
     } catch(error){
