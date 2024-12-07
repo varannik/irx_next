@@ -2,75 +2,49 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtMiddleware } from '@/utils/jwt';
-import { RSISchemaValidation } from './vl'
+import { vScoreSchema  } from './vl'
 import { connectDB } from '@/utils/dbActions/db'
-import RSI  from '@/models/RSI'; // Adjust the path as necessary
+import Score from '@/models/Score';
 
 
-export async function GET(request:NextRequest) {
 
-  try {
-    // Connect to MongoDB
-    await connectDB();
-    const items = await RSI.find({})
-    return NextResponse.json(items);
-
-  } catch(error)  {
-    return NextResponse.json({ message: 'Data dosent exist'}, { status: 404 });
-  }
-  
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const json = await request.json();
-    
-    // Validate the data
-    const validatedData = RSISchemaValidation.parse(json);
-
-    // Connect to MongoDB
-    await connectDB();
-    // Delete if any data exist
-    await RSI.deleteMany({})
-    // Insert the validated data into MongoDB
-    await RSI.create(validatedData);
-
-    return NextResponse.json({ message: 'Data saved successfully' }, { status: 200 });
-  } catch (error) {
-    console.error('Error saving data:', error);
-    return NextResponse.json({ message: 'Error saving data'}, { status: 400 });
-  }
-}
-
-
-export async function PUT(req: NextRequest) {
+export async function POST(req: NextRequest) {
 
   const checkSource = await jwtMiddleware(req)
 
   if (checkSource === 'Authorized') { 
 
     try {
-      const json = req.json();
+      const json = await req.json();
       
       // Validate the data
-      const validatedData = RSISchemaValidation.parse(json);
-
+      const validatedData = vScoreSchema.parse(json);
+      
+      const { updateDate, assets } = validatedData
+      console.log(assets)
       // Connect to MongoDB
       connectDB();
-      // Update the validated data into MongoDB
-      RSI.updateOne({}, validatedData);
-  
-      return NextResponse.json({ message: 'Data updated successfully' }, { status: 200 });
+
+      // Check if a Score with the same updateDate already exists
+      const existingScore = await Score.findOne({ updateDate });
+
+      if (existingScore) {
+        // If the object exists, update it
+        existingScore.assets = assets; // Replace with new assets
+        await existingScore.save();
+        return NextResponse.json({ message: 'Score updated successfully', success: true });
+      } else {
+        // If the object does not exist, create a new one
+        const newScore = new Score({ updateDate, assets });
+        await newScore.save();
+        return NextResponse.json({ message: 'Score added successfully', success: true });
+      }
     } catch (error) {
-      console.error('Error updating data:', error);
-      return NextResponse.json({ message: 'Error updating data'}, { status: 400 });
+      console.error(error);
+      return NextResponse.json({ message: 'Failed to process the request', success: false }, { status: 500 });
     }
 
   } else {
     return NextResponse.json({ message: 'Unauthorized source' }, { status: 401 });
   }
 }
-
-
-
-
