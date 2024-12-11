@@ -123,7 +123,7 @@ export function TrendsChart({ DurationData, PeriodData }: { PeriodData: Record<s
 
 
 
-      <div className="flex  row-span-5 h-full items-center justify-center">
+      <div className="flex  row-span-5 h-full ">
         <AreaChart
           data={trendData}
           index="date"

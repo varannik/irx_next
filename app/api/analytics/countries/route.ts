@@ -49,7 +49,6 @@ export async function PUT(req: NextRequest) {
   if (checkSource === 'Authorized') { 
 
     try {
-      console.log(req)
       const json = req.json();
       
       // Validate the data

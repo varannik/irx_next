@@ -57,7 +57,6 @@ async function handleDelete(query:query){
   const result = await c.deleteOne(query);
 
   if (result.deletedCount > 0) {
-    console.log(result)
     return { success: true, deletedCount: result.deletedCount };
   } else {
     console.log('No document found to delete')

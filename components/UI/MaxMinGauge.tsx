@@ -13,6 +13,7 @@ import { cx } from "@/lib/utils";
 import { I7Days, IAsset } from "@/types/SimpleTrend";
 import { IAssetRange, IDayMaxMin, IMaxMinCal } from "@/types/MaxMin";
 import { IAssetCurrentRate } from "@/types/Current";
+import { Tab, Tabs } from "@nextui-org/react";
 
 const GaugeComponent = dynamic(() => import('react-gauge-component'), { ssr: false });
 
@@ -67,9 +68,8 @@ function limitsArcs(data: objAsset) {
 export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }: { CurrentRateData: IAssetCurrentRate, SimpleData: IAsset, MaxMinData: IMaxMinCal }) {
 
   const { currentAsset } = useSelectedAsset()
-  const { currentCalendar } = useSelectedCalendar()
+  const { currentCalendar, setCurrentCalendar } = useSelectedCalendar()
   const { selectedRange } = useSelectRangeGaugeChart()
-
 
   const [currentRate, setCurrentRate] = useState(0)
   const [currentMaxMin, setCurrentMaxMin] = useState<IDayMaxMin>({ 'min': 0, 'max': 100 })
@@ -137,7 +137,7 @@ export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }:
 
         <div className="col-span-3 text-lg font-normal text-text-active ">Momentum</div>
 
-        <div className="flex col-span-3 font-semibold text-gray-50 items-center justify-center ">
+        <div className="flex col-span-3 font-semibold text-gray-50 ">
           <SparkAreaChart
             data={current7dData}
             categories={["rate"]}
@@ -146,7 +146,7 @@ export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }:
             className="h-8 w-24  sm:h-10 " />
         </div>
 
-        <div className="col-span-2 flex items-center justify-center ml-2 ">
+        <div className="col-span-2 flex justify-center ml-2 ">
           <div className={cx(
             "rounded px-2 text-xs h-8 flex items-center  font-medium text-white",
             color == 'positive'
@@ -165,7 +165,7 @@ export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }:
       {/* End of header  */}
       {/* Chart or content  */}
 
-      <div className="flex row-span-5 h-full items-center justify-center">
+      <div className="flex row-span-5 h-full">
         <GaugeComponent
           value={currentRate}
           type="radial"
@@ -201,7 +201,21 @@ export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }:
       {/* End of chart area */}
       {/* Description area*/}
       <div className=" row-span-1 h-full">
-         
+
+                          {/* <Tabs key='calendar' radius={'md'} aria-label="Tabs radius"
+                            color='default'
+                            classNames={{
+                              tabList: "bg-hov-c ",
+                            }}
+                            selectedKey={currentCalendar}
+                            onSelectionChange={setCurrentCalendar} >
+
+                            <Tab key='J' title="Persian" />
+
+                            <Tab key='G' title="Gregorian" />
+
+                          </Tabs> */}
+
       </div>
       {/* End Description */}
 

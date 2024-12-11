@@ -13,7 +13,6 @@ try {
   const c = await getCollection('UserDailyPredicts');
   const query = { userId:new ObjectId(userId), submitDate: parseDate(submitDate)}
   const prediction = await c.find(query).toArray();
-
   return NextResponse.json({ success: true, data: prediction }, { status: 200 });
 } catch (error) {
   return NextResponse.json({ success: false, message: 'Failed to Search Prediction' }, { status: 400 });

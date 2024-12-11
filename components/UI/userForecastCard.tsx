@@ -12,8 +12,8 @@ export default function UserForecastCard({ Data }: { Data: IDayHist[] | null }) 
                         <div className={cx(
                                 "flex relative"
                                 ,"p-2"
-                                ," border-1 rounded-lg border-div-diff"
-                                ,"  place-items-center  "
+                                ,"border-1 rounded-lg border-div-diff"
+                                ,"place-items-center  "
                                 
                                 )}>
 
@@ -22,7 +22,7 @@ export default function UserForecastCard({ Data }: { Data: IDayHist[] | null }) 
                                             , backgroundCorrect(item.csp)
                                             )}></div>
                             <div className="flex divide-x divide-div-diff w-full ">
-                            <div className="flex w-28 justify-center items-center  text-xs pr-2 ">{item.date} </div>  
+                            <div className="flex w-28 justify-center items-center  text-xs pr-2 text-slate-400 ">{item.date} </div>  
                             <div className="flex w-full justify-evenly items-center ">
 
                                 <div className="flex flex-col ">
@@ -44,7 +44,10 @@ export default function UserForecastCard({ Data }: { Data: IDayHist[] | null }) 
             </ul>
         )
     } else {
-        <div> There is no data </div>
+        return (
+            <div className="text-xs text-gray-400 flex flex-col justify-center items-center">No record found; <p>you haven't forecasted for the corresponding asset.</p> </div>
+        )
+        
     }
 
 }

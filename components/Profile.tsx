@@ -28,50 +28,57 @@ const yesterday = getPreviousDay();
 
 const Profile = async () => {
 
-    // Fetch data with caching applied in the external file
-    const session = await getServerSession(authOptions)
-
-    if (session) {
-
   // Fetch data with caching applied in the external file
-  const [CurrentRateData, PreDayRateData,
-          UserForcastC, 
-          UserHist,
-          score,
-        ] = await Promise.all([
+  const session = await getServerSession(authOptions)
 
-    fetchCollectionData<IAssetCurrentRate[]>('currentrates', 10),
-    fetchCollectionData<IPreDayRate[]>('predayrates', 10),
+  if (session) {
 
+    // Fetch data with caching applied in the external file
+    const [CurrentRateData, PreDayRateData,
+      UserForcastC,
+      UserHist,
+      score,
+    ] = await Promise.all([
 
-    // fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
-    fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
-
-    fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12}, 10),
-    
-    fetchScore<IScore[]>(10)
-
-    
-
-  ]);
-  
- 
-  const histData = transformHist(UserHist[0])
-  const HistCurrData = appendCurrentToHist({histData,currentData:UserForcastC , assetRates:CurrentRateData[0] , preDayRate:PreDayRateData[0] })
+      fetchCollectionData<IAssetCurrentRate[]>('currentrates', 10),
+      fetchCollectionData<IPreDayRate[]>('predayrates', 10),
 
 
-  return (
-    
-    <ProfileSideBar 
-    User={session}
-    HistCurrData={HistCurrData}
-    Score={score}
-    /> 
- 
-  );
-} else {
-  <div> Please login</div>
-}
+      // fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
+      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
+
+      fetchUserHist<IDayPredictAsset[] | "user dosent exist">({ userId: session.user.id, limit: 12 }, 10),
+
+      fetchScore<IScore[]>(10)
+
+
+
+    ]);
+
+    if (UserHist == 'user dosent exist') {
+      return (
+        <ProfileSideBar
+          User={session}
+          HistCurrData={null}
+          Score={score}
+        />
+      )
+    } else {
+
+      const histData = transformHist(UserHist[0])
+      const HistCurrData = appendCurrentToHist({ histData, currentData: UserForcastC, assetRates: CurrentRateData[0], preDayRate: PreDayRateData[0] })
+      return (
+        <ProfileSideBar 
+        User={session}
+        HistCurrData={HistCurrData}
+        Score={score}
+        /> 
+      )
+    }
+
+  } else {
+    <div> Please login</div>
+  }
 };
 
 export default Profile;
