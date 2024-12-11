@@ -10,6 +10,7 @@ const Trend = async () => {
     fetchCollectionData<ICalAsset[]>('periodictrends', 60),
   ]);
   
+  console.log(DurationData[0])
   return (
     <TrendsChart PeriodData={PeriodData[0].periods} DurationData={DurationData}/> 
  

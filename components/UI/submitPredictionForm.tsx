@@ -2,20 +2,17 @@
 import { useState, startTransition, useEffect } from "react";
 import useSelectedAsset from "@/stores/useSelectedAssetStore";
 import { IAssetCurrentRate } from "@/types/Current";
+import { IScore } from "@/types/Score";
 import { Session } from "next-auth";
 import { forcastAction } from "@/app/actions/forcastAction";
-import { IUserForcastRes, IUserPredict } from "@/types/UserDailyPredict";
+import { IUserPredict } from "@/types/UserDailyPredict";
 import { getToday } from "@/utils/global/currentday";
 
 import {
-    CardBody,
     Button,
     Avatar,
     Badge,
     Input,
-    CardFooter,
-    Autocomplete,
-    AutocompleteItem,
     Slider,
     SliderValue,
     Chip,
@@ -26,59 +23,15 @@ import useAssetDrawerStore from '@/stores/useAssetDrawerStore'
 import Flag from "react-world-flags";
 import { IAsset } from "@/types/Assets";
 import { Card } from "./cardTremor";
-import { IScore } from "@/types/Score";
+import { getScore } from "@/utils/global/getScore";
+import { getPredictOfAsset, predictOfAsset } from "@/utils/global/getPredictionOfAsset";
 
 
-type predictOfAsset = number | null
 
 const today = getToday()
 const currentDay = today.toISOString().split('T')[0];
 today.setDate(today.getDate() + 1); // Adds one day
 const nextDay = today.toISOString().split('T')[0];
-
-function getPredictOfAsset({ selectedAsset, ForcastedRateS }: { selectedAsset: string, ForcastedRateS: IUserPredict[] }): predictOfAsset {
-    const asset = ForcastedRateS.find((item) => item.selectedAsset === selectedAsset);
-    return asset?.nextDayRate || null;
-}
-
-function getScore({ scores, userId, asset }: { scores: IScore[], userId: string | undefined, asset: string }): { rank: number | null, total: number | null } {
-
-    if (userId == undefined) {
-
-        return {
-            rank: null,
-            total: null
-        }
-
-
-    } else {
-
-        const a = scores[0].assets.find((obj) => obj[asset] !== undefined)
-        if (a) {
-
-            const u = a[asset].find((obj) => obj[userId] !== undefined)
-            if (u) {
-                return {
-                    rank: u[userId].rank,
-                    total: a[asset].length
-                }
-
-            } else {
-                return {
-                    rank: null,
-                    total: a[asset].length
-                }
-            }
-        } else {
-
-            return {
-                rank: null,
-                total: null
-            }
-        }
-
-    }
-}
 
 
 export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData, Score }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[], Score: IScore[] }) {
@@ -155,7 +108,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
 
     if (currentAsset.name !== 'US Dollar') return (
-        <Card className="min-w-80 max-w-96 lg:max-w-7xl p-2 bg-black" >
+        <Card  >
 
             <div className="flex justify-between w-full ">
                 <div className="text-large grow-1 text-text-active">Forcast details</div>

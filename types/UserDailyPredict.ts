@@ -3,7 +3,7 @@ import { Document, ObjectId } from "mongoose"
 
 export interface IUserPredict {
     userId :ObjectId,
-    submitDate: Date,
+    submitDate: string,
     selectedAsset: string,
     nextDayRate: number
 }

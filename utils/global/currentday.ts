@@ -33,3 +33,14 @@ export function getNextDay(date = new Date()) {
   return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 }
 
+export function addOneDay(dateStr:string) {
+  // Convert the date string to a Date object
+  let date = new Date(dateStr);
+
+  // Add one day
+  date.setDate(date.getDate() + 1);
+
+  // Format the date as YYYY-MM-DD
+  return date.toISOString().split('T')[0];
+}
+

@@ -6,6 +6,7 @@ import clsx, { type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { AvailableChartColorsKeys } from "./chartUtils"
 import { getCurrentDay, getNextDay } from "@/utils/global/currentday"
+import { BlobOptions } from "buffer"
 
 export function cx(...args: ClassValue[]) {
   return twMerge(clsx(...args))
@@ -189,6 +190,23 @@ export function createTrackData({
 }
 
 
+export function numberTextColor(value: number){
+  if (value> 0 ){
+    return "text-red-high"
+  }if (value<0){
+     return "text-green-high"
+  }else{
+    return "text-gray-600"
+  }
+}
+
+export function backgroundCorrect(value:boolean){
+  if (value){
+    return "bg-gradient-to-b from-green-400 to-green-800"
+  }else {
+    return "bg-gradient-to-b from-red-400 to-red-800"
+  }
+}
 
 
 

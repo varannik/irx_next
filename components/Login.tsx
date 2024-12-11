@@ -71,32 +71,3 @@ export default function Login() {
     </Transition>
   )
 }
-
-
-// 'use client'
-// import { useSession, signIn, signOut } from "next-auth/react";
-// import { Container } from '@/components/Container'
-// import LoginPage from '@/components/SigninProfile'
-
-
-// export default function Home() {
-
-//   return (
-//           <>
-//             <Container className="mt-9">
-//               <div className="max-w-2xl">
-//               <h1> Home Page </h1>
-//                     <button onClick={()=> signIn('google')}>Sign In</button>
-//                     <button onClick={()=> signOut()}>Sign Out</button>
-
-                    
-
-//                     {/* <LoginPage /> */}
-//               </div>
-//             </Container>
-//           </>
-//   );
-// }
-
-
-
