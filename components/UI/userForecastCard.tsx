@@ -8,7 +8,7 @@ export default function UserForecastCard({ Data }: { Data: IDayHist[] | null }) 
         return (
             <ul role="list" className="flex flex-col p-2 gap-2 w-full ">
                 {Data.map((item: IDayHist) => (
-                    <li key={item.date} className="  justify-start items-start  px-4  shadow sm:rounded-md sm:px-6 ">
+                    <li key={item.date} className="justify-start items-start  px-4  shadow sm:rounded-md sm:px-6 ">
                         <div className={cx(
                                 "flex relative"
                                 ,"p-2"
@@ -19,7 +19,7 @@ export default function UserForecastCard({ Data }: { Data: IDayHist[] | null }) 
 
                             <div className={cx(
                                             "absolute top-0 left-2 h-2 w-2 rounded-b-sm"
-                                            ,backgroundCorrect(item.csp)
+                                            , backgroundCorrect(item.csp)
                                             )}></div>
                             <div className="flex divide-x divide-div-diff w-full ">
                             <div className="flex w-28 justify-center items-center  text-xs pr-2 ">{item.date} </div>  

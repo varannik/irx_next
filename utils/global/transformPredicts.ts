@@ -22,8 +22,8 @@ export const transformHist = (input: IDayPredictAsset):IHist[] => {
             date,
             predictedrate: prediction.predictedrate,
             actualrate: prediction.actualrate,
-            pct_predicted: prediction.pct_predicted.toFixed(2),
-            pct_actual: prediction.pct_actual.toFixed(2),
+            pct_predicted: Number(prediction.pct_predicted.toFixed(2)),
+            pct_actual: Number(prediction.pct_actual.toFixed(2)),
             csp: prediction.csp,
           });
         }

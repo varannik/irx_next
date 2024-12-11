@@ -34,8 +34,7 @@ const Profile = async () => {
     if (session) {
 
   // Fetch data with caching applied in the external file
-  const [CurrentRateData, PreDayRateData ,AssetListData, 
-          // UserForcastF, 
+  const [CurrentRateData, PreDayRateData,
           UserForcastC, 
           UserHist,
           score,
@@ -43,7 +42,7 @@ const Profile = async () => {
 
     fetchCollectionData<IAssetCurrentRate[]>('currentrates', 10),
     fetchCollectionData<IPreDayRate[]>('predayrates', 10),
-    fetchCollectionData<IAssets[]>('countries', 10),
+
 
     // fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
     fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
