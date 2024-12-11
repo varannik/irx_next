@@ -8,11 +8,10 @@ import { Session } from 'next-auth'
 import { Chip } from '@nextui-org/react'
 import useSelectedAsset from "@/stores/useSelectedAssetStore";
 import { IScore } from "@/types/Score";
-import { getPredictOfAsset, predictOfAsset } from '@/utils/global/getPredictionOfAsset'
 import { getScore } from '@/utils/global/getScore'
-import { IUserPredict } from '@/types/UserDailyPredict'
 import UserForecastCard from './userForecastCard'
 import { IDayHist, IHist } from '@/types/UserHistoryCards'
+import { signOut } from 'next-auth/react'
 
 
 export default function ProfileSideBar({
@@ -93,7 +92,10 @@ export default function ProfileSideBar({
                         <ArrowLeftEndOnRectangleIcon className="h-6 w-6 pr-2" aria-hidden="true" /> Back
                       </button>
 
-                      <button className='w-28  h-10 flex justify-center items-center border-2 border-red-800 rounded-2xl  text-red-800' onClick={() => setProfileDrawerOpen(false)} >
+                      <button className='w-28  h-10 flex justify-center items-center border-2 border-red-800 rounded-2xl  text-red-800' 
+                        onClick={() => { 
+                                    signOut() 
+                                    setProfileDrawerOpen(false)}} >
                         Log out  <ArrowRightStartOnRectangleIcon className="h-6 w-6 pl-2 " aria-hidden="true" />
                       </button >
 
