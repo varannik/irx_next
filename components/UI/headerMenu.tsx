@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import {Transition } from '@headlessui/react'
+import { Transition } from '@headlessui/react'
 import { useEffect, useState } from 'react'
 import useSelectedAsset from '@/stores/useSelectedAssetStore'
 
@@ -12,20 +12,23 @@ import MainMenuDesktop from './mainMenuDesktop'
 import WaitToRefresh from './waitToRefresh'
 import { Logo } from '../QuanticalLogo'
 import { getCorrectTimeZone } from '@/utils/global/getCorrectTimeZone'
+import { Button } from '@nextui-org/react'
+import Flag from 'react-world-flags'
+import SelectCalendar from './base/calendar'
 
 
 
-export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
- 
+export default function HeaderMenu({ LastUpdateDate }: { LastUpdateDate: Date }) {
+
   const [logoHovered, setLogoHovered] = useState(false)
 
   const { currentAsset, setCurrentAsset } = useSelectedAsset()
-  const {openAsset, setAssetDrawerOpen} = useAssetDrawerStore()
+  const { openAsset, setAssetDrawerOpen } = useAssetDrawerStore()
   const { openHeader, setHeaderOpen } = useHeaderDrawerStore()
   const [waitForNewUpdate, setWaitForNewUpdate] = useState(15)
   const [time, setTime] = useState('');
 
-
+ 
 
   // Use useEffect to update the time every second
   useEffect(() => {
@@ -54,12 +57,12 @@ export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
   }, [LastUpdateDate]);
 
 
-  useEffect(()=>{
-    const lastTime =  getCorrectTimeZone(LastUpdateDate)
+  useEffect(() => {
+    const lastTime = getCorrectTimeZone(LastUpdateDate)
     setTime(lastTime)
   }, [LastUpdateDate])
 
-  
+
 
   return (
     <>
@@ -67,7 +70,7 @@ export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
         <div
           className={clsx([
             // Base styles
-            'fixed items-center flex mx-auto max-w-7xl inset-x-0 top-0 h-12  pl-5 pr-2 py-2 text-sm z-50  divide-x divide-div-diff overflow-hidden rounded-b-lg bg-bg-layer1 shadow',
+            'fixed items-center flex mx-auto max-w-7xl inset-x-0 top-0 h-12  pl-5 pr-2 py-2 text-sm z-50   overflow-hidden rounded-b-lg bg-bg-layer1 shadow',
             // Shared closed styles
             'data-[closed]:opacity-0',
             // Entering styles
@@ -75,9 +78,10 @@ export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
             // Leaving styles
             'data-[leave]:duration-300 data-[leave]:data-[closed]:-translate-y-full',
           ])}>
+          <div className='flex justify-items-center grow  divide-x divide-div-diff  '>
 
-          <div className="w-1/5 max-w-32 justify-center ">
-            <Link
+
+            <Link className='w-1/5 max-w-32   mr-5'
               onClick={() => { setHeaderOpen(!openHeader) }}
               href="/"
               aria-label="Home"
@@ -85,42 +89,35 @@ export default function HeaderMenu({LastUpdateDate}:{LastUpdateDate:Date}) {
               onMouseLeave={() => setLogoHovered(false)}
             >
               <Logo
+                className='w-full h-full'
                 invert={true}
                 filled={logoHovered}
               />
             </Link>
-            
-          </div>
-          <div className='grow ml-6'>
-            <div className='hidden md:flex '>
-             <MainMenuDesktop />
+
+            <div className='flex justify-center items-center p-2 text-xs  '>
+                <WaitToRefresh waitForNewUpdate={waitForNewUpdate} lastUplate={time} />
             </div>
-          
+
+            <div className='flex grow '>
+              <div className='hidden md:flex '>
+                <MainMenuDesktop />
+              </div>
+            </div>
+
           </div>
 
-          <div className='grid justify-items-center px-2'>
-        <button onClick={() => setAssetDrawerOpen(true)} type="button">
-          <div className='text-xs text-gray-600 '>
-            Current currency
-          </div>
-          <div className='text-sx text-gray-400'>
-          
-          {currentAsset.name}
-          
-          </div>
-          </button>
-        </div>
+          <div>
 
-          <div className='grid justify-items-center px-2'>
-            <div className='text-xs text-gray-600 '>
-              Last Update
+            <div className='flex justify-items-center px-2 divide-x divide-div-diff '>
+              {/* <SelectCalendar /> */}
+              <button className='pr-2' onClick={() => setAssetDrawerOpen(true)}>
+                <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
+                {/* <p className='text-sx text-gray-400'>{currentAsset.name}</p> */}
+              </button>
             </div>
-            <div className='text-sx text-gray-400'>
-              {time}
-            </div>
-          </div>
-          <div className='flex justify-center pl-2 text-xs '>
-          <WaitToRefresh waitForNewUpdate={waitForNewUpdate}/>
+
+
           </div>
         </div>
 
