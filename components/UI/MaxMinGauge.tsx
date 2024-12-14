@@ -200,23 +200,9 @@ export default function MaxMinGauge({ CurrentRateData, SimpleData, MaxMinData }:
       </div>
       {/* End of chart area */}
       {/* Description area*/}
-      <div className=" row-span-1 h-full">
+      {/* <div className=" row-span-1 h-full">
 
-                          {/* <Tabs key='calendar' radius={'md'} aria-label="Tabs radius"
-                            color='default'
-                            classNames={{
-                              tabList: "bg-hov-c ",
-                            }}
-                            selectedKey={currentCalendar}
-                            onSelectionChange={setCurrentCalendar} >
-
-                            <Tab key='J' title="Persian" />
-
-                            <Tab key='G' title="Gregorian" />
-
-                          </Tabs> */}
-
-      </div>
+      </div> */}
       {/* End Description */}
 
       {/* Adjustments area 3 row span */}

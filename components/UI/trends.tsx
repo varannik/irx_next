@@ -150,9 +150,9 @@ export function TrendsChart({ DurationData, PeriodData }: { PeriodData: Record<s
 
       {/* End of chart area */}
       {/* Description area*/}
-      <div className=" row-span-1 h-full">
+      {/* <div className=" row-span-1 h-full">
          
-      </div>
+      </div> */}
       {/* End Description */}
 
       {/* Adjustments area 3 row span */}

@@ -19,7 +19,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           // Layout
           "grid grid-rows-10"
           // base
-          ,"relative rounded-lg border  text-left shadow-sm  mx-auto min-w-80 max-w-80 overflow-hidden  min-h-[80vh] max-h-[80vh]  px-4 py-3.5",
+          ,"relative rounded-lg border  text-left shadow-sm  mx-auto min-w-80 max-w-80 overflow-hidden  min-h-[70vh] max-h-[80vh]  px-4 py-3.5",
           // background color
           "bg-[#090E1A]", 
           // border color

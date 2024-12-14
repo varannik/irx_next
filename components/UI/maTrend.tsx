@@ -85,11 +85,10 @@ export function MA({ MAData }: { MAData: IMAModel }) {
       </div>
       {/* End of header  */}
       {/* Chart or content  */}
-      <div className="flex  row-span-5 h-full ">
+      <div className="flex  row-span-4 h-full ">
 
 
         <LineChart
-
           data={assetData}
           index="date"
           categories={cats}

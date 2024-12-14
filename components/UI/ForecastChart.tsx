@@ -125,16 +125,19 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
   return (
     <Card >
       {/* Header with 2 row span */}
+      <div className="flex flex-col row-span-10 gap-2">
 
-      <div className="grid grid-cols-8 h-full row-span-1  ">
+
+      
+      <div className="grid grid-cols-8 h-10">
         <div className="col-span-5 text-lg font-normal text-text-active ">{Title}</div>
+        <div className="flex col-span-3 text-xs pt-1 text-gray-500 justify-end">{Title == 'AI' ? " Model: RNN-GRU" : ""}</div>
       </div>
-
       {/* End of header  */}
 
-
       {/* Chart or content  */}
-      <div className="grid  items-start justify-center h-full row-span-1 w-full ">
+      <div className="flex relative  items-start justify-center p-3  w-full   border-gray-800 border-1 rounded-lg">
+        <div className="absolute italic font-medium -inset-2 left-2 bg-[#090E1A] text-xs text-gray-700 w-10 h-6 "> Today </div>
         <div className="w-60">
           <CategoryBar
             forcastedValue={catBarCenter?.toLocaleString()}
@@ -146,7 +149,8 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
         </div>
       </div>
 
-      <div className="flex row-span-5 h-full items-center justify-center">
+      <div className="flex relative row-span-4 h-56 items-start justify-center border-gray-800 mt-2 p-3  border-1 rounded-lg">
+      <div className="absolute italic font-medium -inset-2 left-2 bg-[#090E1A] text-xs text-gray-700 w-16 h-6 "> Tomorrow </div>
         <LineChart
           data={trendData}
           legendPosition={"center"} 
@@ -190,12 +194,15 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
       {/* End Description */}
 
       {/* Adjustments area 3 row span */}
-      <div className="  row-span-3 h-full">
-
-        <div className="flex-none font-medium text-xs mb-3 text-gray-300">Accurately predicted rate shifts</div>
+      <div className="flex relative flex-col  border-gray-800 mt-2 p-3  border-1 rounded-lg">
+      <div className="absolute italic font-medium -inset-2 left-2 bg-[#090E1A] text-xs text-gray-700 w-12 h-6 "> History </div>
+        <div className=" text-xs  text-gray-500 pb-2 ">Accurately predicted rate shifts</div>
         <Tracker className="w-full" data={trackerData} hoverEffect={true} />
-        <Alert />
       </div>
+      <Alert />
+
+      </div>
+
     </Card>
   )
 }
