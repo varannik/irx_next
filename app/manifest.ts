@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'QT',
     description: 'Real-Time Exchange Tracker, Live Iranian Free Market Rates',
     start_url: '/',
-    display: 'fullscreen',
+    display: 'standalone',
     background_color: '#ffffff',
     theme_color: '#000000',
     icons: [
