@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 import '@/styles/tailwind.css'
-import { Session } from "next-auth";
+
 
 export const metadata: Metadata = {
   title: {
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     default:
       'Real-Time Exchange Tracker, Live Iranian Free Market Rates',
   },
-  description:
+  manifest: '/manifest.json'
+  ,description:
     'Real-Time Exchange Rate Tracker provides a comprehensive solution for monitoring the Iranian free market currency fluctuations. This innovative platform offers up-to-the-minute exchange rates, backed by advanced AI analytics and insights from our knowledgeable human community.',
   alternates: {
     types: {

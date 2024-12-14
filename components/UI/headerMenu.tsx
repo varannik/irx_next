@@ -81,7 +81,7 @@ export default function HeaderMenu({ LastUpdateDate }: { LastUpdateDate: Date })
           <div className='flex justify-items-center grow  divide-x divide-div-diff  '>
 
 
-            <Link className='w-1/5 max-w-32   mr-5'
+            <Link className='w-1/5 max-w-32 md:mr-5 md:ml-0 mr-1 -ml-3'
               onClick={() => { setHeaderOpen(!openHeader) }}
               href="/"
               aria-label="Home"
@@ -109,11 +109,10 @@ export default function HeaderMenu({ LastUpdateDate }: { LastUpdateDate: Date })
 
           <div>
 
-            <div className='flex justify-items-center px-2 divide-x divide-div-diff '>
-              {/* <SelectCalendar /> */}
-              <button className='pr-2' onClick={() => setAssetDrawerOpen(true)}>
+            <div className='flex justify-items-center  divide-x divide-div-diff '>
+              <SelectCalendar />
+              <button className='flex w-full justify-center items-center ml-2 ' onClick={() => setAssetDrawerOpen(true)}>
                 <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
-                {/* <p className='text-sx text-gray-400'>{currentAsset.name}</p> */}
               </button>
             </div>
 

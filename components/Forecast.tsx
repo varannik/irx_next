@@ -16,6 +16,7 @@ import { IChartData, recCatTrack, recTrack, recTrend } from '@/types/Forcasts';
 import { createTrackData, resModule } from '@/lib/utils';
 import { IScore } from '@/types/Score';
 import { fetchScore } from '@/utils/apiActions/fetchScore';
+import { UserNotLoggedIn } from './UI/userNotLoggedIn';
 
 
 const today = new Date();
@@ -196,9 +197,7 @@ const Forcast = async () => {
 
     );
   } else {
-    <div>
-      Something Wrong Happened
-    </div>
+      return (<UserNotLoggedIn />)
   }
 
 };
