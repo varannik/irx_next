@@ -7,7 +7,7 @@ import { IWeekDayCal } from '@/types/WeekDays';
 const WeekDays = async () => {
   // Fetch data with caching applied in the external file
   const [WeekDaysData] = await Promise.all([
-    fetchCollectionData<IWeekDayCal[]>('weekdays', 60),
+    fetchCollectionData<IWeekDayCal[]>('weekdays', 0),
 
   ]);
 

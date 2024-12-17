@@ -6,8 +6,8 @@ import { IAssetDays } from '@/types/DurationTrend';
 const Trend = async () => {
   // Fetch data with caching applied in the external file
   const [DurationData, PeriodData] = await Promise.all([
-    fetchCollectionData<IAssetDays[]>('trends', 60),
-    fetchCollectionData<ICalAsset[]>('periodictrends', 60),
+    fetchCollectionData<IAssetDays[]>('trends', 0),
+    fetchCollectionData<ICalAsset[]>('periodictrends', 0),
   ]);
   
   return (

@@ -5,7 +5,7 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/re
 import { Switch, Tab, Tabs } from "@nextui-org/react";
 
 
-import ForcastIcon from './UI/icons/ForecastIcon'
+import {ForecastIcon} from './UI/icons/ForecastIcon'
 import GaugeIcon from './UI/icons/GaugeIcon'
 import useMenuDrawerStore from '@/stores/useMenuDrawerStore'
 import useProfileDrawerStore from '@/stores/useProfileDrawerStore'
@@ -31,7 +31,7 @@ const items = [
   },
   {
     id: 2,
-    icon: ForcastIcon,
+    icon: ForecastIcon,
     href: '/analytics/trend',
     title: "Trends",
     current: true

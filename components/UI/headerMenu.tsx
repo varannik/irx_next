@@ -70,7 +70,7 @@ export default function HeaderMenu({ LastUpdateDate }: { LastUpdateDate: Date })
         <div
           className={clsx([
             // Base styles
-            'fixed items-center flex mx-auto max-w-7xl inset-x-0 top-0 h-12  pl-5 pr-2 py-2 text-sm z-50   overflow-hidden rounded-b-lg bg-bg-layer1 shadow',
+            'fixed items-center flex mx-auto max-w-7xl inset-x-0 top-0 h-12  p-2 text-sm z-50    rounded-b-lg bg-bg-layer1 shadow',
             // Shared closed styles
             'data-[closed]:opacity-0',
             // Entering styles
@@ -81,7 +81,7 @@ export default function HeaderMenu({ LastUpdateDate }: { LastUpdateDate: Date })
           <div className='flex justify-items-center grow  divide-x divide-div-diff  '>
 
 
-            <Link className='w-1/5 max-w-32 md:mr-5 md:ml-0 mr-1 -ml-3'
+            <Link className='w-2/6 max-w-32 p-2'
               onClick={() => { setHeaderOpen(!openHeader) }}
               href="/"
               aria-label="Home"

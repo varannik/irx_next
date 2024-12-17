@@ -12,7 +12,7 @@ export const fetchHistoy = async (userId:string, limit:number) => {
       const passDays = new Date();
       passDays.setDate(passDays.getDate() - limit);
       const result  = await cl.findOne({userId})
-      console.log('dddd', result)
+
       if (result!==null){
           const assets:IDayPredictAsset[] = result.assets
           const selectedDates = assets.map((element:IDayPredictAsset) => {

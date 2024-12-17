@@ -6,7 +6,7 @@ import { IMAModel } from '@/types/MA';
 const MATrend = async () => {
   // Fetch data with caching applied in the external file
   const [MAData] = await Promise.all([
-    fetchCollectionData<IMAModel[]>('mas', 60),
+    fetchCollectionData<IMAModel[]>('mas', 0),
 
   ]);
 

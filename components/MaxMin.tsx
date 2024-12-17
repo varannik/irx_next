@@ -9,9 +9,9 @@ import { IMaxMinCal } from '@/types/MaxMin';
 const MaxMin = async () => {
   // Fetch data with caching applied in the external file
   const [CurrentRateData, SimpleData, MaxMinData] = await Promise.all([
-    fetchCollectionData<IAssetCurrentRate[]>('currentrates', 60),
-    fetchCollectionData<IAssets[]>('simpletrends', 60),
-    fetchCollectionData<IMaxMinCal[]>('maxmins', 60),
+    fetchCollectionData<IAssetCurrentRate[]>('currentrates', 0),
+    fetchCollectionData<IAssets[]>('simpletrends', 0),
+    fetchCollectionData<IMaxMinCal[]>('maxmins', 0),
   ]);
 
   return (

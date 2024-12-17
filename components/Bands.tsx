@@ -9,8 +9,8 @@ import { IBB } from "@/types/BB";
 const Bands = async () => {
   // Fetch data with caching applied in the external file
   const [RSIData, BBData] = await Promise.all([
-    fetchCollectionData<IRSIAsset[]>('rsis', 60),
-    fetchCollectionData<IBB[]>('bbs', 60),
+    fetchCollectionData<IRSIAsset[]>('rsis', 0),
+    fetchCollectionData<IBB[]>('bbs', 0),
 
   ]);
   return (

@@ -38,20 +38,20 @@ const Forcast = async () => {
             score
           ] = await Promise.all([
 
-      fetchCollectionData<IAssetCurrentRate[]>('currentrates', 10),
-      fetchCollectionData<IAssets[]>('countries', 10),
+      fetchCollectionData<IAssetCurrentRate[]>('currentrates', 0),
+      fetchCollectionData<IAssets[]>('countries', 0),
 
       fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
       fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
 
-      fetchGenForcast<IGenDayPredictions>({ date: currentDay }, 10),
-      fetchGenForcast<IGenDayPredictions>({ date: yesterday }, 10),
+      fetchGenForcast<IGenDayPredictions>({ date: currentDay }, 0),
+      fetchGenForcast<IGenDayPredictions>({ date: yesterday }, 0),
 
-      fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12 }, 10),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 12 }, 10),
-      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 10),
+      fetchUserHist<IDayPredictAsset[]>({ userId: session.user.id, limit: 12 }, 0),
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'A'.repeat(24), limit: 12 }, 0),
+      fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 0),
 
-      fetchScore<IScore[]>(10)
+      fetchScore<IScore[]>(0)
     ]);
 
 
