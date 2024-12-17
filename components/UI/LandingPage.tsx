@@ -232,9 +232,8 @@ export default function LandingPage() {
             alt="bg-land-desktop"
             src="/images/DesktopLanding.webp"
             layout="fill"
-            objectFit="cover"
             priority
-            className=" absolute inset-0 -z-10 bg-black opacity-40 pointer-events-none "
+            className=" absolute inset-0 -z-10 bg-black opacity-40 pointer-events-none object-cover "
           />
 
           <div className="mx-auto max-w-7xl px-6 lg:px-8  py-32 sm:py-32 ">
