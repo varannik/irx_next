@@ -199,7 +199,7 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
         <div className=" text-xs  text-gray-500 pb-2 ">Accurately predicted rate shifts</div>
         <Tracker className="w-full" data={trackerData} hoverEffect={true} />
       </div>
-      <Alert />
+      <Alert text="The new forecast for the next day will be updated after 10 PM Tehran time." />
 
       </div>
 

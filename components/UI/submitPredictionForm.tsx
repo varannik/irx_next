@@ -6,7 +6,7 @@ import { IScore } from "@/types/Score";
 import { Session } from "next-auth";
 import { forcastAction } from "@/app/actions/forcastAction";
 import { IUserPredict } from "@/types/UserDailyPredict";
-import { getToday } from "@/utils/global/currentday";
+import { getCurrentTimeInTehran, getToday } from "@/utils/global/currentday";
 
 import {
     Button,
@@ -25,13 +25,8 @@ import { IAsset } from "@/types/Assets";
 import { Card } from "./cardTremor";
 import { getScore } from "@/utils/global/getScore";
 import { getPredictOfAsset, predictOfAsset } from "@/utils/global/getPredictionOfAsset";
+import Alert from "./alert";
 
-
-
-const today = getToday()
-const currentDay = today.toISOString().split('T')[0];
-today.setDate(today.getDate() + 1); // Adds one day
-const nextDay = today.toISOString().split('T')[0];
 
 
 export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRateS, AssetListData, Score }: { User: Session | null, CurrentRateS: IAssetCurrentRate, ForcastedRateS: IUserPredict[], AssetListData: IAsset[], Score: IScore[] }) {
@@ -50,8 +45,54 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
     const [newPercent, setNewPercent] = useState<SliderValue>(0)
     const [percent, setPercent] = useState<SliderValue>(0)
+    const [timeNowInTehran, setTimeNowInTehran] = useState<string>("Loading...");
+    const [nextDay, setNextDay] = useState<string>("Loading...");
+    const [submitDate, setSubmitDate] = useState<Date>(new Date())
 
 
+
+    useEffect(() => {
+        // Update the time every second
+        const intervalId = setInterval(() => {
+            let nowInTehran = getCurrentTimeInTehran()
+
+            // Parse the date string into components
+            const [datePart, timePart] = nowInTehran.split(", ");
+            const [month, day, year] = datePart.split("/");
+
+            // Reformat to the desired format
+            const formattedDateTime = `${year}-${month}-${day}, ${timePart}`;
+
+            setTimeNowInTehran(formattedDateTime);
+
+
+            const dateTimeString = String(nowInTehran);
+            const tsdate = new Date(dateTimeString);
+            const hour = tsdate.getHours();
+
+
+            if (hour > 21) {
+                tsdate.setDate(tsdate.getDate() + 2);
+                tsdate.setUTCHours(0, 0, 0, 0);
+                setSubmitDate(tsdate)
+                const nextDayTehranStr = tsdate.toISOString().split('T')[0];
+                setNextDay(nextDayTehranStr)
+
+            } else {
+                tsdate.setDate(tsdate.getDate() + 1);
+                tsdate.setUTCHours(0, 0, 0, 0);
+                setSubmitDate(tsdate)
+                const nextDayTehranStr = tsdate.toISOString().split('T')[0];
+                setNextDay(nextDayTehranStr)
+
+            }
+            // Set hours, minutes, seconds, and milliseconds to zero
+            // now.setUTCHours(0, 0, 0, 0);
+
+        }, 1000);
+        // Clean up the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, []);
 
 
     useEffect(() => {
@@ -89,12 +130,12 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     }, [userPredictOfAsset])
 
 
-
+    console.log(timeNowInTehran)
     const handleForcastSubmit = async (action: 'CREATE' | 'UPDATE' | 'DELETE') => {
         startTransition(async () => {
             try {
                 await forcastAction({
-                    submitDate: getToday(),
+                    submitDate,
                     selectedAsset: currentAsset.name,
                     nextDayRate: Number(newValue),
                     action
@@ -136,7 +177,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                 <div className="col-span-5 text-large grow-1 text-text-active">Forecast details</div>
                 <div className="col-span-3 flex text-xs grow-0 items-start justify-center ">
                     <div className="flex mt-1 justify-center items-center">
-                        <div className="mr-3  text-slate-400">
+                        <div className="mr-3  text-gray-400">
                             {currentAsset.name}
                         </div>
                         <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
@@ -162,17 +203,17 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                                 <Icon icon="solar:pen-2-linear" />
                             </Button>
                         } placement="bottom-right">
-                        <Avatar size="lg" isBordered radius="md" src={User?.user.image} />
+                        <Avatar size="lg" isBordered  radius="md" src={User?.user.image} />
                     </Badge>
                 </div>
 
                 <div className="flex flex-col col-span-4">
                     <div className="flex justify-center items-center font-medium text-text-active">{User?.user.name}</div>
                     <div className="flex w-full justify-between items-center">
-                        <Chip color="warning" variant="bordered">
-                            <span className="text-xs text-default-500">Rank: {usc == null ? "-" : `#${usc}`}</span>
+                        <Chip color="primary" variant="bordered">
+                            <span className="text-xs text-gray-400">Rank: {usc == null ? "-" : `#${usc}`}</span>
                         </Chip>
-                        <div className="text-xs text-slate-400">{`${countUsers} Participants`}</div>
+                        <div className="text-xs text-gray-400">{`${countUsers} Participants`}</div>
                     </div>
                 </div>
             </div>
@@ -181,37 +222,32 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
 
 
-            <div className="mt-1 mb-1 text-xs text-gray-500"> {usc == null ? "Your rank will be determined after your first forecast." : ""} </div>
-            {/* <p className="text-small text-default-400">
-                        The photo will be used for your profile, and will be visible to other users of the
-                        platform.
-                    </p> */}
+            <div className="mt-1 mb-1 text-xs text-gray-400"> {usc == null ? "Your rank will be determined after your first forecast." : ""} </div>
+            <div className="grid  items-start justify-center h-full md:row-span-5 row-span-5 w-full ">
 
-            {/* End of header  */}
+                <Alert text="Only forecasts made before 10 PM Tehran time for the next day will be considered." />
+                <div className="flex gap-4">
 
 
-            {/* Chart or content  */}
-            <div className="grid  items-start justify-center h-full md:row-span-4 row-span-4 w-full ">
+                    <div className="flex w-2/4 flex-col items-center justify-center">
+                        <div className="text-sm pb-2 text-gray-400">
+                            Tehran Time
+                        </div>
+                        <div className="flex text-xs text-gray-300 ring-1 p-1 rounded-lg ring-yellow-400 w-full items-center justify-center">
+                            {timeNowInTehran}
+                        </div>
+                    </div>
 
-                <div className="grid gap-4 grid-cols-2  text-text-active">
-                    <Input
-                        variant="bordered"
-                        classNames={{
-                            input: "border-none border-0",
-                            label: "group-data-[filled-within=true]:text-text-active text-text-active"
-                        }}
-                        className=" "
-                        isReadOnly
-                        label="Current Date:" labelPlacement="outside" placeholder={currentDay} />
+                    <div className="flex  w-2/4 flex-col items-center ">
+                        <div className="text-sm text-gray-400 pb-2">
+                        Forecast for
+                        </div>
+                        <div className="flex  text-xs text-gray-300 ring-1 p-1 rounded-lg ring-yellow-400 w-full items-center justify-center">
+                            {nextDay}
+                        </div>
+                    </div>
 
-                    <Input
-                        variant="bordered"
-                        classNames={{
-                            input: "border-none border-0 ",
-                            label: "group-data-[filled-within=true]:text-text-active text-text-active",
-                        }}
 
-                        label="Forecast for:" labelPlacement="outside" placeholder={nextDay} />
                 </div>
                 <div>
                     <Input className="md:col-span-2 "
@@ -226,15 +262,15 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         step={100}
                         onValueChange={setNewValue}
                         classNames={{
-
-                            input: "border-none border-0 ",
-                            label: "group-data-[filled-within=true]:text-text-active text-text-active",
+                            inputWrapper:"group-data-[focus=true]:bg-gray-900 bg-gray-900 data-[hover=true]:bg-gray-900 group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-none",
+                            input: "border-none border-0 text-gray-300 group-data-[has-value=true]:text-gray-300   ",
+                            label: "group-data-[filled-within=true]:text-gray-400 text-gray-400 placeholder:text-gray-400",
 
                         }}
 
                         endContent={
                             <div className="pointer-events-none flex items-center">
-                                <span className="text-default-400 text-small">IRR</span>
+                                <span className="text-gray-400 text-small">IRR</span>
                             </div>
                         }
                     />
@@ -254,7 +290,8 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         classNames={
                             {
                                 trackWrapper: "h-full ",
-                                labelWrapper: "text-text-active",
+                                labelWrapper: "text-gray-300",
+                                label: "group-data-[filled-within=true]:text-gray-400 text-gray-400 placeholder:text-gray-400",
                             }
                         }
                         className="max-w-md md:col-span-2 mt-5"

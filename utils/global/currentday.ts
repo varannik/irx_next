@@ -44,3 +44,23 @@ export function addOneDay(dateStr:string) {
   return date.toISOString().split('T')[0];
 }
 
+
+export function getCurrentTimeInTehran(): string {
+  // Create a date object in the Tehran time zone using Intl.DateTimeFormat
+  const tehranTime = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Tehran',
+    hour12: false,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }).format(new Date());
+
+
+  return tehranTime;
+}
+
+
+
