@@ -37,12 +37,9 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     const [userPredictOfAsset, setUserPredictOfAsset] = useState<predictOfAsset>(null);
     const [usc, setUsc] = useState<number | null>(null)
     const [countUsers, seCountUsers] = useState<number | null>(null)
-
     const [message, setMessage] = useState("");
-
     const [newValue, setNewValue] = useState('0')
     const [currentRate, setCurrentRate] = useState<number>(0)
-
     const [newPercent, setNewPercent] = useState<SliderValue>(0)
     const [percent, setPercent] = useState<SliderValue>(0)
     const [timeNowInTehran, setTimeNowInTehran] = useState<string>("Loading...");
@@ -72,16 +69,23 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
 
             if (hour > 21) {
-                tsdate.setDate(tsdate.getDate() + 2);
+                //  Set Date for submition date
                 tsdate.setUTCHours(0, 0, 0, 0);
+                tsdate.setDate(tsdate.getDate() + 1);
                 setSubmitDate(tsdate)
+
+                // Set For UI
+                // tsdate.setDate(tsdate.getDate() + 1);
                 const nextDayTehranStr = tsdate.toISOString().split('T')[0];
                 setNextDay(nextDayTehranStr)
 
             } else {
-                tsdate.setDate(tsdate.getDate() + 1);
+                //  Set Date for submition date
                 tsdate.setUTCHours(0, 0, 0, 0);
                 setSubmitDate(tsdate)
+
+                // Set For UI
+                tsdate.setDate(tsdate.getDate() + 1);
                 const nextDayTehranStr = tsdate.toISOString().split('T')[0];
                 setNextDay(nextDayTehranStr)
 
@@ -130,7 +134,6 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     }, [userPredictOfAsset])
 
 
-    console.log(timeNowInTehran)
     const handleForcastSubmit = async (action: 'CREATE' | 'UPDATE' | 'DELETE') => {
         startTransition(async () => {
             try {
@@ -217,10 +220,6 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                     </div>
                 </div>
             </div>
-
-
-
-
 
             <div className="mt-1 mb-1 text-xs text-gray-400"> {usc == null ? "Your rank will be determined after your first forecast." : ""} </div>
             <div className="grid  items-start justify-center h-full md:row-span-5 row-span-5 w-full ">
