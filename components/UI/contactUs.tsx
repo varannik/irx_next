@@ -64,16 +64,21 @@ export default function ContactUs() {
                 <div className="text-sm leading-6">
                   <div className="font-semibold text-gray-300">Reza</div>
                   <div className="text-gray-500">Full Stack AI Engineer</div>
+                  <a href="mailto:reza@quantical.dev" className="hover:text-white text-gray-400">
+                  reza@quantical.dev
+                  </a>
                 </div>
               </figcaption>
             </figure>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-            Discover our range of services: 
-            <br />
-            AI/ML solutions, web and API development, full-stack integration, AI-driven end-to-end solutions, data analytics, cloud deployment, scalability optimization. 
-            <br />
+
+            <ul className="list-disc pl-6 mt-6 text-lg leading-8 text-gray-300">
+              <li className="mb-2">AI/ML end-to-end solutions</li>
+              <li className="mb-2">Web and API development</li>
+              <li className="mb-2">Full-stack integration</li>
+              <li className="mb-2">Analytics Engineering</li>
+            </ul>
             Connect with us and bring your ideas to life!
-            </p>
+
             <dl className="mt-10 space-y-4 text-base leading-7 text-gray-300">
               <div className="flex gap-x-4">
                 <dt className="flex-none">
@@ -104,8 +109,8 @@ export default function ContactUs() {
                   <EnvelopeIcon aria-hidden="true" className="h-7 w-6 text-gray-400" />
                 </dt>
                 <dd>
-                  <a href="mailto:hello@example.com" className="hover:text-white">
-                    hello@example.com
+                  <a href="mailto:tech@quantical.dev" className="hover:text-white text-gray-400">
+                  tech@quantical.dev
                   </a>
                 </dd>
               </div>

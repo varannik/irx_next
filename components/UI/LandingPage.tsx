@@ -22,6 +22,7 @@ import IranMarketSection from './iranMarketSection';
 import FeatureDetails from './featureDetails';
 import HowItWorks from './howItWorks';
 import ContactUs from './contactUs';
+import SocialSection from './socialSection';
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -156,7 +157,7 @@ export default function LandingPage() {
               />
             </Link>
           </div>
-          <div className="flex lg:hidden">
+          {/* <div className="flex lg:hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -165,19 +166,19 @@ export default function LandingPage() {
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="h-6 w-6" />
             </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
+          </div> */}
+          {/* <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
               <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-white">
                 {item.name}
               </a>
             ))}
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          </div> */}
+          {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" className="text-sm font-semibold leading-6 text-white">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
-          </div>
+          </div> */}
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
           <div className="fixed inset-0 z-50" />
@@ -275,6 +276,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <ContactUs />
+      <SocialSection />
       </ main>
     </div>
   )
