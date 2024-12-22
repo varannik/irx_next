@@ -15,6 +15,7 @@ const config: Config = {
       animation: {
         "scrolling-banner": "scrolling-banner var(--duration) linear infinite",
         "scrolling-banner-vertical": "scrolling-banner-vertical var(--duration) linear infinite",
+        'rotate': "rotate 10s linear infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -38,6 +39,10 @@ const config: Config = {
         "text-active": "#f3f4f6",
       },
       keyframes: {
+        'rotate': {
+          "0%": { transform: "rotate(0deg) scale(10)" },
+          "100%": { transform: "rotate(-360deg) scale(10)" },
+        },
         "scrolling-banner": {
           from: {transform: "translateX(0)"},
           to: {transform: "translateX(calc(-50% - var(--gap)/2))"},

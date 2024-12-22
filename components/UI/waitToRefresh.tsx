@@ -3,6 +3,7 @@ import React from 'react';
 import { CircularProgress, Progress } from '@nextui-org/react';
 import useRefOrWait from './base/useRefOrWait';
 import { Button } from "@nextui-org/react";
+import { Updating } from './updating';
 
 interface MyComponentProps {
   waitForNewUpdate: number;
@@ -17,7 +18,7 @@ const WaitToRefresh: React.FC<MyComponentProps> = ({ waitForNewUpdate, lastUplat
 
     <button onClick={handleRefresh} className='relative place-items-center place-content-center h-8 w-20'>
       {
-        // true?
+        // false ?
         isWaiting ?
           <div>
             <div className=' text-text-active text-xs '>{lastUplate}</div>
@@ -41,7 +42,8 @@ const WaitToRefresh: React.FC<MyComponentProps> = ({ waitForNewUpdate, lastUplat
           </div>
           // <div className=' text-text-active text-xs place-items-center place-content-center  '>Refresh Page</div>
           :
-          <div className='w-full h-8 text-red-high text-xs place-items-center place-content-center border border-x-1  rounded-lg border-red-high '><div className=' text-red-high text-xs '>{lastUplate ? lastUplate : "Cheking"}</div> </div>
+          <Updating />
+        // <div className='w-full h-8 text-red-high text-xs place-items-center place-content-center border border-x-1  rounded-lg border-red-high '><div className=' text-red-high text-xs '>{lastUplate ? lastUplate : "Cheking"}</div> </div>
       }
     </button>
 
@@ -49,3 +51,5 @@ const WaitToRefresh: React.FC<MyComponentProps> = ({ waitForNewUpdate, lastUplat
 }
 
 export default WaitToRefresh;
+
+
