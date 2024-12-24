@@ -10,7 +10,7 @@ import { fetchGenForcast } from '@/utils/apiActions/fetchGenForcast';
 import { IGenDayPredictions } from '@/types/GensPredictions';
 import { fetchUserHist } from '@/utils/apiActions/fetchUserHist';
 import { IDayPredictAsset } from '@/types/HistPredict';
-import { get2DayAgo, getNextDay, getPreviousDay } from '@/utils/global/currentday';
+import { get2DayAgo, getNextDay, getPreviousDay, getSubmitionDate, getTehranDate } from '@/utils/global/currentday';
 import { ForecastChart } from './UI/ForecastChart';
 import { IChartData, recCatTrack, recTrack, recTrend } from '@/types/Forcasts';
 import { createTrackData, resModule } from '@/lib/utils';
@@ -19,11 +19,11 @@ import { fetchScore } from '@/utils/apiActions/fetchScore';
 import { UserNotLoggedIn } from './UI/userNotLoggedIn';
 
 
-const today = new Date();
-const currentDay = today.toISOString().split('T')[0];
-const tomorrow = getNextDay()
-const yesterday = getPreviousDay();
-const prePreDay = get2DayAgo()
+const currentDay = getTehranDate(0)
+const tomorrow = getTehranDate(1)
+const yesterday = getTehranDate(-1)
+const prePreDay = getTehranDate(-2)
+
 
 const Forcast = async () => {
   // Fetch data with caching applied in the external file
@@ -40,8 +40,8 @@ const Forcast = async () => {
 
       fetchCollectionData<IAssetCurrentRate[]>('currentrates', 0),
       fetchCollectionData<IAssets[]>('countries', 0),
-
-      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: currentDay }, 0),
+      
+      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: getSubmitionDate() }, 0),
       fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: yesterday }, 0),
 
       fetchGenForcast<IGenDayPredictions>({ date: currentDay }, 0),

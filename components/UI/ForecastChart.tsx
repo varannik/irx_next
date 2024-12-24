@@ -14,6 +14,7 @@ import { futureTrendColor } from "@/lib/utils"
 import { CategoryBar } from "./base/charts/catChart"
 import { IAssetCurrentRate } from "@/types/Current"
 import { IGenDayPredictions } from "@/types/GensPredictions"
+import { getCurrentTimeInTehran, getTehranDate } from "@/utils/global/currentday"
 
 
 
@@ -55,7 +56,6 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
     }
   }])
 
-
   const [value, setValue] = useState<LineChartEventProps>(null)
   const [datas, setDatas] = useState<TooltipProps | null>(null)
   const [colors, setColors] = useState<AvailableChartColorsKeys[]>(['blue', 'gray']);
@@ -64,19 +64,25 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
 
 
 
+
   useEffect(() => {
     if (ChartData && currentAsset.name == 'US Dollar') {
       const assetData = ChartData[currentAsset.name]
       setTrendData(assetData.trend)
+
+
+      // Get Today Forcast 
+      const todayValues = assetData.trend.find((trend) => trend.date === getTehranDate(0));
+
       if (Title == "AI") {
+
         setTrackerData(assetData.track.AI)
-        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length - 2]["AI Forcast"])
+        setCatBarCenter(todayValues?todayValues["AI Forcast"]:50)
+
       } if (Title == 'Community Polling') {
         setTrackerData(assetData.track.Voting)
-        setCatBarCenter(ChartData[currentAsset.name].trend[(ChartData[currentAsset.name].trend).length - 2]["Voting Forcast"])
+        setCatBarCenter(todayValues?todayValues["Voting Forcast"]:50)
       }
-
-
 
     }
   }, [currentAsset, ChartData])
@@ -98,7 +104,6 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
     let futureColor: AvailableChartColorsKeys = futureTrendColor(trackerData[trackerData.length - 1].tooltip["Forcasted Shift %"])
     setColors(freshColors.concat(futureColor))
   }, [trackerData]);
-
 
 
   if (currentAsset.name !== 'US Dollar') return (
@@ -126,9 +131,6 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
     <Card >
       {/* Header with 2 row span */}
       <div className="flex flex-col row-span-10 gap-2">
-
-
-      
       <div className="grid grid-cols-8 h-10">
         <div className="col-span-5 text-lg font-normal text-text-active ">{Title}</div>
         <div className="flex col-span-3 text-xs pt-1 text-gray-500 justify-end">{Title == 'AI' ? " Model: RNN-GRU" : ""}</div>
@@ -166,8 +168,8 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
           showGridLines={false}
           className="mb-1 mt-1 h-48"
           showTooltip={true}
-          refAreaX1={trendData.length > 2 ? trendData[trendData.length - 3].date : 'null'}
-          refAreaX2={trendData.length > 2 ? trendData[trendData.length - 2].date : 'null'}
+          refAreaX1={getTehranDate(-1)}
+          refAreaX2={getTehranDate(0)}
           tooltipCallback={(props) => {
             if (props.active) {
               setDatas((prev: any) => {
@@ -199,7 +201,7 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
         <div className=" text-xs  text-gray-500 pb-2 ">Accurately predicted rate shifts</div>
         <Tracker className="w-full" data={trackerData} hoverEffect={true} />
       </div>
-      <Alert text="The new forecast for the next day will be updated after 10 PM Tehran time." />
+      <Alert text="The forecast for the next day is recalculated between 9:00 and 9:15 AM Tehran time." />
 
       </div>
 

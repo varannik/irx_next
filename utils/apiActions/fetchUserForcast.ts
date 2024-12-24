@@ -11,5 +11,6 @@ export const fetchUserForcast = async <T>({userId, submitDate}:{ userId: string;
       throw new Error(`Failed to fetch ${userId} prediction`);
     }
     const data = await res.json();
+
     return data.data;
   };

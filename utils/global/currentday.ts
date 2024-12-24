@@ -63,4 +63,38 @@ export function getCurrentTimeInTehran(): string {
 }
 
 
+export function getTehranDate(preday:number){
+
+  // Parse the date string into a Date object
+  const date = new Date(getCurrentTimeInTehran());
+
+  // Subtract one day (24 hours)
+  date.setDate(date.getDate() + preday);
+
+  const formattedDate = date.toISOString().split('T')[0];
+  return formattedDate
+
+}
+
+export function getSubmitionDate(){
+
+  const dateTimeString = getCurrentTimeInTehran()
+  const tsdate = new Date(dateTimeString);
+  const hour = tsdate.getHours();
+
+ 
+  if (hour > 9) {
+
+    return getTehranDate(2)
+
+  } else {
+
+    return getTehranDate(1)
+  }
+
+}
+
+
+
+
 

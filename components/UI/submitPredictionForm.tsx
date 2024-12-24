@@ -6,7 +6,7 @@ import { IScore } from "@/types/Score";
 import { Session } from "next-auth";
 import { forcastAction } from "@/app/actions/forcastAction";
 import { IUserPredict } from "@/types/UserDailyPredict";
-import { getCurrentTimeInTehran, getToday } from "@/utils/global/currentday";
+import { getCurrentTimeInTehran, getSubmitionDate, getToday } from "@/utils/global/currentday";
 
 import {
     Button,
@@ -47,7 +47,6 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     const [submitDate, setSubmitDate] = useState<Date>(new Date())
 
 
-
     useEffect(() => {
         // Update the time every second
         const intervalId = setInterval(() => {
@@ -63,35 +62,8 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
             setTimeNowInTehran(formattedDateTime);
 
 
-            const dateTimeString = String(nowInTehran);
-            const tsdate = new Date(dateTimeString);
-            const hour = tsdate.getHours();
-
-
-            if (hour > 21) {
-                //  Set Date for submition date
-                tsdate.setUTCHours(0, 0, 0, 0);
-                tsdate.setDate(tsdate.getDate() + 1);
-                setSubmitDate(tsdate)
-
-                // Set For UI
-                // tsdate.setDate(tsdate.getDate() + 1);
-                const nextDayTehranStr = tsdate.toISOString().split('T')[0];
-                setNextDay(nextDayTehranStr)
-
-            } else {
-                //  Set Date for submition date
-                tsdate.setUTCHours(0, 0, 0, 0);
-                setSubmitDate(tsdate)
-
-                // Set For UI
-                tsdate.setDate(tsdate.getDate() + 1);
-                const nextDayTehranStr = tsdate.toISOString().split('T')[0];
-                setNextDay(nextDayTehranStr)
-
-            }
-            // Set hours, minutes, seconds, and milliseconds to zero
-            // now.setUTCHours(0, 0, 0, 0);
+            setSubmitDate(new Date(`${getSubmitionDate()}T${timePart}`))
+            setNextDay(getSubmitionDate())
 
         }, 1000);
         // Clean up the interval when the component unmounts
@@ -150,7 +122,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
         });
     };
 
-
+    
     if (currentAsset.name !== 'US Dollar') return (
         <Card  >
 
@@ -173,82 +145,92 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
     )
 
     return (
-        <Card >
-            {/* Header with 2 row span */}
+        <Card className="max-h-none">
 
-            <div className="grid grid-cols-8 h-full row-span-1  ">
-                <div className="col-span-5 text-large grow-1 text-text-active">Forecast details</div>
-                <div className="col-span-3 flex text-xs grow-0 items-start justify-center ">
-                    <div className="flex mt-1 justify-center items-center">
-                        <div className="mr-3  text-gray-400">
-                            {currentAsset.name}
+            <div className="flex flex-col row-span-10 gap-6">
+
+                {/* Header with 2 row span */}
+                <div className="grid grid-cols-8 ">
+                    <div className="col-span-5 text-large grow-1 text-text-active">Forecast details</div>
+                    <div className="col-span-3 flex text-xs grow-0 items-start justify-center ">
+                        <div className="flex mt-1 justify-center items-center">
+                            <div className="mr-3  text-gray-400">
+                                {currentAsset.name}
+                            </div>
+                            <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
                         </div>
-                        <Flag className="h-6 w-6 object-cover object-center rounded-lg" code={currentAsset.info.ALPHA_2} />
-                    </div>
 
-                </div>
-            </div>
-            <div className="grid grid-col-6 gap-2 grid-flow-col h-full row-span-1 ">
-
-                <div className="col-span-2 ">
-                    <Badge classNames={{
-                        badge: "w-5 h-5",
-                    }}
-                        color="primary" content={
-                            <Button
-                                onClick={() => setProfileDrawerOpen(true)}
-                                isIconOnly
-                                className=" text-primary-foreground"
-                                radius="full"
-                                size="sm"
-                                variant="light"
-                            >
-                                <Icon icon="solar:pen-2-linear" />
-                            </Button>
-                        } placement="bottom-right">
-                        <Avatar size="lg" isBordered  radius="md" src={User?.user.image} />
-                    </Badge>
-                </div>
-
-                <div className="flex flex-col col-span-4">
-                    <div className="flex justify-center items-center font-medium text-text-active">{User?.user.name}</div>
-                    <div className="flex w-full justify-between items-center">
-                        <Chip color="primary" variant="bordered">
-                            <span className="text-xs text-gray-400">Rank: {usc == null ? "-" : `#${usc}`}</span>
-                        </Chip>
-                        <div className="text-xs text-gray-400">{`${countUsers} Participants`}</div>
                     </div>
                 </div>
-            </div>
-
-            <div className="mt-1 mb-1 text-xs text-gray-400"> {usc == null ? "Your rank will be determined after your first forecast." : ""} </div>
-            <div className="grid  items-start justify-center h-full md:row-span-5 row-span-5 w-full ">
-
-                <Alert text="Only forecasts made before 10 PM Tehran time for the next day will be considered." />
-                <div className="flex gap-4">
 
 
-                    <div className="flex w-2/4 flex-col items-center justify-center">
-                        <div className="text-sm pb-2 text-gray-400">
-                            Tehran Time
-                        </div>
-                        <div className="flex text-xs text-gray-300 ring-1 p-1 rounded-lg ring-yellow-400 w-full items-center justify-center">
-                            {timeNowInTehran}
+
+
+                {/* User details */}
+                <div className="grid grid-col-6 gap-2 grid-flow-col ">
+                    <div className="col-span-2 ">
+                        <Badge classNames={{
+                            badge: "w-5 h-5",
+                        }}
+                            color="primary" content={
+                                <Button
+                                    onClick={() => setProfileDrawerOpen(true)}
+                                    isIconOnly
+                                    className=" text-primary-foreground"
+                                    radius="full"
+                                    size="sm"
+                                    variant="light"
+                                >
+                                    <Icon icon="solar:pen-2-linear" />
+                                </Button>
+                            } placement="bottom-right">
+                            <Avatar size="lg" isBordered radius="md" src={User?.user.image} />
+                        </Badge>
+                    </div>
+
+                    <div className="flex flex-col col-span-4">
+                        <div className="flex justify-center items-center font-medium text-text-active">{User?.user.name}</div>
+                        <div className="flex w-full justify-between items-center">
+                            <Chip color="primary" variant="bordered">
+                                <span className="text-xs text-gray-400">Rank: {usc == null ? "-" : `#${usc}`}</span>
+                            </Chip>
+                            <div className="text-xs text-gray-400">{`${countUsers} Participants`}</div>
                         </div>
                     </div>
 
-                    <div className="flex  w-2/4 flex-col items-center ">
-                        <div className="text-sm text-gray-400 pb-2">
-                        Forecast for
-                        </div>
-                        <div className="flex  text-xs text-gray-300 ring-1 p-1 rounded-lg ring-yellow-400 w-full items-center justify-center">
-                            {nextDay}
-                        </div>
-                    </div>
-
-
+                    
                 </div>
-                <div>
+
+                {usc == null ? <div className="text-xs text-gray-400">"Your rank will be determined after your first forecast." </div> : ""}
+
+
+                {/* Select Range */}
+                <div className="flex flex-col ">
+                    <div className="flex gap-4">
+                        <div className="flex w-3/5 flex-col items-start justify-center">
+                            <div className="text-sm pb-2 text-gray-400">
+                                Tehran Time
+                            </div>
+                            <div className="flex text-xs text-gray-300 ring-1 p-1 rounded-xl ring-yellow-400 w-full items-center justify-center">
+                                {timeNowInTehran}
+                            </div>
+                        </div>
+
+                        <div className="flex  w-2/5 flex-col items-start ">
+                            <div className="text-sm text-gray-400 pb-2">
+                                Forecast for
+                            </div>
+                            <div className="flex  text-xs text-gray-300 ring-1 p-1 rounded-xl ring-yellow-400 w-full items-center justify-center">
+                                {nextDay}
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div className="border-gray-800 border-1 rounded-lg p-2 ">
                     <Input className="md:col-span-2 "
                         min={Number(currentRate) - (Number(currentRate) * .05)}
                         max={Number(currentRate) + (Number(currentRate) * .05)}
@@ -261,7 +243,7 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         step={100}
                         onValueChange={setNewValue}
                         classNames={{
-                            inputWrapper:"group-data-[focus=true]:bg-gray-900 bg-gray-900 data-[hover=true]:bg-gray-900 group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-none",
+                            inputWrapper: "group-data-[focus=true]:bg-gray-900 bg-gray-900 data-[hover=true]:bg-gray-900 group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-none",
                             input: "border-none border-0 text-gray-300 group-data-[has-value=true]:text-gray-300   ",
                             label: "group-data-[filled-within=true]:text-gray-400 text-gray-400 placeholder:text-gray-400",
 
@@ -297,50 +279,48 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
                         formatOptions={{ signDisplay: 'always' }}
                     />
                 </div>
-            </div>
 
 
+                {/* submit or delete buttom */}
+                <div className="flex flex-col ">
 
-            {/* End of chart area */}
-            {/* Description area*/}
-            {/* <div className=" row-span-1 h-full">
-         hi
-        </div> */}
-            {/* End Description */}
+                    {userPredictOfAsset == null
+                        ?
+                        <div className="flex ">
 
-            {/* Adjustments area 3 row span */}
-            <div className="  row-span-3 h-full">
-
-                {userPredictOfAsset == null
-                    ?
-                    <div className="flex ">
-
-                        <Button
-                            className=" max-w-20"
-                            onClick={() => {
-                                handleForcastSubmit("CREATE")
-                                setUserPredictOfAsset(Number(newValue))
-                            }} color="primary">
-                            Save
-                        </Button>
-
-                    </div>
-                    :
-
-                    <div className="grid grid-rows-2 grid-col-3  grid-flow-col gap-1 ">
-                        <div className="row-span-1 col-span-2 text-text-active text-sm">You have submitted your forecast.</div>
-                        <div className="row-span-1 col-span-2 text-text-active text-[10px] ">If you change your mind, delete it to edit or remove it. </div>
-                        <div className="row-span-2  col-span-1 ml-3">
-                            <Button onClick={() => {
-                                handleForcastSubmit("DELETE")
-                                setUserPredictOfAsset(null)
-                            }} color="danger">
-                                Delete
+                            <Button
+                                className=" max-w-20"
+                                onClick={() => {
+                                    handleForcastSubmit("CREATE")
+                                    setUserPredictOfAsset(Number(newValue))
+                                }} color="primary">
+                                Save
                             </Button>
-                        </div>
-                    </div>
 
-                }
+                        </div>
+                        :
+
+                        <div className="grid grid-rows-2 grid-col-3  grid-flow-col gap-1 ">
+                            <div className="row-span-1 col-span-2 text-text-active text-sm">You have submitted your forecast.</div>
+                            <div className="row-span-1 col-span-2 text-text-active text-[10px] ">If you change your mind, delete it to edit or remove it. </div>
+                            <div className="row-span-2  col-span-1 ml-3">
+                                <Button onClick={() => {
+                                    handleForcastSubmit("DELETE")
+                                    setUserPredictOfAsset(null)
+                                }} color="danger">
+                                    Delete
+                                </Button>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+                {/* Alarm */}
+                <Alert text="Forecasts submitted before 9:00 AM Tehran time will be considered for the next day. Submissions made after 9:00 AM will be applied to forecasts for two days later." />
+
+
+
             </div>
         </Card>
 

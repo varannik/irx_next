@@ -7,7 +7,7 @@ interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({ text, content }) => {
   return (
-          <div className="rounded-md bg-yellow-50 mt-2 p-2 ">
+    <div className="rounded-md bg-yellow-50 mt-2 p-2 ">
       <div className="flex  h-full">
         <div className="flex justify-center items-center">
           <ExclamationTriangleIcon aria-hidden="true" className="h-5 w-5 text-yellow-400" />
@@ -18,7 +18,7 @@ const Alert: React.FC<AlertProps> = ({ text, content }) => {
             <p>
               {text}
             </p>
-            { content ? <div>{content}</div> : ""}
+            {content ? <div>{content}</div> : ""}
           </div>
         </div>
       </div>
