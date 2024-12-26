@@ -145,8 +145,8 @@ export default function LandingPage() {
           <div className="flex lg:flex-1  w-full">
             <Link className='w-2/6 max-w-32 p-2'
 
-              href="/"
-              aria-label="Home"
+              href="https://www.quantical.dev/"
+              aria-label="Company"
               onMouseEnter={() => setLogoHovered(true)}
               onMouseLeave={() => setLogoHovered(false)}
             >
