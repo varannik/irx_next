@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "IRX by Quantical",
     short_name: "IRX",
-    description: 'Real-Time Exchange Tracker, Live Iranian Free Market Rates',
+    description: 'Real-Time Exchange Rate Forecasting & Analytics for the Iranian Market',
     start_url: '/analytics',
     icons: [
       {
