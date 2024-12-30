@@ -1,37 +1,4 @@
-export function getToday() {
-    // Create a new Date object for today's date
-    const now = new Date();
-    
-    // Set hours, minutes, seconds, and milliseconds to zero
-    now.setUTCHours(0, 0, 0, 0);
-    return now
-  }
 
-  export function get2DayAgo(date = new Date()) {
-    const previousDay = new Date(date);
-    previousDay.setDate(date.getDate() - 2); // Subtract 1 day
-    return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-  }
-
-
-export function getPreviousDay(date = new Date()) {
-    const previousDay = new Date(date);
-    previousDay.setDate(date.getDate() - 1); // Subtract 1 day
-    return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-  }
-
-  export function getCurrentDay(date = new Date()) {
-    const previousDay = new Date(date);
-    return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-  }
-
-
-
-export function getNextDay(date = new Date()) {
-  const previousDay = new Date(date);
-  previousDay.setDate(date.getDate() + 1); // Subtract 1 day
-  return previousDay.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-}
 
 export function addOneDay(dateStr:string) {
   // Convert the date string to a Date object
@@ -65,24 +32,60 @@ export function getCurrentTimeInTehran(): string {
 
 export function getTehranDate(preday:number){
 
-  // Parse the date string into a Date object
-  const date = new Date(getCurrentTimeInTehran());
 
+  let nowInTehran = getCurrentTimeInTehran()
+
+  // Parse the date string into components
+  const [datePart, timePart] = nowInTehran.split(", ");
+  const [month, day, year] = datePart.split("/");
+
+  // Reformat to the desired format
+  const formattedDateTime = `${year}-${month}-${day}`;
+
+  // Parse the date string into a Date object
+  const date = new Date(formattedDateTime);
+  
   // Subtract one day (24 hours)
   date.setDate(date.getDate() + preday);
 
-  const formattedDate = date.toISOString().split('T')[0];
-  return formattedDate
+  // Extract the local date part
+  const yearN = date.getFullYear();
+  const monthN = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based
+  const dayN = String(date.getDate()).padStart(2, '0');
+
+  return `${yearN}-${monthN}-${dayN}`;
+
+
 
 }
 
 export function getSubmitionDate(){
 
+  let dateTimeString = getCurrentTimeInTehran()
+  const tsdate = new Date(dateTimeString);
+  const hour = tsdate.getHours();
+
+
+  if (hour > 9) {
+
+    return getTehranDate(1)
+
+  } else {
+
+    return getTehranDate(0)
+  }
+
+}
+
+
+
+export function getSubmitionDateUI(){
+
   const dateTimeString = getCurrentTimeInTehran()
   const tsdate = new Date(dateTimeString);
   const hour = tsdate.getHours();
 
- 
+
   if (hour > 9) {
 
     return getTehranDate(2)
@@ -93,7 +96,6 @@ export function getSubmitionDate(){
   }
 
 }
-
 
 
 

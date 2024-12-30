@@ -2,9 +2,10 @@
 
 import { authOptions } from "@/utils/auth";
 import { getCollection } from "@/utils/dbActions/getCollection";
+import { getSubmitionDate } from "@/utils/global/currentday";
+
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
-
 
 
 interface query {
@@ -53,8 +54,15 @@ async function handleUpdate(query:query, nextDayRate:number){
 
 async function handleDelete(query:query){
 
+
+    const startDate = new Date(`${getSubmitionDate()}T00:00:00Z`)
+    const endDate = new Date(`${getSubmitionDate()}T23:59:59Z`)
+  
+  
+    const queryref = { userId:query.userId, submitDate: { $gte: startDate, $lt: endDate }, selectedAsset:query.selectedAsset}
+    console.log(queryref)
   try {
-  const result = await c.deleteOne(query);
+  const result = await c.deleteMany(queryref);
 
   if (result.deletedCount > 0) {
     return { success: true, deletedCount: result.deletedCount };
@@ -87,6 +95,7 @@ export async function forcastAction( {submitDate,
 
   const userId = new ObjectId(session.user.id);
   const query:query = { userId , submitDate, selectedAsset}
+
   switch (action) {
     case "CREATE":
       return await handleCreate(query, nextDayRate);

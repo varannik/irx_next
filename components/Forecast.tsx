@@ -10,7 +10,7 @@ import { fetchGenForcast } from '@/utils/apiActions/fetchGenForcast';
 import { IGenDayPredictions } from '@/types/GensPredictions';
 import { fetchUserHist } from '@/utils/apiActions/fetchUserHist';
 import { IDayPredictAsset } from '@/types/HistPredict';
-import { get2DayAgo, getNextDay, getPreviousDay, getSubmitionDate, getTehranDate } from '@/utils/global/currentday';
+import { getSubmitionDate, getTehranDate } from '@/utils/global/currentday';
 import { ForecastChart } from './UI/ForecastChart';
 import { IChartData, recCatTrack, recTrack, recTrend } from '@/types/Forcasts';
 import { createTrackData, resModule } from '@/lib/utils';
@@ -23,6 +23,8 @@ const currentDay = getTehranDate(0)
 const tomorrow = getTehranDate(1)
 const yesterday = getTehranDate(-1)
 const prePreDay = getTehranDate(-2)
+
+console.log('getSubmitionDate():',getSubmitionDate())
 
 
 const Forcast = async () => {
@@ -54,7 +56,7 @@ const Forcast = async () => {
       fetchScore<IScore[]>(0)
     ]);
 
-
+  
     const ChartData: IChartData = {}
 
 

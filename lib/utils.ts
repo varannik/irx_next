@@ -5,8 +5,8 @@ import { IDayPredictAsset } from "@/types/HistPredict"
 import clsx, { type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { AvailableChartColorsKeys } from "./chartUtils"
-import { getCurrentDay, getNextDay } from "@/utils/global/currentday"
-import { BlobOptions } from "buffer"
+import { getTehranDate } from "@/utils/global/currentday"
+
 
 export function cx(...args: ClassValue[]) {
   return twMerge(clsx(...args))
@@ -129,7 +129,7 @@ export function createTrackData({
       return {
         color: "bg-gray-600"
         ,tooltip: {
-          date: getNextDay()
+          date: getTehranDate(1)
           , "Forcasted Shift %": (preRealRate && forecastedRate) ? Number(((forecastedRate - preRealRate )/ preRealRate * 100).toFixed(2)) : 0
           , "Actual Shift %": 0
         
@@ -146,7 +146,7 @@ export function createTrackData({
     return {
       color: trackerColor(haveSameSign(f, r))
       ,tooltip: {
-        date: getCurrentDay()
+        date: getTehranDate(0)
         , "Forcasted Shift %": (preRealRate && forecastedRate) ? Number(((forecastedRate - preRealRate )/ preRealRate * 100).toFixed(2)) : 0
         , "Actual Shift %": (preRealRate && currRealRate) ? Number(((currRealRate - preRealRate )/ preRealRate * 100).toFixed(2)) : 0
       

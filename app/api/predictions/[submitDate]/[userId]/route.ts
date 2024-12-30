@@ -15,7 +15,6 @@ try {
   const startDate = new Date(`${parseDate(submitDate)}T00:00:00Z`)
   const endDate = new Date(`${parseDate(submitDate)}T23:59:59Z`)
 
-  console.log('start', startDate)
 
   const query = { userId:new ObjectId(userId), submitDate: { $gte: startDate, $lt: endDate }}
   const prediction = await c.find(query).toArray();

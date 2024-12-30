@@ -6,7 +6,7 @@ import { IScore } from "@/types/Score";
 import { Session } from "next-auth";
 import { forcastAction } from "@/app/actions/forcastAction";
 import { IUserPredict } from "@/types/UserDailyPredict";
-import { getCurrentTimeInTehran, getSubmitionDate, getToday } from "@/utils/global/currentday";
+import { getCurrentTimeInTehran, getSubmitionDate, getSubmitionDateUI } from "@/utils/global/currentday";
 
 import {
     Button,
@@ -26,6 +26,7 @@ import { Card } from "./cardTremor";
 import { getScore } from "@/utils/global/getScore";
 import { getPredictOfAsset, predictOfAsset } from "@/utils/global/getPredictionOfAsset";
 import Alert from "./alert";
+import { parseDate } from "@/utils/global/parseDate";
 
 
 
@@ -58,12 +59,10 @@ export default function SubmitPredictionForm({ User, CurrentRateS, ForcastedRate
 
             // Reformat to the desired format
             const formattedDateTime = `${year}-${month}-${day}, ${timePart}`;
-
             setTimeNowInTehran(formattedDateTime);
-
-
+            
             setSubmitDate(new Date(`${getSubmitionDate()}T${timePart}`))
-            setNextDay(getSubmitionDate())
+            setNextDay(getSubmitionDateUI())
 
         }, 1000);
         // Clean up the interval when the component unmounts

@@ -70,7 +70,6 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
       const assetData = ChartData[currentAsset.name]
       setTrendData(assetData.trend)
 
-
       // Get Today Forcast 
       const todayValues = assetData.trend.find((trend) => trend.date === getTehranDate(0));
 
@@ -105,7 +104,7 @@ export function ForecastChart({ ChartData, Title, Cats, CurrentRateS }: { ChartD
     setColors(freshColors.concat(futureColor))
   }, [trackerData]);
 
-
+  console.log(getCurrentTimeInTehran())
   if (currentAsset.name !== 'US Dollar') return (
     <Card  >
       <p className="text-lg font-normal text-text-active">{Title}</p>
