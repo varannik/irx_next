@@ -34,17 +34,24 @@ const Profile = async () => {
       fetchCollectionData<IPreDayRate[]>('predayrates', 10),
 
 
-      fetchUserForcast<IUserPredict[]>({ userId: session.user.id, submitDate: getTehranDate(-1) }, 0),
+      fetchUserForcast<IUserPredict[]>({ userId: "675071cc28ab1873b8e1600e", submitDate: getTehranDate(-1) }, 0),
 
-      fetchUserHist<IDayPredictAsset[] | "user dosent exist">({ userId: session.user.id, limit: 12 }, 10),
+      fetchUserHist<IDayPredictAsset[] | "user dosent exist">({ userId: "675071cc28ab1873b8e1600e", limit: 12 }, 10),
 
       fetchScore<IScore[]>(10)
-
-
-
     ]);
 
     if (UserHist == 'user dosent exist') {
+      if (UserForcastC.length > 0 ){
+        const HistCurrData = appendCurrentToHist({ histData:[], currentData: UserForcastC, assetRates: CurrentRateData[0], preDayRate: PreDayRateData[0] })
+        return (
+          <ProfileSideBar 
+          User={session}
+          HistCurrData={HistCurrData}
+          Score={score}
+          /> 
+        )
+      } else {
       return (
         <ProfileSideBar
           User={session}
@@ -52,10 +59,11 @@ const Profile = async () => {
           Score={score}
         />
       )
-    } else {
+    }} else {
 
       const histData = transformHist(UserHist[0])
       const HistCurrData = appendCurrentToHist({ histData, currentData: UserForcastC, assetRates: CurrentRateData[0], preDayRate: PreDayRateData[0] })
+      console.log(HistCurrData)
       return (
         <ProfileSideBar 
         User={session}
