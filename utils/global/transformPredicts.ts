@@ -19,7 +19,7 @@ export const transformHist = (input: IDayPredictAsset):IHist[] => {
         for (const date in dayPredict) {
           const prediction = dayPredict[date];
           entries.push({
-            date,
+            date:prediction.nextdaydate,
             predictedrate: prediction.predictedrate,
             actualrate: prediction.actualrate,
             pct_predicted: Number(prediction.pct_predicted.toFixed(2)),
