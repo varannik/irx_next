@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Providers } from '@/app/providers'
 import Layout from '@/components/Layout'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full bg-black antialiased" suppressHydrationWarning>
       <body className="w-full flex min-h-full flex-col">
+       <GoogleAnalytics gaId="G-M7HSXGNQP3" />
         <Providers >
             <Layout>{children}</Layout>
         </Providers>
