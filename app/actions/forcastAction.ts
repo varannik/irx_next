@@ -60,7 +60,6 @@ async function handleDelete(query:query){
   
   
     const queryref = { userId:query.userId, submitDate: { $gte: startDate, $lt: endDate }, selectedAsset:query.selectedAsset}
-    console.log(queryref)
   try {
   const result = await c.deleteMany(queryref);
 

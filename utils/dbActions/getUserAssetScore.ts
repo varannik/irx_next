@@ -8,7 +8,6 @@ export async function getUserAssetScore() {
         const db = client.db(process.env.MONGO_DB);
         const cl = db.collection('scores');
         const lastRecord= await cl.find().sort({ updateDate: -1 }).limit(1).toArray();
-        console.log('lastRecord', lastRecord)
         if (lastRecord.length > 0) {
             return lastRecord
         }else {
