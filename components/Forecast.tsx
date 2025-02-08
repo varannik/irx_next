@@ -59,7 +59,6 @@ const Forcast = async () => {
       
     ]);
 
-    console.log("sco000re",score)
     const ChartData: IChartData = {}
 
 
