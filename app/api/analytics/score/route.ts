@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       const validatedData = vScoreSchema.parse(json);
       
       const { updateDate, assets } = validatedData
-      console.log(assets)
+
       // Connect to MongoDB
       connectDB();
 

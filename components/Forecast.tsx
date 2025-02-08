@@ -24,8 +24,6 @@ const tomorrow = getTehranDate(1)
 const yesterday = getTehranDate(-1)
 const prePreDay = getTehranDate(-2)
 
-console.log('getSubmitionDate():',getSubmitionDate())
-
 
 const Forcast = async () => {
   // Fetch data with caching applied in the external file
@@ -34,9 +32,13 @@ const Forcast = async () => {
 
   if (session) {
     const [ CurrentRateData, AssetListData, 
+
             UserForcastF, UserForcastC,
+
             GenDataF, GenDataC , 
+
             UserHist, AiHist, VoteHist,
+
             score
           ] = await Promise.all([
 
@@ -54,9 +56,10 @@ const Forcast = async () => {
       fetchUserHist<IDayPredictAsset[]>({ userId: 'B'.repeat(24), limit: 12 }, 0),
 
       fetchScore<IScore[]>(0)
+      
     ]);
 
-  
+    console.log("sco000re",score)
     const ChartData: IChartData = {}
 
 

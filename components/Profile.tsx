@@ -65,7 +65,7 @@ const Profile = async () => {
 
       const histData = transformHist(UserHist[0])
       const HistCurrData = appendCurrentToHist({ histData, currentData: UserForcastC, assetRates: CurrentRateData[0], preDayRate: PreDayRateData[0] })
-      console.log(HistCurrData)
+
       return (
         <ProfileSideBar 
         User={session}

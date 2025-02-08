@@ -13,6 +13,7 @@ export function getScore({ scores, userId, asset }: { scores: IScore[], userId: 
     } else {
 
         const a = scores[0].assets.find((obj) => obj[asset] !== undefined)
+        
         if (a) {
 
             const u = a[asset].find((obj) => obj[userId] !== undefined)

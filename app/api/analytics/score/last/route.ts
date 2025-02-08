@@ -6,7 +6,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const c = await getUserAssetScore();
-
+    console.log('hereeeee')
+    console.log(c)
     return NextResponse.json(c);
   } catch (error) {
     console.error(`Error fetching score `, error);
