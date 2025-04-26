@@ -17,7 +17,7 @@ const Bands = async () => {
     <Card >
       {/* Header with 1 row span */}
       <div className="grid grid-cols-8 h-full row-span-1  ">
-        <div className="col-span-5 text-lg font-normal text-text-active ">Bollinger Bands</div>
+        <div className="col-span-5 text-lg font-normal text-text-active ">Bollinger-Bands</div>
       </div>
       {/* End of header  */}
 
